@@ -1,0 +1,58 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #303030;
+}
+
+.form-container
+{
+    background-color: #303030;
+    color: white;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.form-outline .form-control
+{
+    color: white;
+    background-color: transparent;
+    border: 1px solid #666;
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled])
+{
+    background-color: #303030;
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    color: white;
+}
+
+.card-registration .select-arrow
+{
+    top: 13px;
+}
+
+.btn-primary
+{
+    background-color: blue;
+    border-color: blue;
+}
+
+.btn-primary:hover
+{
+    background-color: darkblue;
+    border-color: darkblue;
+}
+
+
