@@ -395,7 +395,7 @@
 							<div class="col-md-4 col-xs-6" >
 								<div class="product">
 										<div class="product-img">
-											<img th:src="@{'/img/' + ${product.image_url}}" alt="">
+											<img th:src="@{'/img/' + ${product.getImage_url()}}" alt="">
 											<div class="product-label">
 												<span class="sale" th:text="'-' + ${product.getDiscount()} + '%'"></span>
 												<span class="new">NEW</span>

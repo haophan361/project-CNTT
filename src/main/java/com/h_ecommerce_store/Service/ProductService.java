@@ -16,8 +16,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void saveProduct(Products products){
-        this.productRepository.save(products);
+    public Products saveProduct(Products products){
+        int newID= productRepository.newID();
+        products.setID(newID);
+        return productRepository.save(products);
     }
 
 }
