@@ -5,9 +5,6 @@ import com.h_ecommerce_store.Repository.Customer_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.PropertyPermission;
-
 @Service
 public class customer_Service
 {
@@ -19,21 +16,8 @@ public class customer_Service
         customer.setID(newID);
         return customer_repository.save(customer);
     }
-    public List<String> listPhone()
+    public Customers updateCustomer(Customers customer)
     {
-        List<String> listPhone = customer_repository.listPhone();
-        if (listPhone.isEmpty())
-        {
-            return null;
-        }
-        return listPhone;
-    }
-    public void updateProfile(String name,String address,String phone,String username)
-    {
-         customer_repository.updateProfile(name,address,phone,username);
-    }
-    public Customers getCustomer(String username)
-    {
-        return customer_repository.findByEmail(username);
+        return customer_repository.save(customer);
     }
 }

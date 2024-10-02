@@ -2,48 +2,50 @@ package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.Model.Accounts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.h_ecommerce_store.Repository.Account_Repository;
+
 import java.util.List;
+import java.util.Optional;
+
 @Service
-public class account_Service implements UserDetailsService
+public class account_Service
 {
     @Autowired
     Account_Repository account_repository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Override
-    public UserDetails loadUserByUsername(String username)
+    public String checkLogin(Accounts accounts)
     {
-        Accounts account=account_repository.findByUsername(username);
-        return new org.springframework.security.core.userdetails.User(
-                account.getUsername(),
-                account.getPassword(),
-                List.of(new SimpleGrantedAuthority(account.getRole()))
-        );
+        String email=accounts.getEmail();
+        Optional<Accounts> checkAccount=account_repository.findById(email);
+        if(checkAccount.isPresent())
+        {
+            String password=checkAccount.get().getPassword();
+            if(password.equals(accounts.getPassword()))
+            {
+                return checkAccount.get().getRole();
+            }
+        }
+        return null;
     }
-    public Accounts getAccount(String username)
+    public Accounts getAccount(String email)
     {
-        return account_repository.findByUsername(username);
+        Optional<Accounts> account=account_repository.findById(email);
+        return account.orElse(null);
     }
-    public Accounts insertAccount(Accounts account)
+    public Accounts insertAccount(Accounts accounts)
     {
-        String encodedPassword =passwordEncoder.encode(account.getPassword());
-        account.setPassword(encodedPassword);
-        account.setRole("ROLE_USER");
-        return account_repository.save(account);
+        accounts.setRole("customer");
+        return account_repository.save(accounts);
     }
-    public Accounts changePassword(String username, String newPassword)
+    public Accounts changePassword(String email, String newPassword)
     {
-        Accounts account=account_repository.findByUsername(username);
-        String encodedPassword =passwordEncoder.encode(newPassword);
-        account.setPassword(encodedPassword);
-        return account_repository.save(account);
+        Optional<Accounts> account=account_repository.findById(email);
+        if(account.isPresent())
+        {
+            account.get().setPassword(newPassword);
+            return account_repository.save(account.get());
+        }
+        return null;
     }
     public List<String> findAllEmail()
     {
@@ -53,24 +55,5 @@ public class account_Service implements UserDetailsService
             return null;
         }
         return listEmail;
-    }
-    public String getLoggedUserName()
-    {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated())
-        {
-            Object principal = authentication.getPrincipal();
-
-            if (principal instanceof UserDetails)
-            {
-                return ((UserDetails) principal).getUsername();
-            }
-            else
-            {
-                return principal.toString();
-            }
-        }
-        return null;
     }
 }

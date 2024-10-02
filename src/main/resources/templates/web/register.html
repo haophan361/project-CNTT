@@ -15,7 +15,7 @@
     			</div>
 	    		<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 	    			<h1 style="text-align:center">Register</h1>
-	    			<form th:action="@{/web/register}" th:object="${register}"  method="POST">
+	    			<form th:action="@{/register}" th:object="${register}"  method="POST">
 						<div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">
 							<small th:errors="*{name}"></small>
 						</div>
@@ -31,7 +31,7 @@
 					        <select data-mdb-select-init class="form-control form-control-lg" id="cities">
 					            <option value="" selected>Tỉnh/Thành phố</option>
 					        </select>
-					        <input type="hidden" id="cityName" th:field="*{city}">
+					        <input type="hidden" id="city" th:field="*{city}">
 					    </div>
 
 						<div th:if="${#fields.hasErrors('district')}" style="color: red" class="error">
@@ -41,7 +41,7 @@
 					        <select data-mdb-select-init class="form-control form-control-lg" id="districts">
 					            <option value="" selected>Quận/Huyện</option>
 					        </select>
-					        <input type="hidden" id="districtName" th:field="*{district}">
+					        <input type="hidden" id="district" th:field="*{district}">
 					    </div>
 
 						<div th:if="${#fields.hasErrors('ward')}" style="color: red" class="error">
@@ -51,7 +51,7 @@
 					        <select data-mdb-select-init class="form-control form-control-lg" id="wards">
 					            <option value="" selected>Phường/Xã</option>
 					        </select>
-					        <input type="hidden" id="wardName" th:field="*{ward}">
+					        <input type="hidden" id="ward" th:field="*{ward}">
 					    </div>
 
 
@@ -71,12 +71,12 @@
 					        <label class="form-label" for="phone" >Số điện thoại</label>
 					    </div>
 
-						<div th:if="${#fields.hasErrors('username')}" style="color: red" class="error">
-							<small th:errors="*{username}"></small>
+						<div th:if="${#fields.hasErrors('email')}" style="color: red" class="error">
+							<small th:errors="*{email}"></small>
 						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
-					        <input type="email" id="username" th:field="*{username}" class="form-control"/>
-					        <label class="form-label" for="username">Email</label>
+					        <input type="email" id="email" th:field="*{email}" class="form-control"/>
+					        <label class="form-label" for="email">Email</label>
 					    </div>
 
 
@@ -96,8 +96,8 @@
 							<label class="form-label" for="confirmPassword">Xác nhận mật khẩu</label>
 						</div>
 
-					    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Register</button>
-					    <p>Already a member? <a th:href="@{/web/login}">Login</a></p>
+					    <button type="submit" name="action" value="register" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Register</button>
+					    <p>Already a member? <a th:href="@{/loginForm}">Login</a></p>
 					</form>
 				</div>
 			</div>
