@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping
-public class Home_Controller {
+public class Home_Controller
+{
     @Autowired
     private ProductService productService;
-    @GetMapping("/")
-    public String home(Model model)
+    @GetMapping(value = {"/","/home"})
+    public String home(Model model) throws Exception
     {
         model.addAttribute("listProducts", productService.getAllProducts());
-        return "web/product";
+        return "web/home";
     }
-
     @GetMapping("/createProducts")
     public String createProduct(Model model){
         Products product = new Products();

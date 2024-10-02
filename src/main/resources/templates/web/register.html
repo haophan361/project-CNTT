@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+    <title>Trang đăng kí</title>
+</head>
+<body>
+	<div class="form-container">
+		<div class="container py-5 h-100">
+			<div class="row d-flex align-items-center justify-content-center h-100">
+    			<div class="col-md-8 col-lg-7 col-xl-6">
+					<img src="https://i.imgur.com/uNGdWHi.png"
+						class="img-fluid" alt="Phone image">
+    			</div>
+	    		<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+	    			<h1 style="text-align:center">Register</h1>
+	    			<form th:action="@{/register}" th:object="${register}"  method="POST">
+					    <div data-mdb-input-init class="form-outline mb-4">
+					        <input type="text" id="name" th:field="*{name}" class="form-control form-control-lg"/>
+					        <label class="form-label" for="name">Họ và tên</label>
+					    </div>
+					                
+					    <div class="mb-4">
+					        <select data-mdb-select-init class="form-control form-control-lg" id="cities">
+					            <option value="" selected>Tỉnh/Thành phố</option>
+					        </select>
+					        <input type="hidden" id="city" th:field="*{city}">
+					    </div>
+					    
+					    <div class="mb-4">
+					        <select data-mdb-select-init class="form-control form-control-lg" id="districts">
+					            <option value="" selected>Quận/Huyện</option>
+					        </select>
+					        <input type="hidden" id="district" th:field="*{district}">
+					    </div>
+					    
+					    <div class="mb-4">
+					        <select data-mdb-select-init class="form-control form-control-lg" id="wards">
+					            <option value="" selected>Phường/Xã</option>
+					        </select>
+					        <input type="hidden" id="ward" th:field="*{ward}">
+					    </div>
+					    
+					    <div data-mdb-input-init class="form-outline mb-4">
+					        <input type="text" id="address" th:field="*{houseNo}" class="form-control"/>
+					        <label class="form-label" for="address" >Số nhà, Tên đường</label>
+					    </div>
+					
+					    <div data-mdb-input-init class="form-outline mb-4">
+					        <input type="text" id="phone" th:field="*{phone}" class="form-control">
+					        <label class="form-label" for="phone" >Số điện thoại</label>
+					    </div>
+					
+					    <div data-mdb-input-init class="form-outline mb-4">
+					        <input type="email" id="email" th:field="*{email}" class="form-control"/>
+					        <label class="form-label" for="email">Email</label>
+					    </div>
+					
+					    <div data-mdb-input-init class="form-outline mb-4">
+					        <input type="password" id="password" th:field="*{password}" class="form-control"/>
+					        <label class="form-label" for="password">Mật khẩu</label>
+					    </div>
+
+						<div data-mdb-input-init class="form-outline mb-4">
+							<input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control"/>
+							<label class="form-label" for="confirmPassword">Xác nhận mật khẩu</label>
+						</div>
+					    
+					    <button type="submit" name="action" value="register" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Register</button>
+					    <p>Already a member? <a th:href="@{/loginForm}">Login</a></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+	<script th:src="@{/js/rregister.js}"></script>
+</body>
+</html>
