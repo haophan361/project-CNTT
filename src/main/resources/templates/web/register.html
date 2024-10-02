@@ -16,57 +16,86 @@
 	    		<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 	    			<h1 style="text-align:center">Register</h1>
 	    			<form th:action="@{/register}" th:object="${register}"  method="POST">
+						<div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">
+							<small th:errors="*{name}"></small>
+						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="name" th:field="*{name}" class="form-control form-control-lg"/>
 					        <label class="form-label" for="name">Họ và tên</label>
 					    </div>
-					                
+
+						<div th:if="${#fields.hasErrors('city')}" style="color: red" class="error">
+							<small th:errors="*{city}"></small>
+						</div>
 					    <div class="mb-4">
 					        <select data-mdb-select-init class="form-control form-control-lg" id="cities">
 					            <option value="" selected>Tỉnh/Thành phố</option>
 					        </select>
 					        <input type="hidden" id="city" th:field="*{city}">
 					    </div>
-					    
+
+						<div th:if="${#fields.hasErrors('district')}" style="color: red" class="error">
+							<small th:errors="*{district}"></small>
+						</div>
 					    <div class="mb-4">
 					        <select data-mdb-select-init class="form-control form-control-lg" id="districts">
 					            <option value="" selected>Quận/Huyện</option>
 					        </select>
 					        <input type="hidden" id="district" th:field="*{district}">
 					    </div>
-					    
+
+						<div th:if="${#fields.hasErrors('ward')}" style="color: red" class="error">
+							<small th:errors="*{ward}"></small>
+						</div>
 					    <div class="mb-4">
 					        <select data-mdb-select-init class="form-control form-control-lg" id="wards">
 					            <option value="" selected>Phường/Xã</option>
 					        </select>
 					        <input type="hidden" id="ward" th:field="*{ward}">
 					    </div>
-					    
+
+
+						<div th:if="${#fields.hasErrors('houseNo')}"  style="color: red" class="error">
+							<small th:errors="*{houseNo}"></small>
+						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="address" th:field="*{houseNo}" class="form-control"/>
 					        <label class="form-label" for="address" >Số nhà, Tên đường</label>
 					    </div>
-					
+
+						<div th:if="${#fields.hasErrors('phone')}" style="color:red;" class="error">
+							<small th:errors="*{phone}"></small>
+						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="phone" th:field="*{phone}" class="form-control">
 					        <label class="form-label" for="phone" >Số điện thoại</label>
 					    </div>
-					
+
+						<div th:if="${#fields.hasErrors('email')}" style="color: red" class="error">
+							<small th:errors="*{email}"></small>
+						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="email" id="email" th:field="*{email}" class="form-control"/>
 					        <label class="form-label" for="email">Email</label>
 					    </div>
-					
+
+
+						<div th:if="${#fields.hasErrors('password')}" style="color: red" class="error">
+							<small th:errors="*{password}"></small>
+						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="password" id="password" th:field="*{password}" class="form-control"/>
 					        <label class="form-label" for="password">Mật khẩu</label>
 					    </div>
 
+						<div th:if="${#fields.hasErrors('confirmPassword')}" style="color: red" class="error">
+							<small th:errors="*{confirmPassword}"></small>
+						</div>
 						<div data-mdb-input-init class="form-outline mb-4">
 							<input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control"/>
 							<label class="form-label" for="confirmPassword">Xác nhận mật khẩu</label>
 						</div>
-					    
+
 					    <button type="submit" name="action" value="register" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Register</button>
 					    <p>Already a member? <a th:href="@{/loginForm}">Login</a></p>
 					</form>
@@ -76,6 +105,6 @@
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-	<script th:src="@{/js/rregister.js}"></script>
+	<script th:src="@{/js/register.js}"></script>
 </body>
 </html>

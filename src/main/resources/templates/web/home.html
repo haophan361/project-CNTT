@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,8 +23,22 @@
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-right">
-						<li><a th:href="@{/createProducts}">Add Product</a></li>
-						<li><a th:href="@{/loginForm}"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li sec:authorize="isAnonymous()">
+							<a th:href="@{/loginForm}">
+								<i class="fa fa-user-o"></i> Đăng nhập
+							</a>
+						</li>
+
+						<li sec:authorize="isAuthenticated()" class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-user-o"></i> My Account
+							</a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
+								<li><a th:href="@{/profile}" style="color: black;">Hồ sơ của bạn</a></li>
+								<li><a th:href="@{/logout}" style="color: black;">Đăng xuất</a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 

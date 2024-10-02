@@ -4,14 +4,13 @@ document.addEventListener("DOMContentLoaded", function() {
     var wards = document.getElementById("wards");
     var Parameter =
         {
-            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+            url: "/js/address.json",
             method: "GET",
             responseType: "application/json",
         };
     var promise = axios(Parameter);
     promise.then(function(result)
     {
-        console.log(result.data);
         renderCity(result.data);
     });
     function renderCity(data)

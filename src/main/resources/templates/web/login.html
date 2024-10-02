@@ -11,16 +11,22 @@
 			<div class="row d-flex align-items-center justify-content-center h-100">
 				<div class="col-md-8 col-lg-7 col-xl-6">
 			        <img src="https://i.imgur.com/uNGdWHi.png"
-			          class="img-fluid" alt="Phone image">
+			          class="img-fluid" alt="image">
       			</div>
       			<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
       				<h1 style="text-align:center">Login</h1>
      				<form th:action="@{/login}" th:object="${login}" method="POST">
+						<div th:if="${#fields.hasErrors('email')}" style="color:red;" class="error">
+							<small th:errors="*{email}"></small>
+						</div>
 						<div data-mdb-input-init class="form-outline mb-4">
 							<input type="email" id="email" th:field="*{email}" class="form-control"/>
 							<label class="form-label" for="email" >Email</label>
 						</div>
-			
+
+						<div th:if="${#fields.hasErrors('password')}" style="color:red;" class="error">
+							<small th:errors="*{password}"></small>
+						</div>
 						<div data-mdb-input-init class="form-outline mb-4">
 							<input type="password" id="password" th:field="*{password}" class="form-control" />
 							<label class="form-label" for="password">Password</label>

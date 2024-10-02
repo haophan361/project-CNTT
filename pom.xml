@@ -35,6 +35,7 @@
         <spring-core.version>6.1.13</spring-core.version>
         <lombok.version>1.18.34</lombok.version>
         <spring-doc.version>2.6.0</spring-doc.version>
+        <thymeleaf-extras.version>3.1.2.RELEASE</thymeleaf-extras.version>
     </properties>
     <dependencies>
 
@@ -95,10 +96,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>${thymeleaf-extras.version}</version>
+        </dependency>
+
 
 
     </dependencies>

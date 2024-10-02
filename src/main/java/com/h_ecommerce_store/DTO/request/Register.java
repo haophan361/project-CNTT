@@ -6,10 +6,13 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class Register
 {
+
     @NotBlank(message ="Email không được để trống")
     @Email(message="Email không đúng định dạng")
     private String email;
@@ -38,10 +41,16 @@ public class Register
     @NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải đủ 10 số")
     private String phone;
-
-    @AssertTrue(message = "Mật khẩu và xác nhận mật khẩu không trùng khớp")
-    public boolean isPasswordMatching()
+    public boolean isEmailPresent(List<String> listEmail)
     {
-        return password != null && password.equals(confirmPassword);
+        if(listEmail != null && !listEmail.isEmpty())
+        {
+            return listEmail.contains(email);
+        }
+        return false;
+    }
+    public boolean IsPasswordMatching()
+    {
+         return password!=null &&password.equals(confirmPassword);
     }
 }
