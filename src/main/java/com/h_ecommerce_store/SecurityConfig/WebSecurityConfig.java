@@ -17,7 +17,12 @@ public class WebSecurityConfig
                                 "/loginForm",
                                 "/registerForm",
                                 "/login",
-                                "/register").permitAll()
+                                "/register",
+                                "/js/**",
+                                "/css/**",
+                                "/fonts/**",
+                                "/img/**",
+                                "/screenshot/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

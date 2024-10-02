@@ -29,4 +29,11 @@ public class Customers
     {
 
     }
+    public Customers(String cus_name, String email, String address, String phone)
+    {
+        this.cus_name=cus_name;
+        this.email=email;
+        this.address=address;
+        this.phone=phone;
+    }
 }
