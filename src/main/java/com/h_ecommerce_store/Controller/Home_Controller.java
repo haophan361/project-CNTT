@@ -13,11 +13,11 @@ public class Home_Controller
 {
     @Autowired
     private ProductService productService;
-    @GetMapping(value = {"/","/home"})
+    @GetMapping(value = {"/"})
     public String home(Model model) throws Exception
     {
         model.addAttribute("listProducts", productService.getAllProducts());
-        return "web/home";
+        return "/web/home";
     }
     @GetMapping("/createProducts")
     public String createProduct(Model model){
