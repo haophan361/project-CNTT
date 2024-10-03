@@ -15,7 +15,7 @@
       			</div>
       			<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
       				<h1 style="text-align:center">Login</h1>
-     				<form th:action="@{/login}" th:object="${login}" method="POST">
+     				<form th:action="@{/web/login}" th:object="${login}" method="POST">
 						<div th:if="${#fields.hasErrors('email')}" style="color:red;" class="error">
 							<small th:errors="*{email}"></small>
 						</div>
@@ -33,7 +33,7 @@
 						</div>
 				  		<button type="submit" name="action" value="login" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Sign in</button>
 				  		<div class="text-center">
-							<p>Not a member? <a th:href="@{/registerForm}">Register</a></p>
+							<p>Not a member? <a th:href="@{/web/registerForm}">Register</a></p>
 						</div>
 					</form>
     			</div>

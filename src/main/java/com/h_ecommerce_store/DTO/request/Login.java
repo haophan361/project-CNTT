@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class Login
@@ -14,8 +16,12 @@ public class Login
     private String email;
     @NotBlank(message = "Mật khẩu không được để trống")
     private String password;
-    public Login()
+    public boolean isEmailPresent(List<String> listEmail)
     {
-
+        if(listEmail != null && !listEmail.isEmpty())
+        {
+            return listEmail.contains(email);
+        }
+        return false;
     }
 }

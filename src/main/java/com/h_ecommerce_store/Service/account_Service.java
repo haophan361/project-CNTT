@@ -34,7 +34,7 @@ public class account_Service
     }
     public Accounts insertAccount(Accounts accounts)
     {
-        accounts.setRole("customer");
+        accounts.setRole("ROLE_USER");
         return account_repository.save(accounts);
     }
     public Accounts changePassword(String email, String newPassword)
