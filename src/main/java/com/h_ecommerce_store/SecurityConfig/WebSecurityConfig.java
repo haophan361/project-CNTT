@@ -2,38 +2,44 @@ package com.h_ecommerce_store.SecurityConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig
 {
+
     @Bean
-    public SecurityFilterChain  securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/",
-                                "/home",
-                                "/loginForm",
-                                "/registerForm",
-                                "/login",
-                                "/register",
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+    {
+        http
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers(
+                                "/",
+                                "/web/**",
                                 "/js/**",
                                 "/css/**",
-                                "/fonts/**",
-                                "/img/**",
+                                "/fonts/**", "/img/**",
                                 "/screenshot/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/loginForm")
-                        .defaultSuccessUrl("/home", true)
-                        .permitAll()
-                )
-                .logout((logout) -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/web/loginForm")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/")
                         .permitAll());
         return http.build();
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception
+    {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
