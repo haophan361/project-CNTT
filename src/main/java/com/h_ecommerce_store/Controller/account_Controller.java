@@ -3,9 +3,6 @@ import com.h_ecommerce_store.DTO.request.changePassword;
 import com.h_ecommerce_store.Model.Customers;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.h_ecommerce_store.Model.Accounts;
-import com.h_ecommerce_store.DTO.request.Login;
 import com.h_ecommerce_store.DTO.request.Register;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.customer_Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -69,9 +66,12 @@ public class account_Controller
         return "redirect:/web/loginForm";
     }
     @GetMapping("/login")
-    public String loginForm(Model model)
+    public String login(@RequestParam(value = "error", required = false) String error, Model model)
     {
-        model.addAttribute("login",new Login());
+        if (error != null)
+        {
+            model.addAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng.");
+        }
         return "web/login";
     }
     @GetMapping("/user/form_changePassword")
@@ -109,10 +109,5 @@ public class account_Controller
     {
         model.addAttribute("register", new Register());
         return "web/register";
-    }
-    @GetMapping("/logout")
-    public String logout()
-    {
-        return "web/home";
     }
 }
