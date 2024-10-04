@@ -12,13 +12,13 @@ import lombok.Setter;
 public class Accounts
 {
     @Id
-    private String email;
+    private String username;
     private String password;
     private String role;
 
-    public Accounts(String email, String password)
+    public Accounts(String username, String password)
     {
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
     public Accounts()
