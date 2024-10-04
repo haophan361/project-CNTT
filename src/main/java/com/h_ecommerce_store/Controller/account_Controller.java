@@ -68,56 +68,11 @@ public class account_Controller
         customer_service.insertCustomer(customer);
         return "redirect:/web/loginForm";
     }
-    @GetMapping("/web/loginForm")
+    @GetMapping("/login")
     public String loginForm(Model model)
     {
         model.addAttribute("login",new Login());
         return "web/login";
-    }
-    @PostMapping("/web/login")
-    public String Login (@Valid @ModelAttribute("login") Login login, BindingResult result)
-    {
-        if(result.hasErrors())
-        {
-            return "/web/login";
-        }
-        List<String> listEmail=account_service.findAllEmail();
-        String email = login.getEmail();
-        if(!listEmail.contains(email))
-        {
-            result.rejectValue("email","error.login",
-                    "Tài khoản email không tồn tại");
-            return "/web/login";
-        }
-        String password = login.getPassword();
-        Accounts account = new Accounts(email, password);
-        String role = account_service.checkLogin(account);
-
-        if(role != null)
-        {
-            List<SimpleGrantedAuthority> authorities;
-
-            if(role.equals("admin"))
-            {
-                authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                SecurityContextHolder.getContext().setAuthentication(
-                        new UsernamePasswordAuthenticationToken(email, password, authorities));
-                return "redirect:/admin/home";
-            }
-            else
-            {
-                authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-                SecurityContextHolder.getContext().setAuthentication(
-                        new UsernamePasswordAuthenticationToken(email, password, authorities));
-                return "redirect:/";
-            }
-        }
-        else
-        {
-            result.rejectValue("password", "error.login",
-                    "Mật khẩu không chính xác");
-            return "/web/login";
-        }
     }
     @GetMapping("/user/form_changePassword")
     public String form_changePassword(Model model)

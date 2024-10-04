@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface Account_Repository extends JpaRepository<Accounts,String>
 {
-    @Query("SELECT a.email FROM Accounts a")
+    @Query("SELECT a.username FROM Accounts a")
     List<String> findAllEmail();
 }
