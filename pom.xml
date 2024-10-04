@@ -36,6 +36,7 @@
         <lombok.version>1.18.34</lombok.version>
         <spring-doc.version>2.6.0</spring-doc.version>
         <thymeleaf-extras.version>3.1.2.RELEASE</thymeleaf-extras.version>
+        <spring-boot-starter-security.version>3.3.4</spring-boot-starter-security.version>
     </properties>
     <dependencies>
 
@@ -100,12 +101,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring-boot-starter-security.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
             <version>${thymeleaf-extras.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
 
