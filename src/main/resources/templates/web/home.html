@@ -9,11 +9,11 @@
 
 		<title>H_Ecommerce Store</title>
  		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
-		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-		<link rel="stylesheet" th:href="@{/css/slick.css}"/>
-		<link rel="stylesheet" th:href="@{css/slick-theme.css}"/>
-		<link rel="stylesheet" th:href="@{/css/nouislider.min.css}"/>
-		<link rel="stylesheet" th:href="@{css/font-awesome.min.css}">
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 		<link rel="stylesheet" th:href="@{/css/style.css}"/>
     </head>
 	<body>
@@ -24,7 +24,7 @@
 				<div class="container">
 					<ul class="header-links pull-right">
 						<li sec:authorize="isAnonymous()">
-							<a th:href="@{/web/loginForm}">
+							<a th:href="@{/login}">
 								<i class="fa fa-user-o"></i> Đăng nhập
 							</a>
 						</li>
@@ -35,9 +35,11 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
-								<li><a th:href="@{/user/profile}" style="color: black;">Hồ sơ của bạn</a></li>
-								<li><a th:href="@{/logout}" style="color: black;">Đăng xuất</a></li>
+								<li><a th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
 							</ul>
+							<form th:action="@{/logout}" method="post" style="display: inline">
+								<button type="submit" style="color: white ;background: none; border: none";>Đăng xuất</button>
+							</form>
 						</li>
 					</ul>
 				</div>
@@ -458,11 +460,11 @@
 			</div>
 			<!-- /container -->
 		</div>
-		<script th:src="@{/js/jquery.min.js}"></script>
-		<script th:src="@{/js/bootstrap.min.js}"></script>
-		<script th:src="@{/js/slick.min.js}"></script>
-		<script th:src="@{/js/nouislider.min.js}"></script>
-		<script th:src="@{/js/jquery.zoom.min.js}"></script>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.20/jquery.zoom.min.js"></script>
 		<script th:src="@{/js/main.js}"></script>
 	</body>
 </html>

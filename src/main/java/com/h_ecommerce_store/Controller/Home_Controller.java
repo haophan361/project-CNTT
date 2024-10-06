@@ -13,7 +13,7 @@ public class Home_Controller
 {
     @Autowired
     private ProductService productService;
-    @GetMapping(value={"/","/user/home"})
+    @GetMapping({"/"})
     public String home(Model model) throws Exception
     {
         model.addAttribute("listProducts", productService.getAllProducts());
@@ -27,7 +27,6 @@ public class Home_Controller
         model.addAttribute("actionUrl","saveProducts");
         return "web/addProduct";
     }
-
     @PostMapping("/admin/saveProducts")
     public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile) {
             if (!imageFile.isEmpty()) {

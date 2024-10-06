@@ -1,5 +1,4 @@
 package com.h_ecommerce_store.DTO.request;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -15,7 +14,7 @@ public class Register
 
     @NotBlank(message ="Email không được để trống")
     @Email(message="Email không đúng định dạng")
-    private String email;
+    private String username;
 
     @NotBlank(message = "Mật khẩu không được để trống")
     private String password;
@@ -45,12 +44,20 @@ public class Register
     {
         if(listEmail != null && !listEmail.isEmpty())
         {
-            return listEmail.contains(email);
+            return listEmail.contains(username);
         }
         return false;
     }
     public boolean IsPasswordMatching()
     {
          return password!=null &&password.equals(confirmPassword);
+    }
+    public boolean isPhonePresent(List<String> listPhone)
+    {
+        if(listPhone != null && !listPhone.isEmpty())
+        {
+            return listPhone.contains(phone);
+        }
+        return false;
     }
 }

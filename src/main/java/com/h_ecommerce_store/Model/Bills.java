@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 public class Bills {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private BigDecimal cost;
     private LocalDateTime purchase_date;
