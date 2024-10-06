@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/mdb-min.css}">
-    <link rel="stylesheet" th:href="@{/css/add.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
     <title>Thêm Sản Phẩm</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    
 </head>
 <body>
 	<div class="form-container">
@@ -20,36 +21,36 @@
 						<input type="hidden" id="ID" th:field="*{ID}" />
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="name" th:field="*{product_name}" class="form-control form-control-lg" required />
-					        <label class="form-label" for="name" style="color:white">Tên sản phẩm</label>
+					        <label class="form-label" for="name">Tên sản phẩm</label>
 					    </div>
 					    
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="type" th:field="*{product_type}" class="form-control form-control-lg" required />
-					        <label class="form-label" for="type" style="color:white">Loại sản phẩm</label>
+					        <label class="form-label" for="type" >Loại sản phẩm</label>
 					    </div>
 					                
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="brand" th:field="*{brand}" class="form-control" required/>
-					        <label class="form-label" for="brand" style="color:white">Hãng</label>
+					        <label class="form-label" for="brand" >Hãng</label>
 					    </div>
 					
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="cost" th:field="*{cost}" class="form-control" required>
-					        <label class="form-label" for="cost" style="color:white">Giá</label>
+					        <label class="form-label" for="cost" >Giá</label>
 					    </div>
 					
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="quantity" th:field="*{quantity}" class="form-control" required />
-					        <label class="form-label" for="quantity" style="color:white">Số lượng</label>
+					        <label class="form-label" for="quantity">Số lượng</label>
 					    </div>
 
 						<div data-mdb-input-init class="form-outline mb-4">
 							<input type="text" id="discount" th:field="*{discount}" class="form-control" required />
-							<label class="form-label" for="discount" style="color:white">Giảm giá</label>
+							<label class="form-label" for="discount">Giảm giá</label>
 						</div>
 
 						<div data-mdb-input-init class="form-outline mb-4">
-							<label class="form-label" style="color:white">Image</label>
+							<label class="form-label">Image</label>
 							<input type="file" id="imageInput" name="imageInput" class="form-control" accept="image/*"
 								   th:attr="required=${product.ID == null}"
 								   onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
@@ -63,6 +64,6 @@
 			</div>
 		</div>
 	</div>
-	<script th:src="@{/js/mdb-min.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 </body>
 </html>

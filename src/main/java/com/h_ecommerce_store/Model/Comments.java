@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class Comments
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private String comment;
     private BigDecimal rate;

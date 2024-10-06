@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             url: "/js/address.json",
             method: "GET",
-            responseType: "application/json",
+            responseType: "json",
         };
     var promise = axios(Parameter);
     promise.then(function(result)
@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     function renderCity(data)
     {
-        let cityName = document.getElementById("city").value;
-        let districtName = document.getElementById("district").value;
-        let wardName = document.getElementById("ward").value;
+        let cityName = document.getElementById("cityName").value;
+        let districtName = document.getElementById("districtName").value;
+        let wardName = document.getElementById("wardName").value;
         for (const c of data)
         {
             cities.options[cities.options.length] = new Option(c.Name, c.Id);
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             districts.length = 1;
             wards.length = 1;
-            document.getElementById("city").value = cities.options[cities.selectedIndex].text;
+            document.getElementById("cityName").value = cities.options[cities.selectedIndex].text;
 
             if (this.value !== "")
             {
@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
         };
         districts.onchange = function()
         {
-            wards.length = 1; // Reset wards
-            document.getElementById("district").value = districts.options[districts.selectedIndex].text;
+            wards.length = 1;
+            document.getElementById("districtName").value = districts.options[districts.selectedIndex].text;
 
             const selectedCity = data.find(n => n.Id === cities.value);
             if (this.value !== "")
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
         };
         wards.onchange = function()
         {
-            document.getElementById("ward").value = wards.options[wards.selectedIndex].text;
+            document.getElementById("wardName").value = wards.options[wards.selectedIndex].text;
         };
     }
 });
