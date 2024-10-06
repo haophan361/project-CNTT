@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Setter
 public class BillDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private BigDecimal cost;
     private int quantity;

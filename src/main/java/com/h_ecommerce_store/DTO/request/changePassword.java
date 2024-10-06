@@ -10,9 +10,7 @@ import lombok.Setter;
 @Setter
 public class changePassword
 {
-    @NotBlank(message ="Email không được để trống")
-    @Email(message="Email không đúng định dạng")
-    private String email;
+    private String username;
 
     @NotBlank(message = "Mật khẩu hiện tại không được để trống")
     private String oldPassword;
@@ -27,8 +25,8 @@ public class changePassword
     {
         return newPassword.equals(confirmPassword);
     }
-    public boolean checkPassword(String password)
+    public changePassword(String username)
     {
-        return oldPassword.equals(password);
+        this.username = username;
     }
 }
