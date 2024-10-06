@@ -20,24 +20,7 @@ public class Home_Controller {
         return "web/store";
     }
 
-    @GetMapping("/createProducts")
-    public String createProduct(Model model){
-        Products product = new Products();
-        model.addAttribute("product", product);
 
-        model.addAttribute("actionUrl","saveProducts");
-        return "web/addProduct";
-    }
-
-    @PostMapping("/saveProducts")
-    public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile) {
-            if (!imageFile.isEmpty()) {
-                String fileName = imageFile.getOriginalFilename();
-                product.setImage_url(fileName);
-            }
-            productService.saveProduct(product); // Lưu sản phẩm
-        return "redirect:/"; // Chuyển hướng đến trang chủ
-    }
 
 
 }

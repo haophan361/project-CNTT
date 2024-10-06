@@ -54,6 +54,23 @@ Table OF Contents
 /*----------------------------*\
 	Typography
 \*----------------------------*/
+.product-image {
+  width: 1%;            /* Chiều rộng của ảnh */
+  height: 1%;           /* Chiều cao của ảnh */
+  object-fit: contain;     /* Giữ tỉ lệ và đảm bảo ảnh nằm trong khung */
+  border: 1px solid #ddd;  /* Viền nhẹ xung quanh ảnh */
+  padding: 5px;            /* Khoảng cách giữa ảnh và viền */
+  background-color: #f8f8f8; /* Màu nền khung ảnh */
+}
+
+table.product-table img {
+  width: 100px;           /* Chiều rộng khung ảnh */
+  height: 100px;          /* Chiều cao khung ảnh */
+  object-fit: contain;    /* Đảm bảo ảnh nằm vừa trong khung */
+  border: 1px solid #ddd; /* Viền khung ảnh */
+  padding: 5px;           /* Khoảng cách giữa ảnh và viền */
+  background-color: #f8f8f8; /* Màu nền khung ảnh */
+}
 
 body {
   font-family: 'Montserrat', sans-serif;
