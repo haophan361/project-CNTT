@@ -23,6 +23,7 @@
 	<div id="top-header">
 		<div class="container">
 			<ul class="header-links pull-right">
+				<li><a th:href="@{/admin/crudProducts}">Manage Products</a></li>
 				<li sec:authorize="isAnonymous()">
 					<a th:href="@{/web/loginForm}">
 						<i class="fa fa-user-o"></i> Đăng nhập
@@ -461,11 +462,11 @@
 	</div>
 	<!-- /container -->
 </div>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.20/jquery.zoom.min.js"></script>
-<script th:src="@{/js/main.js}"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.20/jquery.zoom.min.js"></script>
+	<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

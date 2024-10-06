@@ -3,6 +3,7 @@ import com.h_ecommerce_store.DTO.request.changePassword;
 import com.h_ecommerce_store.Model.Customers;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,8 @@ public class account_Controller
     account_Service account_service;
     @Autowired
     customer_Service customer_service;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @GetMapping("/web/registerForm")
     public String registerForm(Model model)
     {
@@ -43,10 +46,17 @@ public class account_Controller
                     "Mật khẩu không trùng khớp");
             return "/web/register";
         }
+        List<String> listPhone=customer_service.listPhone();
+        if(register.isPhonePresent(listPhone))
+        {
+            result.rejectValue("phone","error.register",
+                    "Số điện thoại đã tồn tại");
+            return "/web/register";
+        }
         List<String> listEmail=account_service.findAllEmail();
         if(register.isEmailPresent(listEmail))
         {
-            result.rejectValue("email","error.register",
+            result.rejectValue("username","error.register",
                     "Email đã tồn tại");
             return "/web/register";
         }
@@ -57,13 +67,13 @@ public class account_Controller
         String houseNo=register.getHouseNo();
         String address=city+", "+district+", "+ward+", "+houseNo;
         String phone=register.getPhone();
-        String email=register.getEmail();
+        String username=register.getUsername();
         String password=register.getPassword();
-        Accounts account=new Accounts(email,password);
-        Customers customer=new Customers(name,email,address,phone);
+        Accounts account=new Accounts(username,password);
+        Customers customer=new Customers(name,username,address,phone);
         account_service.insertAccount(account);
         customer_service.insertCustomer(customer);
-        return "redirect:/web/loginForm";
+        return "redirect:/login";
     }
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model)
@@ -72,12 +82,13 @@ public class account_Controller
         {
             model.addAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng.");
         }
-        return "web/login";
+        return "/web/login";
     }
     @GetMapping("/user/form_changePassword")
     public String form_changePassword(Model model)
     {
-        model.addAttribute("changePassword",new changePassword());
+        String username=account_service.getLoggedUserName();
+        model.addAttribute("changePassword",new changePassword(username));
         return "/web/passwordForm";
     }
     @PostMapping("/user/changePassword")
@@ -94,15 +105,15 @@ public class account_Controller
                     "Mật khẩu không trùng khớp");
             return "/web/passwordForm";
         }
-        Accounts account=account_service.getAccount(changePassword.getEmail());
-        if(!changePassword.checkPassword(account.getPassword()))
+        Accounts account=account_service.getAccount(changePassword.getUsername());
+        if(!passwordEncoder.matches(changePassword.getOldPassword(), account.getPassword()))
         {
             result.rejectValue("oldPassword","error.changePassword",
                     "Mật khẩu hiện tại không khớp");
             return "/web/passwordForm";
         }
-        account_service.changePassword(changePassword.getEmail(),changePassword.getNewPassword());
-        return "redirect:/web/home";
+        account_service.changePassword(changePassword.getUsername(),changePassword.getNewPassword());
+        return "redirect:/user/changePassword";
     }
     @GetMapping("/user/profile")
     public String profile (Model model)
