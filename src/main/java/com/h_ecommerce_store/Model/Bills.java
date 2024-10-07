@@ -29,26 +29,6 @@ public class Bills {
 
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BillDetails> billDetailsList = new ArrayList<>();
-
-    public Bills(int ID, BigDecimal cost, LocalDateTime purchase_date, int status, String address,
-                 LocalDateTime receive_date) {
-        this.ID = ID;
-        this.cost = cost;
-        this.purchase_date = purchase_date;
-        this.status = status;
-        this.address = address;
-        this.receive_date = receive_date;
-    }
-
-    public Bills(BigDecimal cost, LocalDateTime purchase_date, int status, String address,
-                 LocalDateTime receive_date) {
-        this.cost = cost;
-        this.purchase_date = purchase_date;
-        this.status = status;
-        this.address = address;
-        this.receive_date = receive_date;
-    }
-
     public Bills() {
     }
 }

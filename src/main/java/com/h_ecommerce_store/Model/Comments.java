@@ -23,22 +23,6 @@ public class Comments
     @ManyToOne
     @JoinColumn(name="cusID")
     private Customers customer;
-
-    public Comments(int ID, String comment, BigDecimal rate, Products product, Customers customer)
-    {
-        this.ID = ID;
-        this.comment = comment;
-        this.rate = rate;
-        this.product = product;
-        this.customer = customer;
-    }
-    public Comments(String comment, BigDecimal rate, Products product, Customers customer)
-    {
-        this.comment = comment;
-        this.rate = rate;
-        this.product = product;
-        this.customer = customer;
-    }
     public Comments()
     {
 
