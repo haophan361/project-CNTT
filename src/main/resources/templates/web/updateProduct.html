@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/add.css}">
+    <title>Update Sản Phẩm</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+</head>
+<body>
+<div class="form-container">
+    <div class="container py-5 h-100">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                     class="img-fluid" alt="Phone image">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <h1 style="text-align:center">Update sản phẩm</h1>
+                <form  th:action="@{/updateProduct}" th:object="${product}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    <input type="hidden" id="ID" th:field="*{ID}" />
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="name" th:field="*{product_name}" class="form-control form-control-lg" required />
+                        <label class="form-label" for="name" style="color:white">Tên sản phẩm</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="type" th:field="*{product_type}" class="form-control form-control-lg" required />
+                        <label class="form-label" for="type" style="color:white">Loại sản phẩm</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="brand" th:field="*{brand}" class="form-control" required/>
+                        <label class="form-label" for="brand" style="color:white">Hãng</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="cost" th:field="*{cost}" class="form-control" required>
+                        <label class="form-label" for="cost" style="color:white">Giá</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="quantity" th:field="*{quantity}" class="form-control" required />
+                        <label class="form-label" for="quantity" style="color:white">Số lượng</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="discount" th:field="*{discount}" class="form-control" required />
+                        <label class="form-label" for="discount" style="color:white">Giảm giá</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" style="color:white">Image</label>
+                        <input type="file" id="imageInput" name="imageInput" class="form-control" accept="image/*"
+                               th:attr="required=${product.ID == null}"
+                               onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                        <input type="hidden" th:field="*{image_url}" th:value="${product.image_url}">
+                        <br>
+                        <img id="blah" width="400" height="350" th:src="@{'/Image/' + ${product.image_url}}">
+                    </div>
+                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+</body>
+</html>

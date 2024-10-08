@@ -29,8 +29,6 @@ public class Products
     private List<Comments> commentsList=new ArrayList<>();
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
     private List<BillDetails> billsdetailList=new ArrayList<>();
-    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
-    private List<Shopping_Carts> cartsList=new ArrayList<>();
     public Products(int ID, String product_name, String product_type, String brand,
                     BigDecimal cost, int quantity, String image_url, int discount) {
         this.ID = ID;

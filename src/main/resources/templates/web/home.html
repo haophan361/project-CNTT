@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<title>H_Ecommerce Store</title>
- 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
@@ -24,7 +23,7 @@
 				<div class="container">
 					<ul class="header-links pull-right">
 						<li sec:authorize="isAnonymous()">
-							<a th:href="@{/login}">
+							<a th:href="@{/web/loginForm}">
 								<i class="fa fa-user-o"></i> Đăng nhập
 							</a>
 						</li>
@@ -35,7 +34,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
-								<li><a th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
+								<li><a th:href="@{/user/profile}" style="color: black;">Hồ sơ của bạn</a></li>
 							</ul>
 							<form th:action="@{/logout}" method="post" style="display: inline">
 								<button type="submit" style="color: white ;background: none; border: none";>Đăng xuất</button>
@@ -43,6 +42,7 @@
 						</li>
 					</ul>
 				</div>
+
 			</div>
 			<!-- /TOP HEADER -->
 

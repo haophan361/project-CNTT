@@ -113,7 +113,7 @@ public class account_Controller
             return "/web/passwordForm";
         }
         account_service.changePassword(changePassword.getUsername(),changePassword.getNewPassword());
-        return "redirect:/user/home";
+        return "redirect:/user/changePassword";
     }
     @GetMapping("/user/profile")
     public String profile (Model model)
