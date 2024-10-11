@@ -1,6 +1,7 @@
 package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.Model.Products;
+import com.h_ecommerce_store.Service.imgProduct_Service;
 import com.h_ecommerce_store.Service.product_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,39 +17,39 @@ public class products_Controller
 {
     @Autowired
     private product_Service productService;
-
+    @Autowired
+    private imgProduct_Service img_productService;
     @PostMapping("/admin/saveProducts")
     public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile)
     {
         if (!imageFile.isEmpty())
         {
-            String fileName = imageFile.getOriginalFilename();
+            String fileName = img_productService.upload(imageFile);
             product.setImage_url(fileName);
         }
-        productService.saveProduct(product); // Lưu sản phẩm
-        return "redirect:/admin/crudProducts"; // Chuyển hướng đến trang chủ
+        productService.saveProduct(product);
+        return "redirect:/admin/crudProducts";
     }
     @PostMapping("/admin/updateProduct")
     public String updateProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile)
     {
         if (!imageFile.isEmpty())
         {
-            String fileName = imageFile.getOriginalFilename();
+            String fileName = img_productService.upload(imageFile);
             product.setImage_url(fileName);
         }
         productService.updateProduct(product);
 
-        return "redirect:/admin/crudProducts"; // Chuyển hướng đến trang chủ
+        return "redirect:/admin/crudProducts";
     }
 
     @GetMapping("/admin/editProduct/{id}")
     public String showFromForUpdate(@PathVariable(value = "id") int id, Model model)
     {
-        Products product =    productService.getProductsByID(id);
+        Products product = productService.getProductsByID(id);
         model.addAttribute("product",product);
         return "admin/updateProduct";
     }
-
     @GetMapping("/admin/deleteProduct/{id}")
     public String deleteProduct(@PathVariable (value = "id") int id)
     {
@@ -68,8 +69,6 @@ public class products_Controller
         model.addAttribute("product", product);
         return "admin/addProduct";
     }
-
-
     @GetMapping("/admin/search")
     public String searchProduct(Model model,@RequestParam(value = "keyword",required = false)String keyword)
     {
@@ -77,4 +76,5 @@ public class products_Controller
         model.addAttribute("listProducts",product);
         return "admin/crud_products";
     }
+
 }

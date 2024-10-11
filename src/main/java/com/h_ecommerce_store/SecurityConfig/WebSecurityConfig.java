@@ -27,7 +27,7 @@ public class WebSecurityConfig {
                                 "/img/**",
                                 "/screenshot/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/user/**").hasRole( "USER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

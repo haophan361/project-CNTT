@@ -23,12 +23,12 @@
         <div class="container py-5 h-100">
             <div class="row d-flex align-items-center justify-content-center h-100">
                 <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                    <img src="https://i.imgur.com/uNGdWHi.png"
                          class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <h1 style="text-align:center">Update sản phẩm</h1>
-                    <form  th:action="@{/updateProduct}" th:object="${product}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    <form  th:action="@{/admin/updateProduct}" th:object="${product}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                         <input type="hidden" id="ID" th:field="*{ID}" />
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="text" id="name" th:field="*{product_name}" class="form-control form-control-lg" required />

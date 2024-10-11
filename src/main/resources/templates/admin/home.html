@@ -9,11 +9,11 @@
 
 	<title>H_Ecommerce Store</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/css/nouislider.min.css}">
+	<link rel="stylesheet" th:href="@{/css/slick.css}">
+	<link rel="stylesheet" th:href="@{/css/slick-theme.css}">
 	<link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
@@ -410,32 +410,34 @@
 				<div class="row" th:each="product : ${listProducts}">
 					<!-- product -->
 					<div class="col-md-4 col-xs-6" >
-						<div class="product">
-							<div class="product-img">
-								<img th:src="@{'/img/' + ${product.image_url}}" alt="">
-								<div class="product-label">
-									<span class="sale" th:text="'-' + ${product.getDiscount()} + '%'"></span>
-									<span class="new">NEW</span>
+						<a th:href="@{'/web/detail_product/' + ${product.getID()}}" style="text-decoration: none; color: inherit;">
+							<div class="product">
+								<div class="product-img">
+									<img th:src="${product.getImage_url()}" alt="">
+									<div class="product-label">
+										<span class="sale" th:text="'-' + ${product.getDiscount()} + '%'"></span>
+										<span class="new">NEW</span>
+									</div>
+								</div>
+								<div class="product-body">
+									<p class="product-category">Category</p>
+									<h3 class="product-name" th:text="${product.getProduct_name()}"></h3>
+									<h4 class="product-price" th:text="${product.getCost()} + ' $'"><del class="product-old-price">$990.00</del></h4>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+									</div>
+								</div>
+								<div class="add-to-cart">
+									<button class="add-to-cart-btn" th:onclick="'addToCart(' + ${product.getID()} + ')'">
+										<i class="fa fa-shopping-cart"></i> add to cart
+									</button>
 								</div>
 							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name" th:text="${product.getProduct_name()}"></h3>
-								<h4 class="product-price" th:text="${product.getCost()} + ' $'"><del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn" th:onclick="'addToCart(' + ${product.getID()} + ')'">
-									<i class="fa fa-shopping-cart"></i> add to cart
-								</button>
-							</div>
-						</div>
+						</a>
 					</div>
 					<!-- /product -->
 					<div class="clearfix visible-sm visible-xs"></div>
