@@ -17,10 +17,6 @@ public class comment_Service
     public product_Rating getRatingProduct(int productID)
     {
         product_Rating product_rating= comment_repository.getRatingProduct(productID);
-        if(product_rating==null)
-        {
-            product_rating = new product_Rating(0.0, 0L);
-        }
         return product_rating;
     }
     public List<comment_Product> getCommentByProduct(int productID)

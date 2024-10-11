@@ -11,7 +11,15 @@ public class product_Rating
     private double rate;
     public product_Rating(Double rate, Long counting)
     {
-        this.rate = rate;
-        this.counting = counting;
+        if(rate!=null && counting!=null)
+        {
+            this.rate = rate;
+            this.counting = counting;
+        }
+        else
+        {
+            this.rate = 0.0;
+            this.counting=0L;
+        }
     }
 }

@@ -78,7 +78,7 @@ public class home_Controller
             num+=rating;
             ratings.add(rating);
         }
-        if (!ratings.isEmpty())
+        if (num!=0)
         {
             avgRating = avgRating / num;
         }

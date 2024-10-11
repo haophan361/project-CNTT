@@ -201,7 +201,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<div class="col-md-5" style="width: 40%">
 							<div id="product-main-img">
 								<div class="product-preview">
-									<img th:src="@{'/img/'+*{image_url}}" th:alt="${detail_Product.getProduct_name()}">
+									<img th:src="*{image_url}" th:alt="${detail_Product.getProduct_name()}">
 								</div>
 							</div>
 						</div>
@@ -229,7 +229,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									<div class="qty-label">
 										Qty
 										<div class="input-number">
-											<input type="number">
+											<input id="quantity_product" type="number">
+											<label for="quantity_product"></label>
 											<span class="qty-up">+</span>
 											<span class="qty-down">-</span>
 										</div>
