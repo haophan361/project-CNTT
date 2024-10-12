@@ -1,7 +1,7 @@
 package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.Model.Products;
-import com.h_ecommerce_store.Service.imgProduct_Service;
+import com.h_ecommerce_store.Service.file_Service;
 import com.h_ecommerce_store.Service.product_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,25 +18,35 @@ public class products_Controller
     @Autowired
     private product_Service productService;
     @Autowired
-    private imgProduct_Service img_productService;
+    private file_Service file_Service;
     @PostMapping("/admin/saveProducts")
-    public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile)
+    public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile,@RequestParam("description") MultipartFile descriptionFile)
     {
         if (!imageFile.isEmpty())
         {
-            String fileName = img_productService.upload(imageFile);
-            product.setImage_url(fileName);
+            String image = file_Service.upload(imageFile,"media");
+            product.setImage_url(image);
+        }
+        if(!descriptionFile.isEmpty())
+        {
+            String description = file_Service.upload(descriptionFile,"application/pdf");
+            product.setDetail(description);
         }
         productService.saveProduct(product);
         return "redirect:/admin/crudProducts";
     }
     @PostMapping("/admin/updateProduct")
-    public String updateProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile)
+    public String updateProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile,@RequestParam("description")MultipartFile descriptionFile)
     {
         if (!imageFile.isEmpty())
         {
-            String fileName = img_productService.upload(imageFile);
-            product.setImage_url(fileName);
+            String image = file_Service.upload(imageFile,"media");
+            product.setImage_url(image);
+        }
+        if(!descriptionFile.isEmpty())
+        {
+            String description = file_Service.upload(descriptionFile,"application/pdf");
+            product.setDetail(description);
         }
         productService.updateProduct(product);
 
@@ -76,5 +86,4 @@ public class products_Controller
         model.addAttribute("listProducts",product);
         return "admin/crud_products";
     }
-
 }

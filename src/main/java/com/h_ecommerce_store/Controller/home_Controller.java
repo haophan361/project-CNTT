@@ -2,19 +2,28 @@ package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.postComment;
 import com.h_ecommerce_store.DTO.response.product_Rating;
+import com.h_ecommerce_store.Model.Accounts;
 import com.h_ecommerce_store.Model.Products;
+import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.comment_Service;
 import com.h_ecommerce_store.Service.product_Service;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.h_ecommerce_store.DTO.response.detail_Product;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import com.h_ecommerce_store.DTO.response.comment_Product;
+import org.apache.pdfbox.pdmodel.PDDocument;
+
+
 @Controller
 public class home_Controller
 {
@@ -22,17 +31,26 @@ public class home_Controller
     private product_Service product_service;
     @Autowired
     private comment_Service comment_service;
+    @Autowired
+    private account_Service account_service;
     @GetMapping({"/"})
-    public String home(Model model) throws Exception
+    public String home(Model model)
     {
         model.addAttribute("listProducts", product_service.getAllProducts());
-        return "web/home";
-    }
-    @GetMapping("/admin/home")
-    public String admin_home(Model model)
-    {
-        model.addAttribute("listProducts", product_service.getAllProducts());
-        return "admin/home";
+        String username=account_service.getLoggedUserName();
+        if(username.equals("anonymousUser"))
+        {
+            return "web/home";
+        }
+        Accounts account=account_service.getAccount(username);
+        if(account.getRole().equals("ROLE_USER"))
+        {
+            return "web/home";
+        }
+        else
+        {
+            return "admin/home";
+        }
     }
     @GetMapping("/web/detail_product/{ID}")
     public String getDetail_Product(Model model,@PathVariable("ID") int ID)
@@ -54,10 +72,30 @@ public class home_Controller
         return "web/detail_product";
     }
     @GetMapping("/web/description_product/{ID}")
-    public String getDescription_product(Model model,@PathVariable("ID") int ID)
+    public String getDescription_product(Model model, @PathVariable("ID") int ID)
     {
-        String description="Hehe";
-        model.addAttribute("description",description);
+        Products product = product_service.getProductsByID(ID);
+        String description_file = product.getDetail();
+        StringBuilder htmlContent = new StringBuilder("<html><body>");
+        try
+        {
+            URI fileUri = new URI(description_file);
+            URL fileUrl = fileUri.toURL();
+            try (InputStream inputStream = fileUrl.openStream();
+                 PDDocument document = PDDocument.load(inputStream))
+            {
+                PDFTextStripper pdfStripper = new PDFTextStripper();
+                String text = pdfStripper.getText(document);
+                htmlContent.append("<p>").append(text.replace("\n", "<br>")).append("</p>");
+            }
+        }
+        catch (Exception e)
+        {
+            model.addAttribute("description", "Không thể load dữ liệu");
+            return "web/detail_product :: tab1";
+        }
+        htmlContent.append("</body></html>");
+        model.addAttribute("description", htmlContent.toString());
         return "web/detail_product :: tab1";
     }
     @GetMapping("/web/rating_product/{ID}")

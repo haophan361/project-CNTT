@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .successHandler(new Authentication_Handler())
+                        .defaultSuccessUrl("/",true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/")

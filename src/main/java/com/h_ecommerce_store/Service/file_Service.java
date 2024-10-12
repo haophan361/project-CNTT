@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 @Service
-public class imgProduct_Service
+public class file_Service
 {
     @Value("${app.firebase.file}")
     private String file_firebase_path;
@@ -34,11 +34,11 @@ public class imgProduct_Service
         }
         return tempFile;
     }
-    private String uploadFile(File file, String fileName) throws IOException
+    private String uploadFile(File file, String fileName,String type) throws IOException
     {
         BlobId blobId = BlobId.of(bucket, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
-        InputStream inputStream = imgProduct_Service.class.getClassLoader().getResourceAsStream(file_firebase_path);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(type).build();
+        InputStream inputStream = file_Service.class.getClassLoader().getResourceAsStream(file_firebase_path);
         Credentials credentials = GoogleCredentials.fromStream(inputStream);
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
@@ -52,13 +52,13 @@ public class imgProduct_Service
     }
 
 
-    public String upload(MultipartFile multipartFile)
+    public String upload(MultipartFile multipartFile,String type)
     {
         try
         {
             String fileName = multipartFile.getOriginalFilename();
             File file = this.convertToFile(multipartFile, fileName);
-            String URL = this.uploadFile(file, fileName);
+            String URL = this.uploadFile(file, fileName,type);
             if(file.delete())
             {
                 System.out.println("File deleted successfully");

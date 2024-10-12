@@ -229,8 +229,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									<div class="qty-label">
 										Qty
 										<div class="input-number">
-											<input id="quantity_product" type="number">
-											<label for="quantity_product"></label>
+											<input type="number">
 											<span class="qty-up">+</span>
 											<span class="qty-down">-</span>
 										</div>
@@ -263,7 +262,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								<div id="tab1" class="tab-pane in active" th:fragment="tab1(description)">
 									<div class="row">
 										<div class="col-md-12">
-											<p th:text="${description}"></p>
+											<p th:utext="${description}"></p>
 										</div>
 									</div>
 								</div>

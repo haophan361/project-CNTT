@@ -12,7 +12,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="header-logo">
-					<a th:href="@{/admin/home}" class="logo">
+					<a th:href="@{/}" class="logo">
 						<img th:src="@{/img/logo.png}" alt="">
 					</a>
 				</div>
@@ -61,13 +61,21 @@
 						</div>
 
 						<div data-mdb-input-init class="form-outline mb-4">
+							<label class="form-label" for="description">Chi tiết sản phẩm</label>
+							<input type="file" id="description" name="description" class="form-control" accept=".doc,.docx,.pdf"
+								   th:attr="required=${product.ID == null}"
+								   onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+							<input type="hidden" th:field="*{detail}" th:value="${product.detail}">
+						</div>
+
+						<div data-mdb-input-init class="form-outline mb-4">
 							<label class="form-label">Image</label>
 							<input type="file" id="imageInput" name="imageInput" class="form-control" accept="image/*"
 								   th:attr="required=${product.ID == null}"
 								   onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
 							<input type="hidden" th:field="*{image_url}" th:value="${product.image_url}">
 							<br>
-							<img id="blah" width="400" height="350" th:src="@{'/Image/' + ${product.image_url}}">
+							<img id="blah" width="400" height="350" th:src="${product.image_url}" th:alt="${product.product_name}">
 						</div>
 					    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Submit</button>
 					</form>
