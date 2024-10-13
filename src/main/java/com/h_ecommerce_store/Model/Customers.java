@@ -13,9 +13,8 @@ import java.util.List;
 public class Customers
 {
     @Id
-    private int ID;
-    private String cus_name;
     private String email;
+    private String cus_name;
     private String address;
     private String phone;
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
@@ -30,14 +29,6 @@ public class Customers
     }
     public Customers(String cus_name, String email, String address, String phone)
     {
-        this.cus_name=cus_name;
-        this.email=email;
-        this.address=address;
-        this.phone=phone;
-    }
-    public Customers(int ID,String cus_name, String email, String address, String phone)
-    {
-        this.ID=ID;
         this.cus_name=cus_name;
         this.email=email;
         this.address=address;

@@ -15,8 +15,6 @@ public class customer_Service
     private Customer_Repository customer_repository;
     public Customers insertCustomer(Customers customer)
     {
-        int newID= customer_repository.newID();
-        customer.setID(newID);
         return customer_repository.save(customer);
     }
     public List<String> listPhone()

@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.h_ecommerce_store.DTO.response.comment_Product;
@@ -61,13 +62,19 @@ public class home_Controller
         BigDecimal price=product.getCost();
         int quantity=product.getQuantity();
         int discount=product.getDiscount();
-        BigDecimal discountPercentage=new BigDecimal(discount).divide(new BigDecimal(100), RoundingMode.UNNECESSARY);
-        BigDecimal new_price=price.subtract(price.multiply(discountPercentage));
-        String description=product.getDetail();
+        BigDecimal discount_price = (new BigDecimal(discount).multiply(price))
+                .divide(new BigDecimal(100), 0, RoundingMode.FLOOR);
+        BigDecimal new_price=price.subtract(discount_price);
+        String product_type=product.getProduct_type();
         product_Rating product_rating = comment_service.getRatingProduct(ID);
         double rating=product_rating.getRate();
         Long counting=product_rating.getCounting();
-        detail_Product detail_product = new detail_Product(ID,name,image_url,price,quantity,new_price,description,rating,counting);
+        DecimalFormat decimalFormat = new DecimalFormat("#,sa 2###");
+        String formattedNewPrice = decimalFormat.format(new_price);
+        String formattedOldPrice = decimalFormat.format(price);
+        detail_Product detail_product = new detail_Product(ID,name,image_url,price,quantity,new_price,product_type,rating,counting);
+        model.addAttribute("formatted_newPrice", formattedNewPrice + "đ");
+        model.addAttribute("formatted_oldPrice", formattedOldPrice + "đ");
         model.addAttribute("detail_Product",detail_product);
         return "web/detail_product";
     }

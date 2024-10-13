@@ -25,7 +25,7 @@ public class Bills {
     private LocalDateTime receive_date;
 
     @ManyToOne
-    @JoinColumn(name = "cusID")
+    @JoinColumn(name = "username")
     private Customers customer;
 
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

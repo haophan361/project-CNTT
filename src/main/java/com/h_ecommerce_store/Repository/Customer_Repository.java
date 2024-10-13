@@ -11,10 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface Customer_Repository extends JpaRepository<Customers, Integer>
+public interface Customer_Repository extends JpaRepository<Customers, String>
 {
-    @Query("SELECT COALESCE(MAX(ID),0)+1 AS newID FROM Customers")
-    int newID();
     @Query("SELECT c.phone FROM Customers c")
     List<String> listPhone();
     @Modifying

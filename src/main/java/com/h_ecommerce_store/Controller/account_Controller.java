@@ -113,12 +113,6 @@ public class account_Controller
             return "/web/passwordForm";
         }
         account_service.changePassword(changePassword.getUsername(),changePassword.getNewPassword());
-        return "redirect:/user/changePassword";
-    }
-    @GetMapping("/user/profile")
-    public String profile (Model model)
-    {
-        model.addAttribute("register", new Register());
-        return "web/register";
+        return "redirect:/";
     }
 }

@@ -24,7 +24,7 @@ public class Comments
     private Products product;
 
     @ManyToOne
-    @JoinColumn(name="cusID")
+    @JoinColumn(name="username")
     private Customers customer;
     public Comments()
     {

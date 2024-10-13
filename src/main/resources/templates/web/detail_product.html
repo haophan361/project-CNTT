@@ -85,7 +85,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								<div class="dropdown">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
+										<span>Giỏ hàng</span>
 										<div class="qty">3</div>
 									</a>
 									<div class="cart-dropdown">
@@ -98,7 +98,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 													<h3 class="product-name"><a href="#">product name goes here</a></h3>
 													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+												<button class="delete"><i class="fa fa-close" style="color: red"></i></button>
 											</div>
 
 											<div class="product-widget">
@@ -217,19 +217,19 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										   th:classappend="${i <= detail_Product.rate ? 'fa-star' : 'fa-star-o'}">
 										</i>
 									</div>
-									<span th:text="|${detail_Product.counting} Review(s)|"></span>
+									<span th:text="${detail_Product.counting}"></span> Review(s)
 								</div>
 								<div>
-									<h3 class="product-price" th:text="${detail_Product.new_price}">
-										<del class="product-old-price" th:text="${detail_Product.product_price}"></del></h3>
+									<h3 class="product-price" th:text="${formatted_newPrice}"></h3>
+									<del class="product-old-price" th:text="${formatted_oldPrice}"></del>
 									<span class="product-available" th:text="'Số lượng ' +${detail_Product.quantity}"></span>
 								</div>
 
 								<div class="add-to-cart">
 									<div class="qty-label">
-										Qty
+										QTY
 										<div class="input-number">
-											<input type="number">
+											<input type="number" th:value="1">
 											<span class="qty-up">+</span>
 											<span class="qty-down">-</span>
 										</div>
@@ -239,8 +239,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 								<ul class="product-links">
 									<li>Category:</li>
-									<li><a href="#">Headphones</a></li>
-									<li><a href="#">Accessories</a></li>
+									<li><a href="#" th:text="${detail_Product.product_type}"></a></li>
 								</ul>
 							</div>
 						</div>
@@ -261,8 +260,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								<!-- tab1  -->
 								<div id="tab1" class="tab-pane in active" th:fragment="tab1(description)">
 									<div class="row">
-										<div class="col-md-12">
-											<p th:utext="${description}"></p>
+										<div class="col-md-12" style="display: flex; justify-content: center">
+											<p th:utext="${description}" style="font-size: 18px"></p>
 										</div>
 									</div>
 								</div>

@@ -18,7 +18,7 @@ public class Shopping_Carts
     private int quantity;
 
     @ManyToOne
-    @JoinColumn (name="cusID")
+    @JoinColumn (name="username")
     private Customers customer;
 
     @ManyToOne
