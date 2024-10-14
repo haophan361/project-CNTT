@@ -1,0 +1,118 @@
+<!-- HEADER -->
+<header th:fragment="navbar_home">
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-right">
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/web/loginForm}">
+                        <i class="fa fa-user-o"></i> Đăng nhập
+                    </a>
+                </li>
+                <li th:if="${role}=='ROLE_ADMIN'"><a th:href="@{/admin/crudProducts}">Manage Products</a></li>
+                <li sec:authorize="isAuthenticated()" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user-o"></i> My Account
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
+                        <li><a th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
+                    </ul>
+                    <form th:action="@{/logout}" method="post" style="display: inline">
+                        <button type="submit" style="color: white ;background: none; border: none";>Đăng xuất</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        <form>
+                            <select class="input-select">
+                                <option th:value="0">All Categories</option>
+                                <option th:value="1">Category 01</option>
+                                <option th:value="1">Category 02</option>
+                            </select>
+                            <input class="input" placeholder="Search here">
+                            <button class="search-btn">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                                <div th:if="${number_type}!=null" class="qty" th:text="${number_type} "></div>
+                            </a>
+                            <div class="cart-dropdown">
+                                <div class="cart-list">
+                                    <div class="product-widget" th:each="cart: ${list_cart}">
+                                        <div class="product-img">
+                                            <img th:src="${cart.image_url}" th:alt="${cart.productName}">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#" th:text="${cart.productName}"></a></h3>
+                                            <h4 class="product-price">
+                                                <span class="qty" th:text="'Số lượng '+${cart.quantity}+' Tổng '+${cart.formatted_newPrice}"></span>
+                                            </h4>
+                                        </div>
+                                        <button class="delete"><i class="fa fa-close"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cart-summary">
+                                    <small th:text="${number_type} ==null ? '0 Item(s) selected' :${number_type}+' Item(s) selected'"></small>
+                                    <h5 th:text="${total} == null? 'Total: 0': 'Total: '+${total}" ></h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="#">View Cart</a>
+                                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Cart -->
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->

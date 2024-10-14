@@ -1,0 +1,42 @@
+<header th:fragment="navbar">
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-right">
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/web/loginForm}">
+                      <i class="fa fa-user-o"></i> Đăng nhập
+                    </a>
+                </li>
+                <li th:if="${role}=='ROLE_ADMIN'"><a th:href="@{/admin/crudProducts}">Manage Products</a></li>
+                <li sec:authorize="isAuthenticated()" class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-o"></i> My Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: auto">
+                        <li><a class="dropdown-item" th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
+                    </ul>
+                    <form th:action="@{/logout}" method="post" style="display: inline">
+                      <button type="submit" style="color: white; background: none; border: none;">Đăng xuất</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+          <!-- row -->
+            <div class="row">
+              <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                          <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

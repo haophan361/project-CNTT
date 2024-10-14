@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
-    <title>Update Sản Phẩm</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <title>Update Sản Phẩm</title>
 </head>
 <body>
     <div id="header">
+        <!-- container -->
         <div class="container">
+            <!-- row -->
             <div class="row">
-                <div class="header-logo">
-                    <a th:href="@{/}" class="logo">
-                        <img th:src="@{/img/logo.png}" alt="">
-                    </a>
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,5 +88,6 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </body>
 </html>

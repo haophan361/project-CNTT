@@ -28,4 +28,10 @@ public class Shopping_Carts
     {
 
     }
+    public Shopping_Carts(int quantity, Customers customer, Products product)
+    {
+        this.quantity = quantity;
+        this.customer = customer;
+        this.product = product;
+    }
 }

@@ -9,6 +9,8 @@
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
     <style type="text/css">
         body {
             margin-top: 20px;
@@ -45,12 +47,17 @@
 </head>
 <body>
     <div id="header">
+        <!-- container -->
         <div class="container">
+            <!-- row -->
             <div class="row">
-                <div class="header-logo">
-                    <a th:href="@{/}" class="logo">
-                        <img th:src="@{/img/logo.png}" alt="">
-                    </a>
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
