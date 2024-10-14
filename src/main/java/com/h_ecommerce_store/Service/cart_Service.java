@@ -12,8 +12,23 @@ public class cart_Service
 {
     @Autowired
     Cart_Repository cart_repository;
-    List<Shopping_Carts> getCart_Customer(String username)
+    public List<Shopping_Carts> getCart_Customer(String username)
     {
         return cart_repository.getShopping_CartsByCustomer(username);
+    }
+    public Shopping_Carts addToCart(Shopping_Carts cart)
+    {
+        Shopping_Carts existCart=cart_repository.checkExist_Cart(cart.getProduct().getID(),cart.getCustomer().getEmail());
+        if(existCart==null)
+        {
+            int ID=cart_repository.newID();
+            cart.setID(ID);
+            return cart_repository.save(cart);
+        }
+        else
+        {
+            existCart.setQuantity(cart.getQuantity() + existCart.getQuantity());
+            return cart_repository.save(existCart);
+        }
     }
 }

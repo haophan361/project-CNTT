@@ -14,12 +14,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Bean
+      @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf->csrf.ignoringRequestMatchers("/user/addToCart/**"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(
                                 "/",
+                                "/login",
                                 "/web/**",
                                 "/js/**",
                                 "/css/**",
