@@ -107,22 +107,25 @@
 		var $this = $(this),
 		$input = $this.find('input[type="number"]'),
 		up = $this.find('.qty-up'),
-		down = $this.find('.qty-down');
+		down = $this.find('.qty-down'),
+		min = parseInt($input.attr('min')),
+		max = parseInt($input.attr('max'));
 
 		down.on('click', function () {
 			var value = parseInt($input.val()) - 1;
-			value = value < 1 ? 1 : value;
+			value = value < min ? min : value;
 			$input.val(value);
 			$input.change();
 			updatePriceSlider($this , value)
-		})
+		});
 
 		up.on('click', function () {
 			var value = parseInt($input.val()) + 1;
+			value = value > max ? max : value;
 			$input.val(value);
 			$input.change();
 			updatePriceSlider($this , value)
-		})
+		});
 	});
 
 	var priceInputMax = document.getElementById('price-max'),

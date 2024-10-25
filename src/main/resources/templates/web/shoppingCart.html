@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <title>H_Ecommerce Store</title>
+</head>
+<body>
+    <header th:replace="~{fragment/navbar_home.html :: navbar_home}">
+    </header>
+    <section class="h-100">
+        <div class="container h-100 py-5">
+            <div class="row">
+                <div class="col-sm-10 col-md-10">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-normal mb-0">Giỏ Hàng</h3>
+                    </div>
+
+                    <div class="card rounded-3 mb-4">
+                        <div class="row mb-3" style="margin-bottom:50px;">
+                            <div class="col-sm-1 col-md-1">
+                                <input type="checkbox" id="selectAll" onclick="toggleCheckboxes(this)">
+                            </div>
+                            <div class="col-sm-11 col-md-11">
+                                <label for="selectAll" style="font-size: 16px;">Chọn tất cả</label>
+                            </div>
+                        </div>
+                        <form th:action="@{/user/form_BillDetail}" method="GET" onsubmit="return getCheckBox(this)">
+                            <div th:each="cart: ${list_cart}" class="card-body" style="margin-bottom:50px;">
+                                <div class="row">
+                                    <div class="col-sm-1 col-md-1">
+                                        <input class="product-checkbox" type="checkbox" th:value="${cart.cartID}" name="selectedCartIDs">
+                                    </div>
+                                    <div class="col-sm-2 col-md-2">
+                                        <img th:src="${cart.image_url}" class="img-responsive rounded-3" th:alt="${cart.productName}">
+                                    </div>
+                                    <div class="col-sm-3 col-md-3">
+                                        <a class="lead fw-normal mb-2" th:href="@{'/web/detail_product/' + ${cart.productID}}" th:text="${cart.productName}" style="font-size: 16px;"></a>
+                                    </div>
+                                    <div class="add-to-cart col-sm-3 col-md-3 d-flex">
+                                        <div class="qty-label">
+                                            Số lượng
+                                            <div class="input-number"
+                                                 th:data-product-id="${cart.productID}"
+                                                 th:data-product-name="${cart.productName}"
+                                                 th:data-product-selected="${cart.quantity}"
+                                                 th:data-product-available="${cart.stock}">
+                                                <input th:id="${cart.productID}" type="number" th:value="${cart.quantity}" class="form-control" th:min="1" th:max="${cart.stock}">
+                                                <span class="qty-up">+</span>
+                                                <span class="qty-down">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-md-2 pull-right">
+                                        <h5 class="mb-0" th:text="${cart.formatted_newPrice} +'đ'"></h5>
+                                    </div>
+                                    <div class="col-sm-1 col-md-1 text-right">
+                                        <a href="#" class="btn btn-link text-danger" style="color: red" th:attr="onclick=|deleteCart('${cart.cartID}')|">
+                                            <i class="fa fa-trash fa-lg"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="customMessageBox" class="modal">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <span class="close">&times;</span>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="messageText"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-block">Thanh toán</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/shoppingCart.js}"></script>
+</body>
+</html>

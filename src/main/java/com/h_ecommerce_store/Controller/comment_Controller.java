@@ -8,32 +8,22 @@ import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.comment_Service;
 import com.h_ecommerce_store.Service.customer_Service;
 import com.h_ecommerce_store.Service.product_Service;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+@RequiredArgsConstructor
 @Controller
 public class comment_Controller
 {
-    @Autowired
-    comment_Service comment_service;
-    @Autowired
-    account_Service account_service;
-    @Autowired
-    customer_Service customer_service;
-    @Autowired
-    product_Service product_service;
+    private final comment_Service comment_service;
+    private final account_Service account_service;
+    private final customer_Service customer_service;
+    private final product_Service product_service;
     @PostMapping("/user/postComment")
-    public String post_Comment(@Valid @ModelAttribute("postComment") postComment postComment, BindingResult result)
+    public String post_Comment(@ModelAttribute("postComment") postComment postComment)
     {
         int productID=postComment.getProductID();
-        if (result.hasErrors())
-        {
-            return "web/detail_product :: tab2";
-        }
         String comment=postComment.getComment();
         int rate=postComment.getRate();
         String username=account_service.getLoggedUserName();

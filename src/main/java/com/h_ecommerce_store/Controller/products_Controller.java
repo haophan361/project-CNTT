@@ -3,22 +3,20 @@ package com.h_ecommerce_store.Controller;
 import com.h_ecommerce_store.Model.Products;
 import com.h_ecommerce_store.Service.file_Service;
 import com.h_ecommerce_store.Service.product_Service;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 @RequestMapping
 public class products_Controller
 {
-    @Autowired
-    private product_Service productService;
-    @Autowired
-    private file_Service file_Service;
+    private final product_Service productService;
+    private final file_Service file_Service;
     @PostMapping("/admin/saveProducts")
     public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile,@RequestParam("description") MultipartFile descriptionFile)
     {

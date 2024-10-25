@@ -3,7 +3,7 @@ package com.h_ecommerce_store.Controller;
 import com.h_ecommerce_store.DTO.request.updateProfile;
 import com.h_ecommerce_store.Model.Customers;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,14 +13,12 @@ import com.h_ecommerce_store.Service.customer_Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+@RequiredArgsConstructor
 @Controller
 public class customer_Controller
 {
-    @Autowired
-    account_Service account_service;
-    @Autowired
-    customer_Service customer_service;
+    private final account_Service account_service;
+    private final customer_Service customer_service;
     @GetMapping("/user/formProfile")
     public String formProfile(Model model)
     {

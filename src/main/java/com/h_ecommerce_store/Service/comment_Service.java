@@ -4,20 +4,18 @@ import com.h_ecommerce_store.DTO.response.comment_Product;
 import com.h_ecommerce_store.DTO.response.product_Rating;
 import com.h_ecommerce_store.Model.Comments;
 import com.h_ecommerce_store.Repository.comment_Repository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class comment_Service
 {
-    @Autowired
-    comment_Repository comment_repository;
+    private final comment_Repository comment_repository;
     public product_Rating getRatingProduct(int productID)
     {
-        product_Rating product_rating= comment_repository.getRatingProduct(productID);
-        return product_rating;
+        return comment_repository.getRatingProduct(productID);
     }
     public List<comment_Product> getCommentByProduct(int productID)
     {
@@ -27,11 +25,14 @@ public class comment_Service
     {
         return comment_repository.getNumberOfCommentsByRating(rating,productID);
     }
-    public Comments postComment(Comments comment)
+    public void postComment(Comments comment)
     {
         int ID=comment_repository.newID();
         comment.setID(ID);
-
-        return comment_repository.save(comment);
+        comment_repository.save(comment);
+    }
+    public Long getNumberOfComments(String email,int productID)
+    {
+        return comment_repository.getNumberOfComments(email,productID);
     }
 }

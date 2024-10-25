@@ -21,4 +21,7 @@ public interface comment_Repository extends JpaRepository<Comments,Integer>
 
     @Query("SELECT new com.h_ecommerce_store.DTO.response.comment_Product(c.comment,c.customer.cus_name,c.datetime,c.rate)  FROM Comments c WHERE c.product.ID= :productID")
     List<comment_Product> getCommentsByProduct(@Param("productID") int productID);
+
+    @Query("SELECT COUNT(*) FROM Comments c WHERE c.customer.email= :email AND c.product.ID= :productID")
+    Long getNumberOfComments(@Param("email") String email, @Param("productID") int productID);
 }

@@ -1,7 +1,7 @@
 package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.Model.Accounts;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 import com.h_ecommerce_store.Repository.Account_Repository;
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class account_Service implements UserDetailsService
 {
-    @Autowired
-    Account_Repository account_repository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final Account_Repository account_repository;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public UserDetails loadUserByUsername(String username)
     {
@@ -31,19 +30,19 @@ public class account_Service implements UserDetailsService
     {
         return account_repository.findByUsername(username);
     }
-    public Accounts insertAccount(Accounts account)
+    public void insertAccount(Accounts account)
     {
         String encodedPassword =passwordEncoder.encode(account.getPassword());
         account.setPassword(encodedPassword);
         account.setRole("ROLE_USER");
-        return account_repository.save(account);
+        account_repository.save(account);
     }
-    public Accounts changePassword(String username, String newPassword)
+    public void changePassword(String username, String newPassword)
     {
         Accounts account=account_repository.findByUsername(username);
         String encodedPassword =passwordEncoder.encode(newPassword);
         account.setPassword(encodedPassword);
-        return account_repository.save(account);
+        account_repository.save(account);
     }
     public List<String> findAllEmail()
     {

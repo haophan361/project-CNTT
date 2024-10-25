@@ -14,7 +14,7 @@ public class comment_Product
     private LocalDateTime dateTime;
     private int rate;
     private String formattedDateTime;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
     public comment_Product(String comment, String name, LocalDateTime dateTime,int rate)
     {
         this.comment = comment;

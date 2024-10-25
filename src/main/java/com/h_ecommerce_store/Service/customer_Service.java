@@ -1,21 +1,18 @@
 package com.h_ecommerce_store.Service;
 import com.h_ecommerce_store.Model.Customers;
-import com.h_ecommerce_store.Repository.Account_Repository;
 import com.h_ecommerce_store.Repository.Customer_Repository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.PropertyPermission;
 
 @Service
+@RequiredArgsConstructor
 public class customer_Service
 {
-    @Autowired
-    private Customer_Repository customer_repository;
-    public Customers insertCustomer(Customers customer)
+    private final Customer_Repository customer_repository;
+    public void insertCustomer(Customers customer)
     {
-        return customer_repository.save(customer);
+        customer_repository.save(customer);
     }
     public List<String> listPhone()
     {

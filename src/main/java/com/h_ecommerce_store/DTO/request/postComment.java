@@ -1,5 +1,4 @@
 package com.h_ecommerce_store.DTO.request;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,10 +9,15 @@ public class postComment
 {
     private String comment;
     private int productID;
-    @Min(value =1,message ="Đánh giá không được để trống")
+    private Long allowCommentTime;
     private int rate;
-    public postComment(int productID)
+    public postComment(int productID,Long allowCommentTime)
     {
         this.productID = productID;
+        this.allowCommentTime = allowCommentTime;
+    }
+    public postComment()
+    {
+
     }
 }

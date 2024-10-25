@@ -1,17 +1,14 @@
 package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.postComment;
-import com.h_ecommerce_store.DTO.response.list_ShoppingCart;
 import com.h_ecommerce_store.DTO.response.product_Rating;
 import com.h_ecommerce_store.Model.Accounts;
 import com.h_ecommerce_store.Model.Products;
 import com.h_ecommerce_store.Model.Shopping_Carts;
-import com.h_ecommerce_store.Service.account_Service;
-import com.h_ecommerce_store.Service.cart_Service;
-import com.h_ecommerce_store.Service.comment_Service;
-import com.h_ecommerce_store.Service.product_Service;
+import com.h_ecommerce_store.Service.*;
+import com.h_ecommerce_store.Util.Load_dataNavbar;
+import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,39 +26,26 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 
 
 @Controller
+@RequiredArgsConstructor
 public class home_Controller
 {
-    @Autowired
-    private product_Service product_service;
-    @Autowired
-    private comment_Service comment_service;
-    @Autowired
-    private account_Service account_service;
-    @Autowired
-    private cart_Service cart_service;
+    private final product_Service product_service;
+    private final comment_Service comment_service;
+    private final account_Service account_service;
+    private final cart_Service cart_service;
+    private final Load_dataNavbar load_dataNavbar;
+    private final bill_Service bill_service;
     @GetMapping({"/"})
     public String home(Model model)
     {
-        model.addAttribute("listProducts", product_service.getAllProducts());
+        load_dataNavbar.load_navbarHome(model);
         String username=account_service.getLoggedUserName();
+        model.addAttribute("listProducts", product_service.getAllProducts());
         if(username.equals("anonymousUser"))
         {
             return "web/home";
         }
         Accounts account=account_service.getAccount(username);
-        List<list_ShoppingCart> list_Cart=cart_service.getCart_Customer(account.getUsername());
-        model.addAttribute("number_type", list_Cart.size());
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        BigDecimal total=new BigDecimal(0);
-        for(list_ShoppingCart cart:list_Cart)
-        {
-            total=total.add(cart.getNew_price());
-        }
-        String formatted_total=decimalFormat.format(total);
-        model.addAttribute("total",formatted_total);
-        model.addAttribute("list_cart",list_Cart);
-
-        model.addAttribute("role",account.getRole());
         if(account.getRole().equals("ROLE_USER"))
         {
             return "web/home";
@@ -74,25 +58,15 @@ public class home_Controller
     @GetMapping("/web/detail_product/{ID}")
     public String getDetail_Product(Model model,@PathVariable("ID") int ID)
     {
+        load_dataNavbar.load_navbarHome(model);
         String username=account_service.getLoggedUserName();
         if(!username.equals("anonymousUser"))
         {
-            Accounts account=account_service.getAccount(username);
-            if(account.getRole().equals("ROLE_USER"))
+            Shopping_Carts cart=cart_service.getCartByproduct_account(ID,username);
+            if(cart!=null)
             {
-                List<list_ShoppingCart> list_Cart=cart_service.getCart_Customer(account.getUsername());
-                model.addAttribute("number_type", list_Cart.size());
-                DecimalFormat decimalFormat = new DecimalFormat("#,###");
-                BigDecimal total=new BigDecimal(0);
-                for(list_ShoppingCart cart:list_Cart)
-                {
-                    total=total.add(cart.getNew_price());
-                }
-                String formatted_total=decimalFormat.format(total);
-                model.addAttribute("total",formatted_total);
-                model.addAttribute("list_cart",list_Cart);
+                model.addAttribute("selected",cart.getQuantity());
             }
-            model.addAttribute("role",account.getRole());
         }
         Products product = product_service.getProductsByID(ID);
         String name=product.getProduct_name();
@@ -165,11 +139,19 @@ public class home_Controller
         {
             avgRating = avgRating / num;
         }
+        String username=account_service.getLoggedUserName();
+        long allowCommentTime=0L;
+        if(!username.equals("anonymousUser"))
+        {
+            Long numberTimeBuyPro= bill_service.getNumberTimeBuyPro(username,ID);
+            Long numberTimeComment= comment_service.getNumberOfComments(username,ID);
+            allowCommentTime=numberTimeBuyPro-numberTimeComment;
+        }
         model.addAttribute("avg_rating",avgRating);
         model.addAttribute("ratings",ratings);
         model.addAttribute("comments",comments);
         model.addAttribute("num",num);
-        model.addAttribute("postComment",new postComment(ID));
+        model.addAttribute("postComment",new postComment(ID,allowCommentTime));
         return "web/detail_product :: tab2";
     }
 }

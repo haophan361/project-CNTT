@@ -12,7 +12,10 @@ import java.text.DecimalFormat;
 @Setter
 public class list_ShoppingCart
 {
+    private int cartID;
+    private int productID;
     private String productName;
+    private int stock;
     private int quantity;
     private BigDecimal price;
     private int discount;
@@ -21,9 +24,12 @@ public class list_ShoppingCart
     private String formatted_price;
     private String image_url;
     private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
-    public list_ShoppingCart(String productName, int quantity, BigDecimal price, int discount,String image_url)
+    public list_ShoppingCart(int cartID,int productID,String productName,int stock, int quantity, BigDecimal price, int discount,String image_url)
     {
+        this.cartID=cartID;
+        this.productID = productID;
         this.productName = productName;
+        this.stock = stock;
         this.quantity = quantity;
         this.price = price;
         this.discount = discount;

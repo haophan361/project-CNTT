@@ -12,7 +12,7 @@
                 <li th:if="${role}=='ROLE_ADMIN'"><a th:href="@{/admin/crudProducts}">Manage Products</a></li>
                 <li sec:authorize="isAuthenticated()" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user-o"></i> My Account
+                        <i class="fa fa-user-o"></i>Thông tin cá nhân
                     </a>
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
@@ -24,7 +24,6 @@
                 </li>
             </ul>
         </div>
-
     </div>
     <!-- /TOP HEADER -->
 
@@ -63,11 +62,17 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
+                        <div th:if="${role}=='ROLE_USER'" class="dropdown">
+                            <a th:href="@{/user/Bill}">
+                                <i class="fa fa-file-text"></i>
+                                <span>Hóa đơn</span>
+                            </a>
+                        </div>
                         <!-- Cart -->
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Giỏ hàng</span>
                                 <div th:if="${number_type}!=null" class="qty" th:text="${number_type} "></div>
                             </a>
                             <div class="cart-dropdown">
@@ -77,21 +82,21 @@
                                             <img th:src="${cart.image_url}" th:alt="${cart.productName}">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#" th:text="${cart.productName}"></a></h3>
+                                            <h3 class="product-name"><a th:href="@{'/web/detail_product/' + ${cart.productID}}" th:text="${cart.productName}"></a></h3>
                                             <h4 class="product-price">
                                                 <span class="qty" th:text="'Số lượng '+${cart.quantity}+' Tổng '+${cart.formatted_newPrice}"></span>
                                             </h4>
                                         </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
                                     </div>
                                 </div>
                                 <div class="cart-summary">
-                                    <small th:text="${number_type} ==null ? '0 Item(s) selected' :${number_type}+' Item(s) selected'"></small>
-                                    <h5 th:text="${total} == null? 'Total: 0': 'Total: '+${total}" ></h5>
+                                    <small th:text="${number_type} ==null ? 'Đã chọn 0 sản phẩm' :'Đã chọn '+ ${number_type}+' sản phẩm'"></small>
+                                    <h5 th:text="${total} == null? 'Tổng cộng: 0': 'Tổng cộng: '+${total}" ></h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="#">View Cart</a>
-                                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a th:href="@{/user/shoppingCart}">Xem giỏ hàng
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>

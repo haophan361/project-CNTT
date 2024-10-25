@@ -3,10 +3,6 @@ package com.h_ecommerce_store.Model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name="shopping_carts")
 @Getter
@@ -27,6 +23,13 @@ public class Shopping_Carts
     public Shopping_Carts()
     {
 
+    }
+    public Shopping_Carts(int ID,int quantity, Customers customer, Products product)
+    {
+        this.ID=ID;
+        this.quantity = quantity;
+        this.customer = customer;
+        this.product = product;
     }
     public Shopping_Carts(int quantity, Customers customer, Products product)
     {

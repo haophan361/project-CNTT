@@ -2,16 +2,15 @@ package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.Model.Products;
 import com.h_ecommerce_store.Repository.Product_Repository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class product_Service {
-    @Autowired
-    private Product_Repository productRepository;
+    private final Product_Repository productRepository;
 
     public void deleteProductsById(int ID )
     {
@@ -56,5 +55,14 @@ public class product_Service {
     public List<Products> searchProduct(String keyword)
     {
         return productRepository.searchProductsByProduct_name(keyword);
+    }
+    public void buyProduct(int productID,int quantity)
+    {
+        Optional<Products> existingProduct = productRepository.findById(productID);
+        if(existingProduct.isPresent())
+        {
+            existingProduct.get().setQuantity(existingProduct.get().getQuantity()-quantity);
+            productRepository.save(existingProduct.get());
+        }
     }
 }

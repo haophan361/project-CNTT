@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/nouislider.min.css}">
+    <link rel="stylesheet" th:href="@{/css/slick.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <title>H_Ecommerce Store</title>
+</head>
+<body>
+    <header
+            th:replace="~{fragment/navbar_home.html :: navbar_home}">
+    </header>
+
+    <section class="h-100">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-normal mb-0">Danh sách hóa đơn</h3>
+        </div>
+        <div class="container h-100 py-5">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-10">
+                    <ul class="bill-tab-nav" style="margin-bottom: 50px">
+                        <li class="bill-tab active" data-type="all" onclick="fetchData('all')">
+                            <a href="#all" aria-current="page">Tất cả</a>
+                        </li>
+                        <li class="bill-tab" data-type="unpaid" onclick="fetchData('unpaid')">
+                            <a href="#unpaid">Chưa thanh toán</a>
+                        </li>
+                        <li class="bill-tab" data-type="unpaid" onclick="fetchData('paid')">
+                            <a href="#paid">Đã thanh toán</a>
+                        </li>
+                        <li class="bill-tab" data-type="completed" onclick="fetchData('completed')">
+                            <a href="#completed">Hoàn thành</a>
+                        </li>
+                    </ul>
+                    <div class="card rounded-3 mb-4">
+                        <div class="list-bill">
+                            <div th:replace="fragment/bill_fragment.html :: listBillFragment"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.20/jquery.zoom.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/fetchData_Bill.js}"></script>
+</body>

@@ -12,7 +12,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
 		<link rel="stylesheet" th:href="@{/css/nouislider.min.css}">
 		<link rel="stylesheet" th:href="@{/css/slick.css}">
-		<link rel="stylesheet" th:href="@{/css/slick-theme.css}">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
  		<link rel="stylesheet" th:href="@{/css/style.css}"/>
     </head>
 	<body>
@@ -104,23 +104,36 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									<div class="qty-label">
 										QTY
 										<div class="input-number">
-											<input id="quantity_input" type="number" th:value="1">
+											<input id="quantity_input" type="number"
+												   th:value="1"
+												   th:min="0"
+												   th:max="${selected != null ? detail_Product.quantity - selected : detail_Product.quantity}">
 											<span class="qty-up">+</span>
 											<span class="qty-down">-</span>
 										</div>
 									</div>
+									<div id="customMessageBox" class="modal">
+										<div class="modal-content">
+											<div class="modal-header">
+												<span class="close">&times;</span>
+											</div>
+											<div class="modal-body">
+												<p id="messageText"></p>
+											</div>
+										</div>
+									</div>
 									<button class="add-to-cart-btn" sec:authorize="isAuthenticated()"
-											th:attr="onclick=|addToCart('${detail_Product.productID}')|">
-										<i class="fa fa-shopping-cart"></i> add to cart
+											th:attr="onclick=|checkQuantityBeforeAdd('${detail_Product.productID}','${detail_Product.quantity}','${selected}')|">
+										<i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
 									</button>
 									<button class="add-to-cart-btn" sec:authorize="isAnonymous()"
 											onclick="window.location.href='/login'; return false">
-										<i class="fa fa-shopping-cart"></i> add to cart
+										<i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
 									</button>
 								</div>
 
 								<ul class="product-links">
-									<li>Category:</li>
+									<li>Loại sản phẩm:</li>
 									<li><a href="#" th:text="${detail_Product.product_type}"></a></li>
 								</ul>
 							</div>
@@ -132,8 +145,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<div id="product-tab">
 							<!-- product tab nav -->
 							<ul class="tab-nav">
-								<li class="tab active"> <a href="#tab1" onclick="loadTabContent('description')">Description</a></li>
-								<li class="tab"> <a href="#tab2" onclick="loadTabContent('rating')">Reviews (3)</a></li>
+								<li class="tab active"> <a href="#tab1" onclick="loadTabContent('description')">Chi tiết sản phẩm</a></li>
+								<li class="tab"> <a href="#tab2" onclick="loadTabContent('rating')" th:text="'Đánh giá ('+${detail_Product.counting} +')'"></a></li>
 							</ul>
 							<!-- /product tab nav -->
 
@@ -150,8 +163,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								<!-- /tab1  -->
 
 								<!-- tab2  -->
-								<!--/*@thymesVar id="postComment" type="com.h_ecommerce_store.DTO.request.postComment"*/-->
-								<div id="tab2" class="tab-pane in" th:fragment="tab2(avg_rating,ratings,num,comment,postComment)">
+
+								<div id="tab2" class="tab-pane in" th:fragment="tab2(avg_rating,ratings,num,comment)">
 									<div class="row">
 										<!-- Rating -->
 										<div class="col-md-3" style="width: 30%">
@@ -215,9 +228,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										<!-- Review Form -->
 										<div class="col-md-3" style="clear: both;width: 50%;justify-content: center">
 											<div id="review-form" >
-												<form th:if="${postComment != null}" class="review-form" th:action="@{/user/postComment}" th:object="${postComment}" method="post">
+												<!--/*@thymesVar id="postComment" type="com.h_ecommerce_store.DTO.request.postComment"*/-->
+												<form th:if="${postComment != null}" class="review-form" th:action="@{/user/postComment}"
+													  th:object="${postComment}" method="POST" onsubmit="return allowComment(this)">
+													<input class="allowComment" type="hidden" th:data-allow-comment="${postComment.allowCommentTime}">
 													<input type="hidden" th:field="*{productID}"/>
-													<textarea id="inputComment" class="input" th:field="*{comment}" placeholder="Your Review"></textarea>
+													<textarea id="inputComment"  class="input" th:field="*{comment}" placeholder="Your Review"></textarea>
 													<label for="inputComment"></label>
 													<div class="input-rating">
 														<span>Your Rating: </span>
@@ -297,40 +313,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						</div>
 					</div>
 					<!-- /product -->
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="./img/product02.png" alt="">
-								<div class="product-label">
-									<span class="new">NEW</span>
-								</div>
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
 					<div class="clearfix visible-sm visible-xs"></div>
 
 					<!-- product -->
@@ -402,6 +384,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.20/jquery.zoom.min.js"></script>
 		<script th:src="@{/js/LoadTab.js}"></script>
 		<script th:src="@{/js/main.js}"></script>
-		<script th:src="@{/js/list_ShoppingCart.js}"></script>
+		<script th:src="@{/js/cart_DetailProduct.js}"></script>
 	</body>
 </html>

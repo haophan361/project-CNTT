@@ -2,7 +2,7 @@ package com.h_ecommerce_store.Controller;
 import com.h_ecommerce_store.DTO.request.changePassword;
 import com.h_ecommerce_store.Model.Customers;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,18 +15,14 @@ import com.h_ecommerce_store.DTO.request.Register;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.customer_Service;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 public class account_Controller
 {
-    @Autowired
-    account_Service account_service;
-    @Autowired
-    customer_Service customer_service;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final account_Service account_service;
+    private final customer_Service customer_service;
+    private final PasswordEncoder passwordEncoder;
     @GetMapping("/web/registerForm")
     public String registerForm(Model model)
     {

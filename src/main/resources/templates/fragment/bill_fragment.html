@@ -1,0 +1,43 @@
+<div th:fragment="listBillFragment">
+    <div class="list-bill" th:each="bill: ${list_bills}">
+        <div class="d-flex justify-content-between">
+            <div th:text="'Ngày mua hàng: ' + ${bill.formattedPurchase_date}"></div>
+            <div class="text-right" style="margin-bottom: 20px">
+                <div th:if="${bill.status == 1}">Đã thanh toán
+                    <i class="fa fa-check-circle"></i>
+                </div>
+                <div th:if="${bill.status == 0}">Chưa thanh toán
+                    <i class="fa fa-times-circle"></i>
+                </div>
+                <div class="statusBill" th:data-id="${bill.billID}">
+                    <div th:if="${bill.receive_date!=null}" th:text="'Ngày nhận hàng  '+${bill.formattedReceive_date}"></div>
+                    <a href="#" th:if="${bill.receive_date == null}" onclick="updateStatus(this)">
+                        Bấm để xác nhận đã nhận hàng <i class="fa fa-truck"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--/*@thymesVar id="list_billDetail" type="com.h_ecommerce_store.DTO.response.listBillDetail"*/-->
+        <div th:each="billdetail: ${bill.list_billDetail}" class="card-body" style="margin-bottom:50px;">
+            <div class="row">
+                <div class="col-sm-2 col-md-2">
+                    <img th:src="${billdetail.image_url}" class="img-responsive rounded-3" th:alt="${billdetail.productName}">
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <a class="lead fw-normal mb-2" th:href="@{'/web/detail_product/' + ${billdetail.productID}}" th:text="${billdetail.productName}" style="font-size: 16px;"></a>
+                </div>
+                <div class="add-to-cart col-sm-3 col-md-3 d-flex">
+                    <span th:text="'x ' + ${billdetail.quantity}"></span>
+                </div>
+                <div class="col-sm-3 col-md-2 pull-right">
+                    <h5 class="mb-0" th:text="${billdetail.formattedPrice} + 'đ'"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="total-price">
+            <h3 class="font-weight-bold" th:text="${bill.formattedPrice} + 'đ'" style="color: red"></h3>
+        </div>
+        <hr style="border-top: 1px solid #ddd; margin: 20px 0;">
+    </div>
+</div>

@@ -24,13 +24,9 @@ public class BillDetails {
     @JoinColumn(name = "proID")
     private Products product;
 
-    public BillDetails(int ID, BigDecimal cost, int quantity) {
-        this.ID = ID;
-        this.cost = cost;
-        this.quantity = quantity;
-    }
-
-    public BillDetails(BigDecimal cost, int quantity) {
+    public BillDetails(Products product,BigDecimal cost, int quantity)
+    {
+        this.product=product;
         this.cost = cost;
         this.quantity = quantity;
     }
