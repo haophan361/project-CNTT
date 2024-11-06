@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>H_Ecommerce</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS   -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+
+    <!--  Paper Dashboard core CSS    -->
+    <link th:href="@{/css/paper-dashboard.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!--  Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+
+</head>
+<body>
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="sidebar" data-background-color="white" data-active-color="danger">
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/crudProducts}">
+                            <i class= "fa fa-fw fa-th mr-1"></i><span>CRUD</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/dashboard}">
+                            <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/admin/bill}">
+                            <i class="fa fa-file-text"></i><span> Danh sách hóa đơn</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Danh sách hóa đơn</h4>
+                                </div>
+                                <div class="content table-responsive table-full-width">
+                                    <form id="deleteBillForm" method="POST" th:action="@{/admin/deleteBill}" onsubmit="return getCheckBox(this)">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>ID</th>
+                                                <th>Tên</th>
+                                                <th>Tổng</th>
+                                                <th>Ngày mua</th>
+                                                <th>Xử lý</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Trạng thái</th>
+                                                <th>Ngày nhận hàng</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody th:each="bill : ${listBills}">
+                                            <tr class="bill-row" th:data-bill-id="${bill.billID}">
+                                                <td class="col-sm-1 col-md-1">
+                                                    <input class="bill-checkbox" type="checkbox" th:value="${bill.billID}" name="selectedBillIDs"
+                                                           th:data-bill-receive="${bill.receive_date}">
+                                                </td>
+                                                <td th:text="${bill.billID}"></td>
+                                                <td th:text="${bill.cus_name}"></td>
+                                                <td th:text="${bill.formattedPrice} + 'đ'"></td>
+                                                <td th:text="${bill.formattedPurchase_date}"></td>
+                                                <td th:text="${bill.confirm ==1 ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                                                <td th:text="${bill.address}"></td>
+                                                <td th:text="${bill.phone}"></td>
+                                                <td th:text="${bill.status == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}"></td>
+                                                <td th:text="${bill.receive_date == null ? 'Chưa nhận hàng' : bill.formattedReceive_date}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="float: right; margin-top: 30px">
+                                            <button class="btn btn-danger" type="submit">Xóa hóa đơn</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+    <!--   Core JS Files   -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+	<script th:src="@{/js/paper-dashboard.js}   "></script>
+
+    <script th:src="@{/js/manage_Bill.js}"></script>
+
+</html>

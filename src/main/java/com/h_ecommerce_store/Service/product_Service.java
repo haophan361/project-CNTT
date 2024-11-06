@@ -65,4 +65,25 @@ public class product_Service {
             productRepository.save(existingProduct.get());
         }
     }
+    public void cancelProduct(int productID,int quantity)
+    {
+        Optional<Products> existingProduct = productRepository.findById(productID);
+        if(existingProduct.isPresent())
+        {
+            existingProduct.get().setQuantity(existingProduct.get().getQuantity()+quantity);
+            productRepository.save(existingProduct.get());
+        }
+    }
+    public Long totalProduct()
+    {
+        return productRepository.count();
+    }
+    public List<String> getProductType()
+    {
+        return productRepository.getTypeProduct();
+    }
+    public List<String> getProductName()
+    {
+        return productRepository.getProductName();
+    }
 }

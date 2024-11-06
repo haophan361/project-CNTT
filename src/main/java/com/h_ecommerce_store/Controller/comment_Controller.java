@@ -8,8 +8,10 @@ import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.comment_Service;
 import com.h_ecommerce_store.Service.customer_Service;
 import com.h_ecommerce_store.Service.product_Service;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
@@ -21,9 +23,13 @@ public class comment_Controller
     private final customer_Service customer_service;
     private final product_Service product_service;
     @PostMapping("/user/postComment")
-    public String post_Comment(@ModelAttribute("postComment") postComment postComment)
+    public String post_Comment(@Valid @ModelAttribute("postComment") postComment postComment, BindingResult result)
     {
         int productID=postComment.getProductID();
+        if(result.hasErrors())
+        {
+            return "/web/detail_product/"+productID+"#tab2";
+        }
         String comment=postComment.getComment();
         int rate=postComment.getRate();
         String username=account_service.getLoggedUserName();

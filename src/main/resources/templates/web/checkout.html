@@ -79,13 +79,12 @@
 						<form th:action="@{/user/insertBill}" th:object="${checkout_Bill}" method="POST">
 							<div class="col-md-5">
 
-								<div th:if="${#fields.hasErrors('phone')}" style="color: red" class="error">
+								<div th:if="${#fields.hasErrors('cus_name')}" style="color: red" class="error">
 									<small th:errors="*{phone}"></small>
 								</div>
 								<div class="form-group" style="margin-bottom: 30px">
 									<input class="input" th:field="*{cus_name}" placeholder="Họ và tên">
 								</div>
-
 								<div th:if="${#fields.hasErrors('city')}" style="color: red" class="error">
 									<small th:errors="*{city}"></small>
 								</div>
@@ -106,9 +105,6 @@
 									<input type="hidden" id="districtName" th:field="*{district}">
 								</div>
 
-								<div th:if="${#fields.hasErrors('ward')}" style="color: red" class="error">
-									<small th:errors="*{ward}"></small>
-								</div>
 								<div class="mb-4" style="margin-bottom: 30px">
 									<select data-mdb-select-init class="form-control form-control-lg" id="wards">
 										<option value="" selected>Phường/Xã</option>
@@ -116,9 +112,6 @@
 									<input type="hidden" id="wardName" th:field="*{ward}">
 								</div>
 
-								<div th:if="${#fields.hasErrors('houseNo')}"  style="color: red" class="error">
-									<small th:errors="*{houseNo}"></small>
-								</div>
 								<div class="form-group" style="margin-bottom: 30px">
 									<input class="input" th:field="*{houseNo}" placeholder="Số nhà, Tên đường">
 								</div>

@@ -13,6 +13,7 @@ import java.util.Optional;
 public class cart_Service
 {
     private final Cart_Repository cart_repository;
+
     public List<list_ShoppingCart> getCart_Customer(String username)
     {
         List<Shopping_Carts> shoppingCartsList= cart_repository.getShopping_CartsByCustomer(username);
@@ -73,5 +74,9 @@ public class cart_Service
     {
         Optional<Shopping_Carts> cart= cart_repository.findById(cartID);
         return cart.orElse(null);
+    }
+    public Long totalCart()
+    {
+        return cart_repository.count();
     }
 }

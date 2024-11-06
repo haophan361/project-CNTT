@@ -21,6 +21,7 @@ public class Bills
     private BigDecimal cost;
     private LocalDateTime purchase_date;
     private int status;
+    private int confirm;
     private String address;
     private String phone;
     private LocalDateTime receive_date;
@@ -31,7 +32,7 @@ public class Bills
 
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BillDetails> billDetails = new ArrayList<>();
-    public Bills(Customers customer, String cus_name,String address, String phone,BigDecimal cost, int status)
+    public Bills(Customers customer, String cus_name,String address, String phone,BigDecimal cost, int status,int confirm)
     {
         this.customer = customer;
         this.cus_name = cus_name;
@@ -39,6 +40,7 @@ public class Bills
         this.phone = phone;
         this.cost = cost;
         this.status = status;
+        this.confirm = confirm;
         this.purchase_date = LocalDateTime.now();
     }
     public Bills ()

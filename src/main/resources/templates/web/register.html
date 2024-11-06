@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trang đăng kí</title>
 </head>
 <body>
@@ -44,9 +45,7 @@
 					        <input type="hidden" id="districtName" th:field="*{district}">
 					    </div>
 
-						<div th:if="${#fields.hasErrors('ward')}" style="color: red" class="error">
-							<small th:errors="*{ward}"></small>
-						</div>
+
 					    <div class="mb-4">
 					        <select data-mdb-select-init class="form-control form-control-lg" id="wards">
 					            <option value="" selected>Phường/Xã</option>
@@ -54,10 +53,6 @@
 					        <input type="hidden" id="wardName" th:field="*{ward}">
 					    </div>
 
-
-						<div th:if="${#fields.hasErrors('houseNo')}"  style="color: red" class="error">
-							<small th:errors="*{houseNo}"></small>
-						</div>
 					    <div data-mdb-input-init class="form-outline mb-4">
 					        <input type="text" id="address" th:field="*{houseNo}" class="form-control"/>
 					        <label class="form-label" for="address" >Số nhà, Tên đường</label>

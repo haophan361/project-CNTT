@@ -1,7 +1,5 @@
 package com.h_ecommerce_store.DTO.request;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,15 +12,18 @@ public class Register
 
     @NotBlank(message ="Email không được để trống")
     @Email(message="Email không đúng định dạng")
+    @Size(max = 100, message = "Số ký tự tối đa là 100")
     private String username;
 
     @NotBlank(message = "Mật khẩu không được để trống")
+    @Size(max = 100, message = "Số ký tự tối đa là 100")
     private String password;
 
     @NotBlank(message = "Xác nhận mật khẩu không được để trống")
     private String  confirmPassword;
 
     @NotBlank(message = "Họ và Tên không được để trống")
+    @Size(max = 300, message = "Số ký tự tối đa là 300")
     private String name;
 
     @NotBlank(message = "Tỉnh/Thành phố không được để trống")
@@ -31,10 +32,8 @@ public class Register
     @NotBlank(message = "Quận/Huyện không được để trống")
     private String district;
 
-    @NotBlank(message = "Phường/Xã không được để trống")
     private String ward;
 
-    @NotBlank(message = "Tên đường/Số nhà không được để trống")
     private String houseNo;
 
     @NotBlank(message = "Số điện thoại không được để trống")

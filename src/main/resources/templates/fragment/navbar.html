@@ -17,7 +17,10 @@
                         <li><a class="dropdown-item" th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
                     </ul>
                     <form th:action="@{/logout}" method="post" style="display: inline">
-                      <button type="submit" style="color: white; background: none; border: none;">Đăng xuất</button>
+                      <button type="submit" style="color: white; background: none; border: none;">
+                          Đăng xuất
+                          <a class="fa fa-sign-out"></a>
+                      </button>
                     </form>
                 </li>
             </ul>

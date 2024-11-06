@@ -21,5 +21,4 @@ public interface Customer_Repository extends JpaRepository<Customers, String>
     void updateProfile(@Param("name") String name, @Param("address") String address, @Param("phone") String phone, @Param("username") String username);
     @Query("SELECT c FROM Customers c WHERE c.email= :username")
     Customers findByEmail(@Param("username") String username);
-
 }

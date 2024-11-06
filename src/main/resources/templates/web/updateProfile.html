@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <title>Hồ sơ của bạn</title>
@@ -24,20 +25,23 @@
                     <form th:action="@{/user/updateProfile}" th:object="${updateProfile}" method="post">
                         <input type="hidden" th:field="*{username}">
 
+                        <div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">
+                            <small th:errors="*{name}"></small>
+                        </div>
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="text" id="name" th:field="*{name}" class="form-control"/>
                             <label class="form-label" for="name">Họ và tên</label>
                         </div>
 
                         <div class="mb-4">
-                            <select data-mdb-select-init class="form-control form-control-lg" id="cities">
+                            <select data-mdb-select-init class="form-control form-control-lg" id="cities" required>
                                 <option value="" selected>Tỉnh/Thành phố</option>
                             </select>
                             <input type="hidden" id="cityName" name="cityName" th:value="${cityName}">
                         </div>
 
                         <div class="mb-4">
-                            <select data-mdb-select-init class="form-control form-control-lg" id="districts">
+                            <select data-mdb-select-init class="form-control form-control-lg" id="districts" required>
                                 <option value="" selected>Quận/Huyện</option>
                             </select>
                             <input type="hidden" id="districtName" name="districtName" th:value="${districtName}">
@@ -55,6 +59,9 @@
                             <label class="form-label" for="houseNo">Số nhà, Tên đường</label>
                         </div>
 
+                        <div th:if="${#fields.hasErrors('phone')}" style="color: red" class="error">
+                            <small th:errors="*{phone}"></small>
+                        </div>
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="text" id="phone" th:field="*{phone}" class="form-control">
                             <label class="form-label" for="phone">Số điện thoại</label>

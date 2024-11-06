@@ -20,9 +20,9 @@ public class checkout_Bill
     private String city;
     @NotBlank(message = "Quận/Huyện không được để trống")
     private String district;
-    @NotBlank(message = "Phường/Xã không được để trống")
+
     private String ward;
-    @NotBlank(message = "Tên đường/Số nhà không được để trống")
+
     private String houseNo;
     @NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải đủ 10 số")

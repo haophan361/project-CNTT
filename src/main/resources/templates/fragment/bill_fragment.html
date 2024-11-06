@@ -10,10 +10,15 @@
                     <i class="fa fa-times-circle"></i>
                 </div>
                 <div class="statusBill" th:data-id="${bill.billID}">
-                    <div th:if="${bill.receive_date!=null}" th:text="'Ngày nhận hàng  '+${bill.formattedReceive_date}"></div>
-                    <a href="#" th:if="${bill.receive_date == null}" onclick="updateStatus(this)">
-                        Bấm để xác nhận đã nhận hàng <i class="fa fa-truck"></i>
-                    </a>
+                    <div th:if="${bill.confirm ==1}">
+                        <div th:if="${bill.receive_date!=null}" th:text="'Ngày nhận hàng  '+${bill.formattedReceive_date}"></div>
+                        <a href="#" th:if="${bill.receive_date == null}" onclick="updateStatus(this)">
+                            Bấm để xác nhận đã nhận hàng <i class="fa fa-truck"></i>
+                        </a>
+                    </div>
+                    <div th:if="${bill.confirm == 0}">Chưa xác nhận
+                        <i class="fa fa-ellipsis-h"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,6 +43,14 @@
         <div class="total-price">
             <h3 class="font-weight-bold" th:text="${bill.formattedPrice} + 'đ'" style="color: red"></h3>
         </div>
-        <hr style="border-top: 1px solid #ddd; margin: 20px 0;">
+        <form th:if="${bill.confirm}==0" th:action="@{/user/cancelBill}" method="POST" style="display: inline-block; float: right;"
+              id="cancelForm">
+            <input type="hidden" th:value="${bill.billID}" th:name="billID">
+            <button class="btn btn-danger btn-md" type="button" onclick="confirmCancel(event)">
+                Hủy đơn
+                <i class="fa fa-times"></i>
+            </button>
+        </form>
+        <hr style="border-top: 3px solid #ddd; margin: 50px 0;">
     </div>
 </div>

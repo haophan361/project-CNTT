@@ -31,4 +31,8 @@ public class customer_Service
     {
         return customer_repository.findByEmail(username);
     }
+    public Long totalCustomers()
+    {
+        return customer_repository.count();
+    }
 }

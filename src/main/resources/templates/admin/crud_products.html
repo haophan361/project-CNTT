@@ -70,18 +70,18 @@
                     <div class="e-navlist e-navlist--active-bg">
                         <ul class="nav flex-column" style="width:200px" >
                             <li class="nav-item">
-                                <a class="nav-link px-2 active" href="#">
-                                    <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span>
+                                <a class="nav-link px-2 active" th:href="@{/admin/dashboard}">
+                                    <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Dashboard</span>
                                 </a>
                             </li>
                             <li class="nav-item" style="width:200px">
-                                <a class="nav-link px-2" href="https://www.bootdey.com/snippets/view/bs4-crud-users" target="_blank">
+                                <a class="nav-link px-2" th:href="@{/admin/crudProducts}" target="_blank">
                                     <i class="fa fa-fw fa-th mr-1"></i><span>CRUD</span>
                                 </a>
                             </li>
                             <li class="nav-item" style="width:200px">
-                                <a class="nav-link px-2" href="https://www.bootdey.com/snippets/view/bs4-edit-profile-page" target="_blank">
-                                    <i class="fa fa-fw fa-cog mr-1"></i><span>Settings</span>
+                                <a class="nav-link px-2" th:href="@{/admin/bill}" target="_blank">
+                                    <i class="fa fa-file-text"></i><span> Danh sách hóa đơn</span>
                                 </a>
                             </li>
                         </ul>

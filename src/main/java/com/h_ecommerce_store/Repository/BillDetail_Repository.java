@@ -11,5 +11,9 @@ public interface BillDetail_Repository extends JpaRepository<BillDetails, Intege
     @Query("SELECT COALESCE(MAX(ID),0)+1 AS newID FROM BillDetails")
     int newID();
     @Query("SELECT bd FROM BillDetails bd WHERE bd.bill.ID= :billID")
-    List<BillDetails> findBillDetailsByBillId(int billID);
+    List<BillDetails> getBillDetailsByBillId(int billID);
+    @Query("SELECT SUM(bd.cost) FROM BillDetails bd WHERE bd.product.product_type= :productType")
+    Double totalRevenueByProductType(String productType);
+    @Query("SELECT SUM(bd.cost) FROM BillDetails bd WHERE bd.product.product_name= :product_name")
+    Double totalRevenueByProduct(String product_name);
 }

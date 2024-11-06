@@ -85,10 +85,10 @@ function toggleCheckboxes(source)
 }
 function getCheckBox(source)
 {
-    const checkbox = source.querySelectorAll('.product-checkbox');
+    const checkboxes = source.querySelectorAll('.product-checkbox');
     let isChecked = false;
 
-    checkbox.forEach(checkbox =>
+    for (const checkbox of checkboxes)
     {
         if (checkbox.checked)
         {
@@ -105,7 +105,7 @@ function getCheckBox(source)
             }
             isChecked = true;
         }
-    });
+    }
     if (!isChecked)
     {
         var modal = document.getElementById("customMessageBox");

@@ -76,13 +76,14 @@ public class bill_Controller
             BillDetails bill_detail=new BillDetails(product,billDetail.getProductNewPrice(),billDetail.getQuantity());
             billDetails.add(bill_detail);
         }
-        Bills bill=new Bills(customer,cus_name,address,phone,total,status);
+        Bills bill=new Bills(customer,cus_name,address,phone,total,status,0);
         bill_service.insertBill(bill,billDetails);
         return "redirect:/user/shoppingCart";
     }
     @GetMapping("/user/Bill")
-    public String getBill()
+    public String getBill(Model model)
     {
+        load_dataNavbar.load_navbarHome(model);
         return "web/bill";
     }
 
@@ -97,14 +98,21 @@ public class bill_Controller
     public String listBill_Unpaid(Model model)
     {
         String username = account_service.getLoggedUserName();
-        List<Bills> bills = bill_service.getBillsByEmail_Unpaid(username);
+        List<Bills> bills = bill_service.getBillsByEmail_statusBill(username,0);
         return requestBill(model, bills);
     }
     @GetMapping("/user/listBill_Paid")
     public String listBill_Paid(Model model)
     {
         String username = account_service.getLoggedUserName();
-        List<Bills> bills = bill_service.getBillsByEmail_Paid(username);
+        List<Bills> bills = bill_service.getBillsByEmail_statusBill(username,1);
+        return requestBill(model, bills);
+    }
+    @GetMapping("/user/listBill_Waiting")
+    public String listBill_Waiting(Model model)
+    {
+        String username = account_service.getLoggedUserName();
+        List<Bills> bills = bill_service.getBillsByEmail_Waiting(username);
         return requestBill(model, bills);
     }
     @GetMapping("/user/listBill")
@@ -137,6 +145,7 @@ public class bill_Controller
                     bill.getID(),
                     bill.getCost(),
                     bill.getStatus(),
+                    bill.getConfirm(),
                     bill.getPurchase_date(),
                     bill.getReceive_date(),
                     listBillDetails
@@ -149,7 +158,13 @@ public class bill_Controller
     @PostMapping("/user/updateStatus/{ID}")
     public ResponseEntity<String> updateStatus(@PathVariable("ID") int ID)
     {
-        bill_service.updateStatusBill(ID);
-        return ResponseEntity.ok("/user/listBill");
+        bill_service.updateStatusBill(ID,1);
+        return ResponseEntity.ok("/user/Bill");
+    }
+    @PostMapping("/user/cancelBill")
+    public String cancelBill(@RequestParam("billID") int billID)
+    {
+        bill_service.cancelBill(billID);
+        return "redirect:/user/Bill";
     }
 }

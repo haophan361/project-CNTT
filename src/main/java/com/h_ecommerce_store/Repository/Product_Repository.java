@@ -20,6 +20,8 @@ public interface Product_Repository extends JpaRepository<Products,Integer>
 
 //    @Query("SELECT p FROM Products p WHERE p.product_type = :product_type")
 //    Page<Products> searchType(@Param("product_type") String product_type);
-//    @Query("SELECT new com.haro_store.DTO.Respone.product_Type(COUNT(p),p.product_type) FROM Products p GROUP BY p.product_type")
-//    List<product_Type> getTypeProduct();
+    @Query("SELECT DISTINCT(p.product_type) FROM Products p")
+    List<String> getTypeProduct();
+    @Query("SELECT p.product_name FROM Products p")
+    List<String> getProductName();
 }

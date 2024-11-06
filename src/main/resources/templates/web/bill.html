@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
@@ -27,6 +28,9 @@
                         <li class="bill-tab active" data-type="all" onclick="fetchData('all')">
                             <a href="#all" aria-current="page">Tất cả</a>
                         </li>
+                        <li class="bill-tab" data-type="waiting" onclick="fetchData('waiting')">
+                            <a href="#waiting">Chưa xác nhận</a>
+                        </li>
                         <li class="bill-tab" data-type="unpaid" onclick="fetchData('unpaid')">
                             <a href="#unpaid">Chưa thanh toán</a>
                         </li>
@@ -51,6 +55,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.20/jquery.zoom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
     <script th:src="@{/js/main.js}"></script>
     <script th:src="@{/js/fetchData_Bill.js}"></script>
 </body>

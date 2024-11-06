@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 @Setter
 public class listBillDetail
 {
+    private int ID;
     private String image_url;
     private String productName;
     private int productID;
@@ -28,5 +29,15 @@ public class listBillDetail
         this.oldPrice = oldPrice;
         this.formattedPrice = decimalFormat.format(price);
         this.formattedOldPrice = decimalFormat.format(oldPrice);
+    }
+    public listBillDetail(int ID,String image_url, String productName, int productID, int quantity, BigDecimal price)
+    {
+        this.ID=ID;
+        this.image_url = image_url;
+        this.productName = productName;
+        this.productID = productID;
+        this.quantity = quantity;
+        this.price = price;
+        this.formattedPrice = decimalFormat.format(price);
     }
 }

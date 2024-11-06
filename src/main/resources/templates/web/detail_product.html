@@ -237,8 +237,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 													<label for="inputComment"></label>
 													<div class="input-rating">
 														<span>Your Rating: </span>
-														<div th:if="${#fields.hasErrors('rate')}" style="color: red" class="error">
-															<small th:errors="*{rate}"></small>
+														<div th:if="${#fields.hasErrors('comment')}" style="color: red" class="error">
+															<small th:errors="*{comment}"></small>
 														</div>
 														<div class="stars">
 															<input id="star5" th:field="*{rate}" value="5" type="radio">

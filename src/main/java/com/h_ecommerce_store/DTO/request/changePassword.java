@@ -1,8 +1,6 @@
 package com.h_ecommerce_store.DTO.request;
-
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +14,7 @@ public class changePassword
     private String oldPassword;
 
     @NotBlank(message = "Mật khẩu mới không được để trống")
+    @Size(max = 100, message = "Số ký tự tối đa là 100")
     private String newPassword;
 
     @NotBlank(message = "Xác nhận mật khẩu không được để trống")

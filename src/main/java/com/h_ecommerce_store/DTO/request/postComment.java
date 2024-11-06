@@ -1,4 +1,5 @@
 package com.h_ecommerce_store.DTO.request;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class postComment
 {
+    @Size(max = 500, message = "Số ký tự tối đa là 500")
     private String comment;
     private int productID;
     private Long allowCommentTime;
