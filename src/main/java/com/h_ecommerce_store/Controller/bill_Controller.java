@@ -32,7 +32,7 @@ public class bill_Controller
     @GetMapping("/user/form_BillDetail")
     public String getListBill(@RequestParam("selectedCartIDs") List<Integer> selectedCartIds, Model model)
     {
-        load_dataNavbar.load_navbarHome(model);
+        load_dataNavbar.load_Navbar(model);
         List<checkout_BillDetail> list_BillDetail=new ArrayList<>();
         for(Integer cartID:selectedCartIds)
         {
@@ -83,7 +83,7 @@ public class bill_Controller
     @GetMapping("/user/Bill")
     public String getBill(Model model)
     {
-        load_dataNavbar.load_navbarHome(model);
+        load_dataNavbar.load_Navbar(model);
         return "web/bill";
     }
 

@@ -9,7 +9,10 @@ import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.cart_Service;
 import com.h_ecommerce_store.Service.customer_Service;
 import com.h_ecommerce_store.Service.product_Service;
+import com.h_ecommerce_store.Util.Load_dataNavbar;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,8 @@ public class cart_Controller
     private final product_Service product_service;
     private final account_Service account_service;
     private final customer_Service customer_service;
+    private final Load_dataNavbar load_dataNavbar;
+
     @PostMapping("/user/addToCart/{productID}/{quantity}")
     public ResponseEntity<String> addToCart(@PathVariable("productID") int productID, @PathVariable("quantity") int quantity)
     {
@@ -56,20 +61,15 @@ public class cart_Controller
     @GetMapping("/user/shoppingCart")
     public String shoppingCart(Model model)
     {
+        load_dataNavbar.load_Navbar(model);
         String username=account_service.getLoggedUserName();
         Accounts account=account_service.getAccount(username);
-        List<list_ShoppingCart> list_Cart=cart_service.getCart_Customer(account.getUsername());
-        model.addAttribute("number_type", list_Cart.size());
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        BigDecimal total=new BigDecimal(0);
-        for(list_ShoppingCart cart:list_Cart)
-        {
-            total=total.add(cart.getNew_price());
-        }
-        String formatted_total=decimalFormat.format(total);
-        model.addAttribute("total",formatted_total);
+        List<Shopping_Carts> shopping_carts =cart_service.getCart_Customer(username);
+        List<list_ShoppingCart> list_Cart=cart_service.getCart_Customer(shopping_carts);
+        model.addAttribute("number_type", cart_service.getCartCountByCus(username));
+        List<String> typeProduct=product_service.getProductType();
+        model.addAttribute("typeProduct",typeProduct);
         model.addAttribute("list_cart",list_Cart);
-        model.addAttribute("role",account.getRole());
         return "web/shoppingCart";
     }
 }

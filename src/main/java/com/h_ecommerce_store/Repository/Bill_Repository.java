@@ -1,6 +1,8 @@
 package com.h_ecommerce_store.Repository;
 
 import com.h_ecommerce_store.Model.Bills;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,4 +28,6 @@ public interface Bill_Repository extends JpaRepository<Bills, Integer>
     Double getTotalCost();
     @Query("SELECT SUM(b.cost) FROM Bills b WHERE b.purchase_date >= :timeStart and b.purchase_date <= :timeEnd")
     Double getRevenueByTime(LocalDateTime timeStart, LocalDateTime timeEnd);
+    @Query("SELECT b FROM Bills b WHERE LOWER(b.cus_name) LIKE LOWER(CONCAT('%',:cus_name, '%'))")
+    Page<Bills> getBillsByCusName(@Param("cus_name") String cus_name, Pageable pageable);
 }

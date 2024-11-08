@@ -2,6 +2,7 @@ package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.Model.BillDetails;
 import com.h_ecommerce_store.Model.Bills;
+import com.h_ecommerce_store.Model.Products;
 import com.h_ecommerce_store.Repository.BillDetail_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,9 @@ public class billDetail_Service
     public Double totalRevenueByProduct(String product_name)
     {
         return billDetail_repository.totalRevenueByProduct(product_name);
+    }
+    public List<Products> TopProductsSeller()
+    {
+        return billDetail_repository.TopProductsSeller();
     }
 }

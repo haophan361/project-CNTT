@@ -19,51 +19,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<header
 				th:replace ="~{fragment/navbar_home.html :: navbar_home} ">
 		</header>
-		<!-- NAVIGATION -->
-		<nav id="navigation">
-			<!-- container -->
-			<div class="container">
-				<!-- responsive-nav -->
-				<div id="responsive-nav">
-					<!-- NAV -->
-					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#">Hot Deals</a></li>
-						<li><a href="#">Categories</a></li>
-						<li><a href="#">Laptops</a></li>
-						<li><a href="#">Smartphones</a></li>
-						<li><a href="#">Cameras</a></li>
-						<li><a href="#">Accessories</a></li>
-					</ul>
-					<!-- /NAV -->
-				</div>
-				<!-- /responsive-nav -->
-			</div>
-			<!-- /container -->
-		</nav>
-		<!-- /NAVIGATION -->
-
-		<!-- BREADCRUMB -->
-		<div id="breadcrumb" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Headphones</a></li>
-							<li class="active">Product name goes here</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /BREADCRUMB -->
 
 		<!-- SECTION -->
 		<div class="section">
@@ -84,7 +39,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 						<!-- Product details -->
 						<div class="col-md-5 " style="width: 40%; margin-left: 20%">
-							<div class="product-details" style="margin-top: 100px" >
+							<div class="product-details" style="margin-top: 50px" >
 								<h2 class="product-name" th:text="${detail_Product.product_name}"></h2>
 								<div>
 									<div class="product-rating">
@@ -95,8 +50,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									<span th:text="${detail_Product.counting}"></span> Review(s)
 								</div>
 								<div>
-									<h3 class="product-price" th:text="${formatted_newPrice}"></h3>
-									<del class="product-old-price" th:text="${formatted_oldPrice}"></del>
+									<h3 class="product-price" th:text="${detail_Product.formattedNewPrice}"></h3>
+									<del class="product-old-price" th:text="${detail_Product.formattedOldPrice}"></del>
 									<span class="product-available" th:text="'Số lượng ' +${detail_Product.quantity}"></span>
 								</div>
 

@@ -4,6 +4,9 @@ import com.h_ecommerce_store.DTO.response.list_ShoppingCart;
 import com.h_ecommerce_store.Model.Shopping_Carts;
 import com.h_ecommerce_store.Repository.Cart_Repository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +17,14 @@ public class cart_Service
 {
     private final Cart_Repository cart_repository;
 
-    public List<list_ShoppingCart> getCart_Customer(String username)
+    public List<Shopping_Carts> getCart_Customer(String username)
     {
-        List<Shopping_Carts> shoppingCartsList= cart_repository.getShopping_CartsByCustomer(username);
+        return cart_repository.getShopping_CartsByCus(username);
+    }
+    public List<list_ShoppingCart> getCart_Customer(List<Shopping_Carts> shopping_carts)
+    {
         List<list_ShoppingCart> list_Cart=new ArrayList<>();
-        for(Shopping_Carts cart :shoppingCartsList)
+        for(Shopping_Carts cart :shopping_carts)
         {
             list_ShoppingCart Cart=new list_ShoppingCart(cart.getID(),
                     cart.getProduct().getID(),
@@ -31,6 +37,10 @@ public class cart_Service
             list_Cart.add(Cart);
         }
         return list_Cart;
+    }
+    public Long getCartCountByCus(String username)
+    {
+        return cart_repository.getCartCount(username);
     }
     public void addToCart(Shopping_Carts cart)
     {

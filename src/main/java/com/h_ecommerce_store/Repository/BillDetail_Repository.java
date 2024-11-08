@@ -1,6 +1,7 @@
 package com.h_ecommerce_store.Repository;
 
 import com.h_ecommerce_store.Model.BillDetails;
+import com.h_ecommerce_store.Model.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,4 +17,6 @@ public interface BillDetail_Repository extends JpaRepository<BillDetails, Intege
     Double totalRevenueByProductType(String productType);
     @Query("SELECT SUM(bd.cost) FROM BillDetails bd WHERE bd.product.product_name= :product_name")
     Double totalRevenueByProduct(String product_name);
+    @Query("SELECT bd.product, COUNT(bd.product) AS quantity  FROM BillDetails bd GROUP BY bd.product ORDER BY quantity DESC")
+    List<Products> TopProductsSeller();
 }

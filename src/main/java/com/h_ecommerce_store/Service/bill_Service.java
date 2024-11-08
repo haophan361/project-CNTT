@@ -4,6 +4,9 @@ import com.h_ecommerce_store.Model.BillDetails;
 import com.h_ecommerce_store.Model.Bills;
 import com.h_ecommerce_store.Repository.Bill_Repository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,13 +88,10 @@ public class bill_Service
     {
         return bill_repository.getBillsByEmail_Waiting(email);
     }
-    public List<Bills> getAllBill()
+    public Page<Bills> getAllBill(int page,int size)
     {
-        return bill_repository.findAll();
-    }
-    public Long countBill()
-    {
-        return bill_repository.count();
+        Pageable pageable=PageRequest.of(page-1,size);
+        return bill_repository.findAll(pageable);
     }
     public void cancelBill(int billID)
     {
@@ -125,5 +125,10 @@ public class bill_Service
         LocalDateTime timeStart = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDateTime timeEnd = timeStart.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59);
         return bill_repository.getRevenueByTime(timeStart,timeEnd);
+    }
+    public Page<Bills> getBillsByCusName(String cus_name, int page, int size)
+    {
+        Pageable pageable = PageRequest.of(page-1, size);
+        return bill_repository.getBillsByCusName(cus_name,pageable);
     }
 }

@@ -2,23 +2,22 @@ package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.postComment;
 import com.h_ecommerce_store.DTO.response.product_Rating;
-import com.h_ecommerce_store.Model.Accounts;
 import com.h_ecommerce_store.Model.Products;
 import com.h_ecommerce_store.Model.Shopping_Carts;
 import com.h_ecommerce_store.Service.*;
 import com.h_ecommerce_store.Util.Load_dataNavbar;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.h_ecommerce_store.DTO.response.detail_Product;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.h_ecommerce_store.DTO.response.comment_Product;
@@ -35,30 +34,140 @@ public class home_Controller
     private final cart_Service cart_service;
     private final Load_dataNavbar load_dataNavbar;
     private final bill_Service bill_service;
-    @GetMapping({"/"})
-    public String home(Model model)
+    @GetMapping("/")
+    public String home(Model model, @RequestParam(value="page", required=false, defaultValue="1")int page,
+                       @RequestParam(value="listBrand",required = false) List<String> listBrand,
+                       HttpServletRequest request)
     {
-        load_dataNavbar.load_navbarHome(model);
-        String username=account_service.getLoggedUserName();
-        model.addAttribute("listProducts", product_service.getAllProducts());
-        if(username.equals("anonymousUser"))
+        load_dataNavbar.load_Navbar(model);
+        load_dataNavbar.get_Type(model,listBrand);
+        load_dataNavbar.get_Brand(model,"");
+        load_dataNavbar.topSeller(model);
+        Page<Products> products;
+        if(listBrand==null)
         {
-            return "web/home";
-        }
-        Accounts account=account_service.getAccount(username);
-        if(account.getRole().equals("ROLE_USER"))
-        {
-            return "web/home";
+            products=product_service.getAllProducts(page,20);
         }
         else
         {
-            return "admin/home";
+            products=product_service.getListProductByBrands(listBrand,page,20);
         }
+        List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("listProducts", productsForPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("selectedBrands", listBrand);
+        String brandParam = (listBrand != null) ? "?listBrand=" + String.join("%2C", listBrand) : "";
+        model.addAttribute("requestURI", request.getRequestURI()+brandParam);
+        return "web/home";
+    }
+    @GetMapping("/web/selectByName_Product")
+    public String searchProduct_ByName(Model model, @RequestParam(value = "keyword",required = false) String keyword,
+                                       @RequestParam(value="page", required=false, defaultValue="1") int page,
+                                       @RequestParam(value="listBrand",required = false) List<String> listBrand,HttpServletRequest request)
+    {
+        load_dataNavbar.load_Navbar(model);
+        load_dataNavbar.get_Type(model,listBrand);
+        load_dataNavbar.get_Brand(model,"");
+        load_dataNavbar.topSeller(model);
+        Page<Products> products;
+        if(listBrand==null)
+        {
+            products=product_service.noBrand_selectByName_Products(keyword,page,20);
+        }
+        else
+        {
+            products=product_service.selectByName_Products(keyword,listBrand,page,20);
+        }
+        List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("listProducts", productsForPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("selectedBrands", listBrand);
+        String brandParam = (listBrand != null) ? "&listBrand=" + String.join("%2C", listBrand) : "";
+        model.addAttribute("requestURI", request.getRequestURI()+"?keyword="+keyword+brandParam);
+        return "web/home";
+    }
+    @GetMapping("/web/selectProductDiscount")
+    public String selectProductDiscount(Model model, @RequestParam(value="page", required=false, defaultValue="1")int page,
+                       @RequestParam(value="listBrand",required = false) List<String> listBrand,
+                       HttpServletRequest request)
+    {
+        load_dataNavbar.load_Navbar(model);
+        load_dataNavbar.get_Type(model,listBrand);
+        load_dataNavbar.get_Brand(model,"");
+        load_dataNavbar.topSeller(model);
+        Page<Products> products;
+        if(listBrand==null)
+        {
+            products=product_service.noBrand_getLisProductDiscount(page,20);
+        }
+        else
+        {
+            products=product_service.getListProduct_Discount(listBrand,page,20);
+        }
+        List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("listProducts", productsForPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("selectedBrands", listBrand);
+        String brandParam = (listBrand != null) ? "?listBrand=" + String.join("%2C", listBrand) : "";
+        model.addAttribute("requestURI", request.getRequestURI()+brandParam);
+        return "web/home";
+    }
+    @GetMapping("/web/selectProductByType")
+    public String selectProductByType(Model model,@RequestParam(value = "productType",required = false) String productType, @RequestParam(value="page", required=false, defaultValue="1")int page,
+                                      @RequestParam(value="listBrand",required = false) List<String> listBrand,
+                                      HttpServletRequest request)
+    {
+        load_dataNavbar.load_Navbar(model);
+        load_dataNavbar.get_Type(model,listBrand);
+        load_dataNavbar.get_Brand(model,productType);
+        load_dataNavbar.topSeller(model);
+        Page<Products> products;
+        if(listBrand==null)
+        {
+            products=product_service.noBrand_getListProductByType(productType,page,20);
+        }
+        else
+        {
+            products=product_service.getListProductByType(productType,listBrand,page,20);
+        }
+        List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("listProducts", productsForPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("selectedBrands", listBrand);
+        String brandParam = (listBrand != null) ? "&listBrand=" + String.join("%2C", listBrand) : "";
+        model.addAttribute("requestURI", request.getRequestURI()+"?productType="+productType+brandParam);
+        return "web/home";
+    }
+    public List<detail_Product> getContentProduct(Page<Products> productPage)
+    {
+        List<Products> productsForPage = productPage.getContent();
+        List<detail_Product> detailProducts = new ArrayList<>();
+        for (Products product : productsForPage)
+        {
+            product_Rating product_rating = comment_service.getRatingProduct(product.getID());
+            detail_Product detailProduct = new detail_Product(
+                    product.getID(),
+                    product.getProduct_name(),
+                    product.getImage_url(),
+                    product.getCost(),
+                    product.getDiscount(),
+                    product.getQuantity(),
+                    product.getProduct_type(),
+                    product_rating.getRate(),
+                    product_rating.getCounting()
+            );
+            detailProducts.add(detailProduct);
+        }
+        return detailProducts;
     }
     @GetMapping("/web/detail_product/{ID}")
     public String getDetail_Product(Model model,@PathVariable("ID") int ID)
     {
-        load_dataNavbar.load_navbarHome(model);
+        load_dataNavbar.load_Navbar(model);
         String username=account_service.getLoggedUserName();
         if(!username.equals("anonymousUser"))
         {
@@ -74,19 +183,11 @@ public class home_Controller
         BigDecimal price=product.getCost();
         int quantity=product.getQuantity();
         int discount=product.getDiscount();
-        BigDecimal discount_price = (new BigDecimal(discount).multiply(price))
-                .divide(new BigDecimal(100), 0, RoundingMode.FLOOR);
-        BigDecimal new_price=price.subtract(discount_price);
         String product_type=product.getProduct_type();
         product_Rating product_rating = comment_service.getRatingProduct(ID);
         double rating=product_rating.getRate();
         Long counting=product_rating.getCounting();
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedNewPrice = decimalFormat.format(new_price);
-        String formattedOldPrice = decimalFormat.format(price);
-        detail_Product detail_product = new detail_Product(ID,name,image_url,price,quantity,new_price,product_type,rating,counting);
-        model.addAttribute("formatted_newPrice", formattedNewPrice + "đ");
-        model.addAttribute("formatted_oldPrice", formattedOldPrice + "đ");
+        detail_Product detail_product = new detail_Product(ID,name,image_url,price,discount,quantity,product_type,rating,counting);
         model.addAttribute("detail_Product",detail_product);
         return "web/detail_product";
     }

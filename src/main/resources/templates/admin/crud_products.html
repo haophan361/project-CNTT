@@ -105,25 +105,19 @@
                         <div class="e-panel card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h6 class="mr-2"><span>Products</span><small class="px-1">Be a wise leader</small></h6>
+                                    <h6 class="mr-2"><span>Danh sách sản phẩm</span></h6>
                                 </div>
                                 <div class="e-table">
                                     <div class="table-responsive table-lg mt-3">
                                         <table class="table table-bordered table-hover" >
                                             <thead>
                                             <tr>
-                                                <th class="align-top">
-                                                    <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
-                                                        <input type="checkbox" class="custom-control-input" id="all-items">
-                                                        <label class="custom-control-label" for="all-items"></label>
-                                                    </div>
-                                                </th>
-                                                <th>Photo</th>
-                                                <th class>Name</th>
-                                                <th class="sortable">Cost</th>
-                                                <th>Product Type</th>
-                                                <th>Discount</th>
-                                                <th>Number</th>
+                                                <th>Hình ảnh</th>
+                                                <th class>Tên</th>
+                                                <th class="sortable">Giá</th>
+                                                <th>Loại sản phẩm</th>
+                                                <th>Giảm giá</th>
+                                                <th>Số lượng</th>
                                                 <th>Actions</th>
                                             </tr>
                                             </thead>
@@ -133,12 +127,6 @@
 
 
                                             <tr th:each="p : ${listProducts}">
-                                                <td class="align-middle">
-                                                    <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                                        <input type="checkbox" class="custom-control-input" th:id="'item-' + ${p.getID()}" />
-                                                        <label class="custom-control-label" th:for="'item-' + ${p.getID()}"></label>
-                                                    </div>
-                                                </td>
                                                 <td><img th:src="${p.image_url}" alt=""  style="width: 200px; height: 150px; object-fit: contain; border: 1px solid #ddd; padding: 5px;"></td>
                                                 <td th:text="${p.getProduct_name()}"></td>
                                                 <td th:text="${p.getCost()}"></td>
@@ -159,14 +147,15 @@
                                     <!-- Phân trang -->
                                     <div class="d-flex justify-content-center">
                                         <ul class="pagination mt-3 mb-0">
-                                            <li class="disabled page-item"><a href="#" class="page-link">‹</a></li>
-                                            <li class="active page-item"><a href="#" class="page-link">1</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">›</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">»</a></li>
+                                            <a th:href="@{${requestURI}(page=${currentPage - 1})}"
+                                               th:if="${currentPage > 1}">&laquo; Previous</a>
+                                            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                                <a class="page-link" th:href="@{${requestURI}(page=${i})}"
+                                                   th:text="${i}"
+                                                   th:classappend="${i == currentPage} ? 'active' : ''" >2</a>
+                                            </li>
+                                            <a th:href="@{${requestURI}(page=${currentPage + 1})}"
+                                               th:if="${currentPage < totalPages}">Next &raquo;</a>
                                         </ul>
                                     </div>
                                 </div>
@@ -185,60 +174,40 @@
                                 <div class="e-navlist e-navlist--active-bold">
                                     <ul class="nav flex-column">
                                         <li class="nav-item active">
-                                            <a href="#" class="nav-link"><span>All</span>&nbsp;<small>/&nbsp;32</small></a>
+                                            <a th:href="@{/admin/crudProducts}" class="nav-link"><span>Tất cả</span>&nbsp;<small th:text="'('+${countAll}+')'">&nbsp;</small></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link"><span>Active</span>&nbsp;<small>/&nbsp;16</small></a>
+                                            <a th:href="@{/admin/crudProducts/inStock}" class="nav-link"><span>Còn hàng</span>&nbsp;<small th:text="'('+${count_inStock}+')'">&nbsp;</small></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link"><span>Selected</span>&nbsp;<small>/&nbsp;0</small></a>
+                                            <a th:href="@{/admin/crudProducts/outOfStock}" class="nav-link"><span>Hết hàng</span>&nbsp;<small th:text="'('+${count_outOfStock}+')'">&nbsp;</small></a>
                                         </li>
                                     </ul>
                                 </div>
                                 <hr class="my-3">
                                 <div>
-                                    <form th:action="@{/search}" method="get">
+                                    <form th:action="@{/admin/searchByName}" method="get">
                                         <div class="form-group">
-                                            <label>Search by Name:</label>
+                                            <label>Tìm kiếm theo tên:</label>
                                             <div>
-                                                <input class="form-control w-100" th:name="keyword" type="text" placeholder="Name">
+                                                <input class="form-control w-100" th:name="keyword" type="text" placeholder="Tên sản phẩm">
                                             </div>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </form>
-                                    <form th:action="@{/admin/searchByType}" method="get">
+                                    <form th:action="@{/admin/searchByProductType}" method="get">
                                         <div class="form-group">
-                                            <label>Search by Type:</label>
+                                            <label>Tìm kiếm theo loại:</label>
                                             <div>
-                                                <input class="form-control w-100" th:name="keyword" type="text" placeholder="Name">
+                                                <select class="form-control w-100" th:name="productType">
+                                                    <option th:each="type, iter : ${listType}" th:value="${type}" th:text="${type}"
+                                                            th:selected="${iter.index == 0}"></option>
+                                                </select>
                                             </div>
                                         </div>
-
-                                        <button type="submit" class="btn btn-primary">Search By Type</button>
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                     </form>
-                                </div>
-                                <hr class="my-3">
-                                <div>
-                                    <label>Status:</label>
-                                    <div class="px-2">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="user-status" id="users-status-disabled">
-                                            <label class="custom-control-label" for="users-status-disabled">Disabled</label>
-                                        </div>
-                                    </div>
-                                    <div class="px-2">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="user-status" id="users-status-active">
-                                            <label class="custom-control-label" for="users-status-active">Active</label>
-                                        </div>
-                                    </div>
-                                    <div class="px-2">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="user-status" id="users-status-any" checked>
-                                            <label class="custom-control-label" for="users-status-any">Any</label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

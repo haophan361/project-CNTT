@@ -71,6 +71,20 @@
                                 <div class="header">
                                     <h4 class="title">Danh sách hóa đơn</h4>
                                 </div>
+                                <div class="text-center">
+                                    <form th:action="@{/admin/searchBillBy_cusName}" method="get" class="form-inline">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="searchInput">Tìm kiếm </label>
+                                            <div class="input-group" style="width: 400px;">
+                                                <input type="text" class="form-control" th:name="cus_name" id="searchInput" placeholder="Tên người dùng"
+                                                       style="background-color: #f8f9fa; border-color: #ddd;">
+                                                <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-danger">Search</button>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                                 <div class="content table-responsive table-full-width">
                                     <form id="deleteBillForm" method="POST" th:action="@{/admin/deleteBill}" onsubmit="return getCheckBox(this)">
                                         <table class="table table-striped">
@@ -113,6 +127,23 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="store-filter clearfix" style="margin-top: 20px">
+                        <ul class="store-pagination">
+                            <!-- Previous Page -->
+                            <a th:href="@{${requestURI}(page=${currentPage - 1})}"
+                               th:if="${currentPage > 1}">&laquo; Previous</a>
+                            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                <li>
+                                    <a th:href="@{${requestURI}(page=${i})}"
+                                       th:text="${i}"
+                                       th:classappend="${i == currentPage} ? 'active' : ''"></a>
+                                </li>
+                            </span>
+                            <!-- Next Page -->
+                            <a th:href="@{${requestURI}(page=${currentPage + 1})}"
+                               th:if="${currentPage < totalPages}">Next &raquo;</a>
+                        </ul>
                     </div>
                 </div>
             </div>
