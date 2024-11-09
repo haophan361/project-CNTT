@@ -33,13 +33,25 @@ public class DashBoard
         model.addAttribute("totalProduct",totalProduct);
 
         Double totalRevenue=bill_service.totalRevenue();
+        if(totalRevenue==null)
+        {
+            totalRevenue=0.0;
+        }
         String formattedPrice=decimalFormat.format(totalRevenue);
         model.addAttribute("totalRevenue",formattedPrice);
 
         Long totalCart=cart_service.totalCart();
+        if(totalCart==null)
+        {
+            totalCart=0L;
+        }
         model.addAttribute("totalCart",totalCart);
 
         Long totalCustomer=customer_service.totalCustomers();
+        if(totalCustomer==null)
+        {
+            totalCustomer=0L;
+        }
         model.addAttribute("totalCustomer",totalCustomer);
         List<String> productTypes=product_service.getProductType();
         model.addAttribute("productType",productTypes);
@@ -54,7 +66,12 @@ public class DashBoard
         List<revenue_productType> revenueProductTypeList = new ArrayList<>();
         for(String type : productTypes)
         {
-            Double revenue_percent=(billDetail_service.totalRevenueByProductType(type)/totalRevenue)*100;
+            Double revenue_percent=0.0;
+            Double revenue=billDetail_service.totalRevenueByProductType(type);
+            if(revenue!=null)
+            {
+                revenue_percent=revenue/totalRevenue*100;
+            }
             revenueProductTypeList.add(new revenue_productType(type,revenue_percent));
         }
         return revenueProductTypeList;
@@ -80,7 +97,10 @@ public class DashBoard
         for(String product_name : product_names)
         {
             Double revenue=billDetail_service.totalRevenueByProduct(product_name);
-            topSellerProductList.add(new topSeller_Product(product_name,revenue));
+            if(revenue!=null)
+            {
+                topSellerProductList.add(new topSeller_Product(product_name,revenue));
+            }
         }
         topSellerProductList.sort(Comparator.comparing(topSeller_Product::getRevenue_product).reversed());
         if (numberProduct < topSellerProductList.size())
