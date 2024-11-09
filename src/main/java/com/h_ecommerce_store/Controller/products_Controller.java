@@ -1,7 +1,9 @@
 package com.h_ecommerce_store.Controller;
 
-import com.h_ecommerce_store.DTO.response.detail_Product;
-import com.h_ecommerce_store.Model.Products;
+import com.h_ecommerce_store.Entity.Bills;
+import com.h_ecommerce_store.Entity.Products;
+import com.h_ecommerce_store.Service.billDetail_Service;
+import com.h_ecommerce_store.Service.bill_Service;
 import com.h_ecommerce_store.Service.file_Service;
 import com.h_ecommerce_store.Service.product_Service;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 @RequiredArgsConstructor
 @Controller
@@ -20,6 +24,8 @@ public class products_Controller
 {
     private final product_Service product_service;
     private final file_Service file_Service;
+    private final billDetail_Service billDetail_service;
+    private final bill_Service bill_service;
     @PostMapping("/admin/saveProducts")
     public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile,@RequestParam("description") MultipartFile descriptionFile)
     {
@@ -61,11 +67,41 @@ public class products_Controller
         model.addAttribute("product",product);
         return "admin/updateProduct";
     }
-    @GetMapping("/admin/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable (value = "id") int id)
+
+    @PostMapping("/admin/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable(value = "id") int id, Model model)
     {
-        this.product_service.deleteProductsById(id);
-        return "redirect:/admin/crudProducts";
+        List<Integer> billIDs = billDetail_service.getBillIDByProductID(id);
+        List<Bills> bills= new ArrayList<>();
+        for(Integer billID : billIDs)
+        {
+            Bills bill=bill_service.getBillByID(billID);
+            bills.add(bill);
+        }
+        List<String> constraint=new ArrayList<>();
+        for (Bills bill : bills)
+        {
+            LocalDateTime receiveDate = bill.getReceive_date();
+            if (receiveDate != null)
+            {
+                LocalDateTime now=LocalDateTime.now();
+                long days=ChronoUnit.DAYS.between(receiveDate,now);
+                if(days<30)
+                {
+                    constraint.add("Hóa đơn "+bill.getID()+" phải được hoàn thành thủ tục hơn 30 ngày mới có thể xóa");
+                }
+            }
+        }
+        if(constraint.isEmpty())
+        {
+            product_service.deleteProductsById(id);
+            return "redirect:/admin/crudProducts";
+        }
+        else
+        {
+            model.addAttribute("error_message",constraint);
+            return "/web/error";
+        }
     }
     @GetMapping("/admin/crudProducts")
     public String crudProducts(Model model,@RequestParam(value="page", required=false, defaultValue="1")int page,

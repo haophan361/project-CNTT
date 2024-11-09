@@ -1,15 +1,14 @@
 package com.h_ecommerce_store.Util;
 
 import com.h_ecommerce_store.DTO.response.*;
-import com.h_ecommerce_store.Model.Accounts;
-import com.h_ecommerce_store.Model.Products;
-import com.h_ecommerce_store.Model.Shopping_Carts;
+import com.h_ecommerce_store.Entity.Accounts;
+import com.h_ecommerce_store.Entity.Products;
+import com.h_ecommerce_store.Entity.Shopping_Carts;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.billDetail_Service;
 import com.h_ecommerce_store.Service.cart_Service;
 import com.h_ecommerce_store.Service.product_Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import java.util.ArrayList;

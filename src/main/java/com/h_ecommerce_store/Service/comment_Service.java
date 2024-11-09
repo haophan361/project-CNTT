@@ -2,7 +2,7 @@ package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.DTO.response.comment_Product;
 import com.h_ecommerce_store.DTO.response.product_Rating;
-import com.h_ecommerce_store.Model.Comments;
+import com.h_ecommerce_store.Entity.Comments;
 import com.h_ecommerce_store.Repository.comment_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

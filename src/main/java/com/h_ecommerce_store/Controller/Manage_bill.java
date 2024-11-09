@@ -2,8 +2,8 @@ package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.response.listBill;
 import com.h_ecommerce_store.DTO.response.listBillDetail;
-import com.h_ecommerce_store.Model.BillDetails;
-import com.h_ecommerce_store.Model.Bills;
+import com.h_ecommerce_store.Entity.BillDetails;
+import com.h_ecommerce_store.Entity.Bills;
 import com.h_ecommerce_store.Service.billDetail_Service;
 import com.h_ecommerce_store.Service.bill_Service;
 import jakarta.servlet.http.HttpServletRequest;

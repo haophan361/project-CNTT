@@ -1,4 +1,4 @@
-package com.h_ecommerce_store.Model;
+package com.h_ecommerce_store.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

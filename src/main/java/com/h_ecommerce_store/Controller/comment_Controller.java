@@ -1,9 +1,9 @@
 package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.postComment;
-import com.h_ecommerce_store.Model.Comments;
-import com.h_ecommerce_store.Model.Customers;
-import com.h_ecommerce_store.Model.Products;
+import com.h_ecommerce_store.Entity.Comments;
+import com.h_ecommerce_store.Entity.Customers;
+import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.comment_Service;
 import com.h_ecommerce_store.Service.customer_Service;

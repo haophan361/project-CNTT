@@ -1,9 +1,8 @@
-package com.h_ecommerce_store.Model;
+package com.h_ecommerce_store.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package com.h_ecommerce_store.Controller;
 import com.h_ecommerce_store.DTO.request.changePassword;
-import com.h_ecommerce_store.Model.Customers;
+import com.h_ecommerce_store.Entity.Customers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.h_ecommerce_store.Model.Accounts;
+import com.h_ecommerce_store.Entity.Accounts;
 import com.h_ecommerce_store.DTO.request.Register;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.customer_Service;

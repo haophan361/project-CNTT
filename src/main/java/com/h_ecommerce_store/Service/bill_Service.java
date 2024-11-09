@@ -1,7 +1,7 @@
 package com.h_ecommerce_store.Service;
 
-import com.h_ecommerce_store.Model.BillDetails;
-import com.h_ecommerce_store.Model.Bills;
+import com.h_ecommerce_store.Entity.BillDetails;
+import com.h_ecommerce_store.Entity.Bills;
 import com.h_ecommerce_store.Repository.Bill_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

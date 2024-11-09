@@ -1,5 +1,5 @@
 package com.h_ecommerce_store.Service;
-import com.h_ecommerce_store.Model.Customers;
+import com.h_ecommerce_store.Entity.Customers;
 import com.h_ecommerce_store.Repository.Customer_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

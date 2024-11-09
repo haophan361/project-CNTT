@@ -86,7 +86,7 @@
                                     </form>
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                    <form id="deleteBillForm" method="POST" th:action="@{/admin/deleteBill}" onsubmit="return getCheckBox(this)">
+                                    <form id="deleteBillForm" method="POST" th:action="@{/admin/deleteBill}">
                                         <table class="table table-striped">
                                             <thead>
                                             <tr>
@@ -121,7 +121,7 @@
                                             </tbody>
                                         </table>
                                         <div style="float: right; margin-top: 30px">
-                                            <button class="btn btn-danger" type="submit">Xóa hóa đơn</button>
+                                            <button class="btn btn-danger" type="button" onclick="confirmDeleteBill(event)">Xóa hóa đơn</button>
                                         </div>
                                     </form>
                                 </div>

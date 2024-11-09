@@ -1,6 +1,6 @@
 package com.h_ecommerce_store.Service;
 
-import com.h_ecommerce_store.Model.Products;
+import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Repository.Product_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,10 +14,9 @@ import java.util.Optional;
 @Service
 public class product_Service {
     private final Product_Repository productRepository;
-
     public void deleteProductsById(int ID )
     {
-        this.productRepository.deleteById( ID);
+        productRepository.deleteById( ID);
     }
     public Products getProductsByID(int ID)
     {

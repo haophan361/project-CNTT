@@ -54,7 +54,7 @@ function getCheckBox(source)
                 bootbox.alert(
                     {
                     message: 'Hóa đơn có mã là ' + billID + ' phải được hoàn tất giao hàng trên 30 ngày mới có thể xóa',
-                    size: 'medium',
+                    size: 'large',
                     backdrop: false
                 });
                 return false;
@@ -67,11 +67,44 @@ function getCheckBox(source)
         bootbox.alert(
             {
             message: 'Vui lòng chọn ít nhất một hóa đơn để xóa.',
-            size: 'medium',
+            size: 'large',
             backdrop: true
         });
         return false;
     }
     return true;
 }
-
+function confirmDeleteBill(event)
+{
+    event.preventDefault();
+    if (!getCheckBox(document.getElementById("deleteBillForm")))
+    {
+        return;
+    }
+    bootbox.confirm({
+        title: "Xác nhận xóa đơn hàng",
+        message: "Bạn có muốn xóa các hóa đơn này không",
+        backdrop: false,
+        buttons:
+            {
+                cancel:
+                    {
+                        label: '<i class="fa fa-times"></i> Không'
+                    },
+                confirm:
+                    {
+                        label: '<i class="fa fa-check"></i> Xác nhận'
+                    }
+            },
+        callback: function (result)
+        {
+            if (result)
+            {
+                document.getElementById("deleteBillForm").submit();
+            }
+        }
+    }).on('shown.bs.modal', function()
+    {
+        $(this).find('.modal-dialog').css("width","800px");
+    });
+}

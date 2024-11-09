@@ -1,25 +1,21 @@
 package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.response.list_ShoppingCart;
-import com.h_ecommerce_store.Model.Accounts;
-import com.h_ecommerce_store.Model.Customers;
-import com.h_ecommerce_store.Model.Products;
-import com.h_ecommerce_store.Model.Shopping_Carts;
+import com.h_ecommerce_store.Entity.Accounts;
+import com.h_ecommerce_store.Entity.Customers;
+import com.h_ecommerce_store.Entity.Products;
+import com.h_ecommerce_store.Entity.Shopping_Carts;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.cart_Service;
 import com.h_ecommerce_store.Service.customer_Service;
 import com.h_ecommerce_store.Service.product_Service;
 import com.h_ecommerce_store.Util.Load_dataNavbar;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 @RequiredArgsConstructor
 @Controller

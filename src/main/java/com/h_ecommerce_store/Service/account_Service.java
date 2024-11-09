@@ -1,6 +1,6 @@
 package com.h_ecommerce_store.Service;
 
-import com.h_ecommerce_store.Model.Accounts;
+import com.h_ecommerce_store.Entity.Accounts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

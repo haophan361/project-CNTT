@@ -1,7 +1,7 @@
 package com.h_ecommerce_store.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.h_ecommerce_store.Model.Accounts;
+import com.h_ecommerce_store.Entity.Accounts;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

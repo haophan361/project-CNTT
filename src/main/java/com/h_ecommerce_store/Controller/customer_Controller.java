@@ -1,7 +1,7 @@
 package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.updateProfile;
-import com.h_ecommerce_store.Model.Customers;
+import com.h_ecommerce_store.Entity.Customers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

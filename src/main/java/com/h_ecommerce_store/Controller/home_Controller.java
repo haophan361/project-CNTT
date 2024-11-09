@@ -2,8 +2,8 @@ package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.postComment;
 import com.h_ecommerce_store.DTO.response.product_Rating;
-import com.h_ecommerce_store.Model.Products;
-import com.h_ecommerce_store.Model.Shopping_Carts;
+import com.h_ecommerce_store.Entity.Products;
+import com.h_ecommerce_store.Entity.Shopping_Carts;
 import com.h_ecommerce_store.Service.*;
 import com.h_ecommerce_store.Util.Load_dataNavbar;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +53,7 @@ public class home_Controller
             products=product_service.getListProductByBrands(listBrand,page,20);
         }
         List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("url","home");
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", products.getTotalPages());
@@ -107,6 +108,7 @@ public class home_Controller
             products=product_service.getListProduct_Discount(listBrand,page,20);
         }
         List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("url","discount");
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", products.getTotalPages());
@@ -134,6 +136,7 @@ public class home_Controller
             products=product_service.getListProductByType(productType,listBrand,page,20);
         }
         List<detail_Product> productsForPage = getContentProduct(products);
+        model.addAttribute("url",productType);
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", products.getTotalPages());

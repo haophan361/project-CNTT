@@ -1,12 +1,9 @@
 package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.DTO.response.list_ShoppingCart;
-import com.h_ecommerce_store.Model.Shopping_Carts;
+import com.h_ecommerce_store.Entity.Shopping_Carts;
 import com.h_ecommerce_store.Repository.Cart_Repository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;

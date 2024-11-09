@@ -1,7 +1,7 @@
 package com.h_ecommerce_store.Repository;
 
 import com.h_ecommerce_store.DTO.response.comment_Product;
-import com.h_ecommerce_store.Model.Comments;
+import com.h_ecommerce_store.Entity.Comments;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

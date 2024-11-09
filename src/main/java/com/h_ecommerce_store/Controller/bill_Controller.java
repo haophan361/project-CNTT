@@ -5,7 +5,7 @@ import com.h_ecommerce_store.DTO.response.listBillDetail;
 import com.h_ecommerce_store.Util.Load_dataNavbar;
 import com.h_ecommerce_store.DTO.request.checkout_Bill;
 import com.h_ecommerce_store.DTO.request.checkout_BillDetail;
-import com.h_ecommerce_store.Model.*;
+import com.h_ecommerce_store.Entity.*;
 import com.h_ecommerce_store.Service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

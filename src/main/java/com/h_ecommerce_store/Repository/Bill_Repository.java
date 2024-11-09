@@ -1,6 +1,6 @@
 package com.h_ecommerce_store.Repository;
 
-import com.h_ecommerce_store.Model.Bills;
+import com.h_ecommerce_store.Entity.Bills;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

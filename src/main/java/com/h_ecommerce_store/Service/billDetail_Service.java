@@ -1,8 +1,8 @@
 package com.h_ecommerce_store.Service;
 
-import com.h_ecommerce_store.Model.BillDetails;
-import com.h_ecommerce_store.Model.Bills;
-import com.h_ecommerce_store.Model.Products;
+import com.h_ecommerce_store.Entity.BillDetails;
+import com.h_ecommerce_store.Entity.Bills;
+import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Repository.BillDetail_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,5 +45,9 @@ public class billDetail_Service
     public List<Products> TopProductsSeller()
     {
         return billDetail_repository.TopProductsSeller();
+    }
+    public List<Integer> getBillIDByProductID(int productID)
+    {
+        return billDetail_repository.getBillIDByProductID(productID);
     }
 }

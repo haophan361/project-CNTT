@@ -130,12 +130,18 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
-                    <li class="active"><a th:href="@{/}">Trang chủ</a></li>
-                    <li><a th:href="@{/web/selectProductDiscount}">Giảm giá</a></li>
-                    <li th:each="type: ${typeProduct}">
+                    <li th:classappend="${url == 'home'} ? 'active'">
+                        <a th:href="@{/}">Trang chủ</a>
+                    </li>
+                    <li th:classappend="${url == 'discount'} ? 'active'">
+                        <a th:href="@{/web/selectProductDiscount}">Giảm giá</a>
+                    </li>
+                    <li th:each="type: ${typeProduct}"
+                        th:classappend="${url == type} ? 'active'">
                         <a th:href="@{/web/selectProductByType(productType=${type})}" th:text="${type}"></a>
                     </li>
                 </ul>
+
                 <!-- /NAV -->
             </div>
             <!-- /responsive-nav -->

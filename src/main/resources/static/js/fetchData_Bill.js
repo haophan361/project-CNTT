@@ -51,7 +51,7 @@ function updateStatus(source)
         })
     }
 }
-function confirmCancel(event)
+function confirmDeleteBill(event)
 {
     event.preventDefault();
     bootbox.confirm({
