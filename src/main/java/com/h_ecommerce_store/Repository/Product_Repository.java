@@ -46,5 +46,6 @@ public interface Product_Repository extends JpaRepository<Products,Integer>
     Page<Products> getLisProductDiscount(@Param("brands") List<String> brands,Pageable pageable);
     @Query("SELECT p FROM Products p WHERE p.brand IN :brands")
     Page<Products> getListProductByBrands(@Param("brands") List<String> brands, Pageable pageable);
-
+    @Query("SELECT p FROM Products p WHERE p.product_type= :productType AND p.ID!= :ID")
+    List<Products> getRelatedProductByType(@Param("productType") String productType, @Param("ID") Integer ID);
 }

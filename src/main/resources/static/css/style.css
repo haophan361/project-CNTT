@@ -827,6 +827,7 @@ textarea.input {
   box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  min-height: 380px;
 }
 
 .product:hover {
@@ -835,11 +836,12 @@ textarea.input {
 }
 
 .product .product-img {
-  position: relative;
+  position: relative ;
 }
 
 .product .product-img>img {
   width: 100%;
+  max-height: 170px;
 }
 
 .product .product-img .product-label {
@@ -1245,19 +1247,6 @@ textarea.input {
 .store-filter {
   margin-bottom: 15px;
   margin-top: 15px;
-}
-
-/*-- Store Sort --*/
-
-.store-sort {
-  display: inline-block;
-}
-
-.store-sort label {
-  font-weight: 500;
-  font-size: 12px;
-  text-transform: uppercase;
-  margin-right: 15px;
 }
 
 /*-- Store Grid --*/

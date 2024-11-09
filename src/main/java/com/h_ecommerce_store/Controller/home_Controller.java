@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.h_ecommerce_store.DTO.response.detail_Product;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class home_Controller
         {
             products=product_service.getListProductByBrands(listBrand,page,20);
         }
-        List<detail_Product> productsForPage = getContentProduct(products);
+        List<detail_Product> productsForPage = getContentProduct(products.getContent());
         model.addAttribute("url","home");
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
@@ -80,7 +79,7 @@ public class home_Controller
         {
             products=product_service.selectByName_Products(keyword,listBrand,page,20);
         }
-        List<detail_Product> productsForPage = getContentProduct(products);
+        List<detail_Product> productsForPage = getContentProduct(products.getContent());
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", products.getTotalPages());
@@ -107,7 +106,7 @@ public class home_Controller
         {
             products=product_service.getListProduct_Discount(listBrand,page,20);
         }
-        List<detail_Product> productsForPage = getContentProduct(products);
+        List<detail_Product> productsForPage = getContentProduct(products.getContent());
         model.addAttribute("url","discount");
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
@@ -135,7 +134,7 @@ public class home_Controller
         {
             products=product_service.getListProductByType(productType,listBrand,page,20);
         }
-        List<detail_Product> productsForPage = getContentProduct(products);
+        List<detail_Product> productsForPage = getContentProduct(products.getContent());
         model.addAttribute("url",productType);
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
@@ -145,11 +144,10 @@ public class home_Controller
         model.addAttribute("requestURI", request.getRequestURI()+"?productType="+productType+brandParam);
         return "web/home";
     }
-    public List<detail_Product> getContentProduct(Page<Products> productPage)
+    public List<detail_Product> getContentProduct(List<Products> productPage)
     {
-        List<Products> productsForPage = productPage.getContent();
         List<detail_Product> detailProducts = new ArrayList<>();
-        for (Products product : productsForPage)
+        for (Products product : productPage)
         {
             product_Rating product_rating = comment_service.getRatingProduct(product.getID());
             detail_Product detailProduct = new detail_Product(
@@ -168,30 +166,47 @@ public class home_Controller
         return detailProducts;
     }
     @GetMapping("/web/detail_product/{ID}")
-    public String getDetail_Product(Model model,@PathVariable("ID") int ID)
-    {
+    public String getDetail_Product(Model model, @PathVariable("ID") int ID) {
         load_dataNavbar.load_Navbar(model);
-        String username=account_service.getLoggedUserName();
-        if(!username.equals("anonymousUser"))
-        {
-            Shopping_Carts cart=cart_service.getCartByproduct_account(ID,username);
-            if(cart!=null)
-            {
-                model.addAttribute("selected",cart.getQuantity());
+        String username = account_service.getLoggedUserName();
+        if (!username.equals("anonymousUser")) {
+            Shopping_Carts cart = cart_service.getCartByproduct_account(ID, username);
+            if (cart != null) {
+                model.addAttribute("selected", cart.getQuantity());
             }
         }
+
         Products product = product_service.getProductsByID(ID);
-        String name=product.getProduct_name();
-        String image_url=product.getImage_url();
-        BigDecimal price=product.getCost();
-        int quantity=product.getQuantity();
-        int discount=product.getDiscount();
-        String product_type=product.getProduct_type();
+        List<Products> relatedProducts = product_service.getRelatedProductByType(product.getProduct_type(), ID);
+
+        // Sắp xếp các sản phẩm liên quan theo khoảng cách giữa ID của chúng và ID hiện tại
+        relatedProducts.sort((p1, p2) -> Integer.compare(Math.abs(p1.getID() - ID), Math.abs(p2.getID() - ID)));
+
+        // Giữ lại tối đa 4 sản phẩm từ danh sách đã sắp xếp
+        if (relatedProducts.size() > 4) {
+            relatedProducts = relatedProducts.subList(0, 4);
+        }
+
+        List<detail_Product> products = getContentProduct(relatedProducts);
         product_Rating product_rating = comment_service.getRatingProduct(ID);
-        double rating=product_rating.getRate();
-        Long counting=product_rating.getCounting();
-        detail_Product detail_product = new detail_Product(ID,name,image_url,price,discount,quantity,product_type,rating,counting);
-        model.addAttribute("detail_Product",detail_product);
+        double rating = product_rating.getRate();
+        Long counting = product_rating.getCounting();
+
+        detail_Product detail_product = new detail_Product(
+                ID,
+                product.getProduct_name(),
+                product.getImage_url(),
+                product.getCost(),
+                product.getDiscount(),
+                product.getQuantity(),
+                product.getProduct_type(),
+                rating,
+                counting
+        );
+
+        model.addAttribute("relatedProducts", products);
+        model.addAttribute("detail_Product", detail_product);
+
         return "web/detail_product";
     }
     @GetMapping("/web/description_product/{ID}")

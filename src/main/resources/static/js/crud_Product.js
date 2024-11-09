@@ -1,5 +1,6 @@
 function confirmDelete(event)
 {
+    const productID = event.target.closest("form").querySelector("input[name='productID']").getAttribute("data-id");
     event.preventDefault();
     bootbox.confirm({
         title: "Xác nhận xóa sản phẩm",
@@ -20,7 +21,7 @@ function confirmDelete(event)
         {
             if (result)
             {
-                document.getElementById("deleteProduct").submit();
+                document.getElementById("deleteProduct_"+productID).submit();
             }
         }
     }).on('shown.bs.modal', function()

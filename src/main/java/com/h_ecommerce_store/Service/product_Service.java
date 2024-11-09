@@ -149,4 +149,8 @@ public class product_Service {
         Pageable pageable = PageRequest.of(page-1, size);
         return productRepository.getLisProductDiscount(brands,pageable);
     }
+    public List<Products> getRelatedProductByType(String productType,int ID)
+    {
+        return productRepository.getRelatedProductByType(productType,ID);
+    }
 }

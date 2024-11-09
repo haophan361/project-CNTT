@@ -123,8 +123,9 @@
                                                 <td class="text-center align-middle">
                                                     <div class="btn-group align-top">
                                                         <a th:href="@{/admin/editProduct/{id}(id=${p.getID()})}" class="btn btn-sm btn-outline-secondary badge">Edit</a>
-                                                        <form th:action="@{/admin/deleteProduct/{id}(id=${p.getID()})}" id="deleteProduct" method="POST" style="display:inline;font-size: 14px">
-                                                            <button type="button" class="btn btn-sm btn-outline-secondary badge" onclick="confirmDelete(event)">
+                                                        <form th:action="@{/admin/deleteProduct}" th:id="'deleteProduct_'+${p.ID}" method="POST" style="display:inline;font-size: 14px">
+                                                            <input type="hidden" name="productID" th:value="${p.ID}" th:data-id="${p.ID}">
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary badge" onclick="confirmDelete(event,)">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         </form>

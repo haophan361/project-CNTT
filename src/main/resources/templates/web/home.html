@@ -97,7 +97,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 											</div>
 											<div class="product-body">
 												<p class="product-category" th:text="${product.getProduct_type()}"></p>
-												<h3 class="product-name" th:text="${product.getProduct_name()}"></h3>
+												<h4 class="product-name" th:text="${product.getProduct_name()}"></h4>
 												<h4 class="product-price" th:text="${product.formattedNewPrice} + 'đ'"></h4>
 												<del class="product-old-price" th:text="${product.formattedOldPrice} +'đ'"></del>
 												<div class="product-rating">

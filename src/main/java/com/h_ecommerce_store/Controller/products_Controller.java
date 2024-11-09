@@ -68,10 +68,10 @@ public class products_Controller
         return "admin/updateProduct";
     }
 
-    @PostMapping("/admin/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable(value = "id") int id, Model model)
+    @PostMapping("/admin/deleteProduct")
+    public String deleteProduct(@RequestParam(value = "productID") int ID, Model model)
     {
-        List<Integer> billIDs = billDetail_service.getBillIDByProductID(id);
+        List<Integer> billIDs = billDetail_service.getBillIDByProductID(ID);
         List<Bills> bills= new ArrayList<>();
         for(Integer billID : billIDs)
         {
@@ -94,7 +94,7 @@ public class products_Controller
         }
         if(constraint.isEmpty())
         {
-            product_service.deleteProductsById(id);
+            product_service.deleteProductsById(ID);
             return "redirect:/admin/crudProducts";
         }
         else
