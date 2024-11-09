@@ -15,9 +15,9 @@ public interface BillDetail_Repository extends JpaRepository<BillDetails, Intege
     List<BillDetails> getBillDetailsByBillId(int billID);
     @Query("SELECT SUM(bd.cost) FROM BillDetails bd WHERE bd.product.product_type= :productType")
     Double totalRevenueByProductType(String productType);
-    @Query("SELECT SUM(bd.cost) FROM BillDetails bd WHERE bd.product.product_name= :product_name")
+    @Query("SELECT SUM(bd.cost) FROM BillDetails bd WHERE bd.product.product_name= :product_name AND bd.bill.status=1")
     Double totalRevenueByProduct(String product_name);
-    @Query("SELECT bd.product, COUNT(bd.product) AS quantity  FROM BillDetails bd GROUP BY bd.product ORDER BY quantity DESC")
+    @Query("SELECT bd.product, COUNT(bd.product) AS quantity FROM BillDetails bd WHERE bd.bill.status=1 GROUP BY bd.product ORDER BY quantity DESC")
     List<Products> TopProductsSeller();
     @Query("SELECT DISTINCT(bd.bill.ID) FROM BillDetails bd WHERE bd.product.ID= :productID")
     List<Integer> getBillIDByProductID(int productID);

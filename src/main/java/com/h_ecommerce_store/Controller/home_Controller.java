@@ -166,32 +166,30 @@ public class home_Controller
         return detailProducts;
     }
     @GetMapping("/web/detail_product/{ID}")
-    public String getDetail_Product(Model model, @PathVariable("ID") int ID) {
+    public String getDetail_Product(Model model, @PathVariable("ID") int ID)
+    {
         load_dataNavbar.load_Navbar(model);
         String username = account_service.getLoggedUserName();
-        if (!username.equals("anonymousUser")) {
+        if (!username.equals("anonymousUser"))
+        {
             Shopping_Carts cart = cart_service.getCartByproduct_account(ID, username);
-            if (cart != null) {
+            if (cart != null)
+            {
                 model.addAttribute("selected", cart.getQuantity());
             }
         }
-
         Products product = product_service.getProductsByID(ID);
         List<Products> relatedProducts = product_service.getRelatedProductByType(product.getProduct_type(), ID);
 
-        // Sắp xếp các sản phẩm liên quan theo khoảng cách giữa ID của chúng và ID hiện tại
         relatedProducts.sort((p1, p2) -> Integer.compare(Math.abs(p1.getID() - ID), Math.abs(p2.getID() - ID)));
-
-        // Giữ lại tối đa 4 sản phẩm từ danh sách đã sắp xếp
-        if (relatedProducts.size() > 4) {
+        if (relatedProducts.size() > 4)
+        {
             relatedProducts = relatedProducts.subList(0, 4);
         }
-
         List<detail_Product> products = getContentProduct(relatedProducts);
         product_Rating product_rating = comment_service.getRatingProduct(ID);
         double rating = product_rating.getRate();
         Long counting = product_rating.getCounting();
-
         detail_Product detail_product = new detail_Product(
                 ID,
                 product.getProduct_name(),
@@ -203,10 +201,8 @@ public class home_Controller
                 rating,
                 counting
         );
-
         model.addAttribute("relatedProducts", products);
         model.addAttribute("detail_Product", detail_product);
-
         return "web/detail_product";
     }
     @GetMapping("/web/description_product/{ID}")
