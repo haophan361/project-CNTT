@@ -33,13 +33,25 @@ public class DashBoard
         model.addAttribute("totalProduct",totalProduct);
 
         Double totalRevenue=bill_service.totalRevenue();
+        if(totalRevenue==null)
+        {
+            totalRevenue=0.0;
+        }
         String formattedPrice=decimalFormat.format(totalRevenue);
         model.addAttribute("totalRevenue",formattedPrice);
 
         Long totalCart=cart_service.totalCart();
+        if(totalCart==null)
+        {
+            totalCart=0L;
+        }
         model.addAttribute("totalCart",totalCart);
 
         Long totalCustomer=customer_service.totalCustomers();
+        if(totalCustomer==null)
+        {
+            totalCustomer=0L;
+        }
         model.addAttribute("totalCustomer",totalCustomer);
         List<String> productTypes=product_service.getProductType();
         model.addAttribute("productType",productTypes);
