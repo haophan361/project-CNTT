@@ -1,7 +1,5 @@
 package com.h_ecommerce_store.Controller;
-
 import com.h_ecommerce_store.DTO.response.list_ShoppingCart;
-import com.h_ecommerce_store.Entity.Accounts;
 import com.h_ecommerce_store.Entity.Customers;
 import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Entity.Shopping_Carts;
@@ -59,7 +57,6 @@ public class cart_Controller
     {
         load_dataNavbar.load_Navbar(model);
         String username=account_service.getLoggedUserName();
-        Accounts account=account_service.getAccount(username);
         List<Shopping_Carts> shopping_carts =cart_service.getCart_Customer(username);
         List<list_ShoppingCart> list_Cart=cart_service.getCart_Customer(shopping_carts);
         model.addAttribute("number_type", cart_service.getCartCountByCus(username));
