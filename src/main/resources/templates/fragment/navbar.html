@@ -7,12 +7,12 @@
                       <i class="fa fa-user-o"></i> Đăng nhập
                     </a>
                 </li>
-                <li th:if="${role}=='ROLE_ADMIN'"><a th:href="@{/admin/crudProducts}">Manage Products</a></li>
+                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/crudProducts}">Manage Products</a></li>
                 <li sec:authorize="isAuthenticated()" class="dropdown">
-                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-user-o"></i> My Account
+                    <a th:if="${role} !='ROLE_ADMIN'" href="#" class="dropdown-toggle" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-o"></i> Thông tin cá nhân
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: auto">
+                    <ul  class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: auto">
                         <li><a class="dropdown-item" th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
                     </ul>

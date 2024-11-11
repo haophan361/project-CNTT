@@ -9,9 +9,9 @@
                         <i class="fa fa-user-o"></i> Đăng nhập
                     </a>
                 </li>
-                <li th:if="${role}=='ROLE_ADMIN'"><a th:href="@{/admin/crudProducts}">Manage Products</a></li>
+                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/crudProducts}">Manage Products</a></li>
                 <li sec:authorize="isAuthenticated()" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a th:if="${role} !='ROLE_ADMIN'" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user-o"></i>Thông tin cá nhân
                     </a>
                     <ul class="dropdown-menu">
@@ -67,7 +67,7 @@
                             </a>
                         </div>
                         <!-- Cart -->
-                        <div class="dropdown">
+                        <div class="dropdown" th:if="${role} !='ROLE_ADMIN'">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
