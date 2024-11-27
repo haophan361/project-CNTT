@@ -36,11 +36,11 @@
 						<form th:action="@{/user/insertBill}" th:object="${checkout_Bill}" method="POST">
 							<div class="col-md-5">
 
-								<div th:if="${#fields.hasErrors('cus_name')}" style="color: red" class="error">
-									<small th:errors="*{phone}"></small>
+								<div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">
+									<small th:errors="*{name}"></small>
 								</div>
 								<div class="form-group" style="margin-bottom: 30px">
-									<input class="input" th:field="*{cus_name}" placeholder="Họ và tên">
+									<input class="input" th:field="*{name}" placeholder="Họ và tên">
 								</div>
 								<div th:if="${#fields.hasErrors('city')}" style="color: red" class="error">
 									<small th:errors="*{city}"></small>

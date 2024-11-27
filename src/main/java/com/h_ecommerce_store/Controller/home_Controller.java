@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import com.h_ecommerce_store.DTO.response.comment_Product;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -34,114 +35,37 @@ public class home_Controller
     private final Load_dataNavbar load_dataNavbar;
     private final bill_Service bill_service;
     @GetMapping("/")
-    public String home(Model model, @RequestParam(value="page", required=false, defaultValue="1")int page,
-                       @RequestParam(value="listBrand",required = false) List<String> listBrand,
-                       HttpServletRequest request)
-    {
-        load_dataNavbar.load_Navbar(model);
-        load_dataNavbar.get_Type(model,listBrand);
-        load_dataNavbar.get_Brand(model,"");
-        load_dataNavbar.topSeller(model);
-        Page<Products> products;
-        if(listBrand==null)
-        {
-            products=product_service.getAllProducts(page,20);
-        }
-        else
-        {
-            products=product_service.getListProductByBrands(listBrand,page,20);
-        }
-        List<detail_Product> productsForPage = getContentProduct(products.getContent());
-        model.addAttribute("url","home");
-        model.addAttribute("listProducts", productsForPage);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", products.getTotalPages());
-        model.addAttribute("selectedBrands", listBrand);
-        String brandParam = (listBrand != null) ? "?listBrand=" + String.join("%2C", listBrand) : "";
-        model.addAttribute("requestURI", request.getRequestURI()+brandParam);
-        return "web/home";
-    }
-    @GetMapping("/web/selectByName_Product")
-    public String searchProduct_ByName(Model model, @RequestParam(value = "keyword",required = false) String keyword,
+    public String home(Model model, @RequestParam(value = "keyword",defaultValue = "") String keyword,
                                        @RequestParam(value="page", required=false, defaultValue="1") int page,
-                                       @RequestParam(value="listBrand",required = false) List<String> listBrand,HttpServletRequest request)
+                                       @RequestParam(value="listProductType",required = false) List<String> productType,
+                                       @RequestParam(value="listBrand",required = false) List<String> listBrand,
+                                       @RequestParam(value = "url",required = false,defaultValue = "home") String url,
+                                       HttpServletRequest request)
     {
         load_dataNavbar.load_Navbar(model);
-        load_dataNavbar.get_Type(model,listBrand);
-        load_dataNavbar.get_Brand(model,"");
+        load_dataNavbar.get_Type(model,listBrand,keyword);
+        load_dataNavbar.get_Brand(model,productType,keyword);
         load_dataNavbar.topSeller(model);
-        Page<Products> products;
-        if(listBrand==null)
-        {
-            products=product_service.noBrand_selectByName_Products(keyword,page,20);
-        }
-        else
-        {
-            products=product_service.selectByName_Products(keyword,listBrand,page,20);
-        }
+        Page<Products> products=product_service.getProduct(keyword,productType,listBrand,url,page,9);
         List<detail_Product> productsForPage = getContentProduct(products.getContent());
+        model.addAttribute("url",url);
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", products.getTotalPages());
         model.addAttribute("selectedBrands", listBrand);
-        String brandParam = (listBrand != null) ? "&listBrand=" + String.join("%2C", listBrand) : "";
-        model.addAttribute("requestURI", request.getRequestURI()+"?keyword="+keyword+brandParam);
-        return "web/home";
-    }
-    @GetMapping("/web/selectProductDiscount")
-    public String selectProductDiscount(Model model, @RequestParam(value="page", required=false, defaultValue="1")int page,
-                       @RequestParam(value="listBrand",required = false) List<String> listBrand,
-                       HttpServletRequest request)
-    {
-        load_dataNavbar.load_Navbar(model);
-        load_dataNavbar.get_Type(model,listBrand);
-        load_dataNavbar.get_Brand(model,"");
-        load_dataNavbar.topSeller(model);
-        Page<Products> products;
-        if(listBrand==null)
+        model.addAttribute("selectedProductTypes", productType);
+        model.addAttribute("keyword", keyword);
+        String brandParam ="";
+        if(listBrand!=null && !listBrand.isEmpty())
         {
-            products=product_service.noBrand_getLisProductDiscount(page,20);
+            brandParam="&listBrand=" + String.join("%2C", listBrand);
         }
-        else
+        String productTypeParam="";
+        if(productType!=null && !productType.isEmpty())
         {
-            products=product_service.getListProduct_Discount(listBrand,page,20);
+            productTypeParam="&listProductType=" + String.join("%2C", productType);
         }
-        List<detail_Product> productsForPage = getContentProduct(products.getContent());
-        model.addAttribute("url","discount");
-        model.addAttribute("listProducts", productsForPage);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", products.getTotalPages());
-        model.addAttribute("selectedBrands", listBrand);
-        String brandParam = (listBrand != null) ? "?listBrand=" + String.join("%2C", listBrand) : "";
-        model.addAttribute("requestURI", request.getRequestURI()+brandParam);
-        return "web/home";
-    }
-    @GetMapping("/web/selectProductByType")
-    public String selectProductByType(Model model,@RequestParam(value = "productType",required = false) String productType, @RequestParam(value="page", required=false, defaultValue="1")int page,
-                                      @RequestParam(value="listBrand",required = false) List<String> listBrand,
-                                      HttpServletRequest request)
-    {
-        load_dataNavbar.load_Navbar(model);
-        load_dataNavbar.get_Type(model,listBrand);
-        load_dataNavbar.get_Brand(model,productType);
-        load_dataNavbar.topSeller(model);
-        Page<Products> products;
-        if(listBrand==null)
-        {
-            products=product_service.noBrand_getListProductByType(productType,page,20);
-        }
-        else
-        {
-            products=product_service.getListProductByType(productType,listBrand,page,20);
-        }
-        List<detail_Product> productsForPage = getContentProduct(products.getContent());
-        model.addAttribute("url",productType);
-        model.addAttribute("listProducts", productsForPage);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", products.getTotalPages());
-        model.addAttribute("selectedBrands", listBrand);
-        String brandParam = (listBrand != null) ? "&listBrand=" + String.join("%2C", listBrand) : "";
-        model.addAttribute("requestURI", request.getRequestURI()+"?productType="+productType+brandParam);
+        model.addAttribute("requestURI", request.getRequestURI()+"?keyword="+keyword+productTypeParam+brandParam);
         return "web/home";
     }
     public List<detail_Product> getContentProduct(List<Products> productPage)
@@ -181,7 +105,7 @@ public class home_Controller
         Products product = product_service.getProductsByID(ID);
         List<Products> relatedProducts = product_service.getRelatedProductByType(product.getProduct_type(), ID);
 
-        relatedProducts.sort((p1, p2) -> Integer.compare(Math.abs(p1.getID() - ID), Math.abs(p2.getID() - ID)));
+        relatedProducts.sort(Comparator.comparingInt(p -> Math.abs(p.getID() - ID)));
         if (relatedProducts.size() > 4)
         {
             relatedProducts = relatedProducts.subList(0, 4);

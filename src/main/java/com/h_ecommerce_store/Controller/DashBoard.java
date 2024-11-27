@@ -20,7 +20,7 @@ import java.util.List;
 @Controller
 public class DashBoard
 {
-    private final customer_Service customer_service;
+    private final user_Service user_service;
     private final product_Service product_service;
     private final bill_Service bill_service;
     private final billDetail_Service billDetail_service;
@@ -47,7 +47,7 @@ public class DashBoard
         }
         model.addAttribute("totalCart",totalCart);
 
-        Long totalCustomer=customer_service.totalCustomers();
+        Long totalCustomer= user_service.totalCustomers();
         if(totalCustomer==null)
         {
             totalCustomer=0L;

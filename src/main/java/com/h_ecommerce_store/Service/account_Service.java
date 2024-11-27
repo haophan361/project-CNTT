@@ -72,4 +72,15 @@ public class account_Service implements UserDetailsService
         }
         return null;
     }
+    public String getRoleByUsername(String username)
+    {
+        Accounts accounts =account_repository.findByUsername(username);
+        return accounts.getRole();
+    }
+    public void changeRole(String username,String role)
+    {
+        Accounts account=account_repository.findByUsername(username);
+        account.setRole(role);
+        account_repository.save(account);
+    }
 }

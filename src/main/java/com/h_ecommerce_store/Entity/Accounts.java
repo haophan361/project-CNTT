@@ -15,7 +15,6 @@ public class Accounts
     private String username;
     private String password;
     private String role;
-
     public Accounts(String username, String password)
     {
         this.username = username;

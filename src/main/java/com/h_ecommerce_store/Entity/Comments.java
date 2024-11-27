@@ -24,16 +24,16 @@ public class Comments
 
     @ManyToOne
     @JoinColumn(name="username")
-    private Customers customer;
+    private Users user;
     public Comments()
     {
 
     }
-    public Comments(String comment, int rate, Products product, Customers customer)
+    public Comments(String comment, int rate, Products product, Users user)
     {
         this.comment = comment;
         this.rate = rate;
         this.product = product;
-        this.customer = customer;
+        this.user = user;
     }
 }

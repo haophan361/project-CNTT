@@ -1,6 +1,5 @@
 package com.h_ecommerce_store.DTO.response;
 
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -107,7 +107,7 @@ public class products_Controller
     public String crudProducts(Model model,@RequestParam(value="page", required=false, defaultValue="1")int page,
                                HttpServletRequest request)
     {
-        Page<Products> products=product_service.getAllProducts(page,20);
+        Page<Products> products=product_service.getAllProducts(page,10);
         List<Products> productsForPage = products.getContent();
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("listType",product_service.getProductType());
@@ -123,7 +123,7 @@ public class products_Controller
     public String crudProducts_inStock(Model model,@RequestParam(value="page", required=false, defaultValue="1")int page,
                                HttpServletRequest request)
     {
-        Page<Products> products=product_service.getLisProduct_inStock(page,20);
+        Page<Products> products=product_service.getLisProduct_inStock(page,10);
         List<Products> productsForPage = products.getContent();
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("listType",product_service.getProductType());
@@ -139,7 +139,7 @@ public class products_Controller
     public String crudProducts_oufOfStock(Model model,@RequestParam(value="page", required=false, defaultValue="1")int page,
                                        HttpServletRequest request)
     {
-        Page<Products> products=product_service.getLisProduct_outOfStock(page,20);
+        Page<Products> products=product_service.getLisProduct_outOfStock(page,10);
         List<Products> productsForPage = products.getContent();
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("listType",product_service.getProductType());
@@ -163,7 +163,7 @@ public class products_Controller
                                 @RequestParam(value="page", required=false, defaultValue="1")int page,
                                 HttpServletRequest request)
     {
-        Page<Products> products=product_service.noBrand_selectByName_Products(keyword,page,20);
+        Page<Products> products=product_service.noBrand_selectByName_Products(keyword,page,10);
         List<Products> productsForPage = products.getContent();
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("listType",product_service.getProductType());
@@ -176,11 +176,13 @@ public class products_Controller
         return "admin/crud_products";
     }
     @GetMapping("admin/searchByProductType")
-    public String searchByProductType(Model model,@RequestParam(value = "productType")String productType,
+    public String searchByProductType(Model model,
+                                      @RequestParam(value = "keyword",required = false)String keyword,
+                                      @RequestParam(value = "productType")String productType,
                                       @RequestParam(value="page", required=false, defaultValue="1")int page,
                                       HttpServletRequest request)
     {
-        Page<Products> products=product_service.noBrand_getListProductByType(productType,page,20);
+        Page<Products> products=product_service.noBrand_getListProductByType(productType,page,10);
         List<Products> productsForPage = products.getContent();
         model.addAttribute("listProducts", productsForPage);
         model.addAttribute("listType",product_service.getProductType());

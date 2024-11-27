@@ -3,16 +3,22 @@ package com.h_ecommerce_store.Service;
 import com.h_ecommerce_store.Entity.BillDetails;
 import com.h_ecommerce_store.Entity.Bills;
 import com.h_ecommerce_store.Repository.Bill_Repository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +42,7 @@ public class bill_Service
             product_service.buyProduct(billDetail.getProduct().getID(), billDetail.getQuantity());
             billDetail_service.insertBillDetail(bill,billDetail);
             cost=cost.add(billDetail.getCost());
-            int cartID=cart_service.getCartID(billDetail.getProduct().getID(),bill.getCustomer().getEmail());
+            int cartID=cart_service.getCartID(billDetail.getProduct().getID(),bill.getUser().getEmail());
             cart_service.deleteCart(cartID);
         }
         bill.setBillDetails(billDetails);
@@ -88,11 +94,6 @@ public class bill_Service
     {
         return bill_repository.getBillsByEmail_Waiting(email);
     }
-    public Page<Bills> getAllBill(int page,int size)
-    {
-        Pageable pageable=PageRequest.of(page-1,size);
-        return bill_repository.findAll(pageable);
-    }
     public void cancelBill(int billID)
     {
         Optional<Bills> existBill=bill_repository.findById(billID);
@@ -111,10 +112,7 @@ public class bill_Service
     public void deleteBillByID(int billID)
     {
         Optional<Bills> existBill=bill_repository.findById(billID);
-        if(existBill.isPresent())
-        {
-            bill_repository.delete(existBill.get());
-        }
+        existBill.ifPresent(bill_repository::delete);
     }
     public Double totalRevenue()
     {
@@ -126,9 +124,98 @@ public class bill_Service
         LocalDateTime timeEnd = timeStart.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59);
         return bill_repository.getRevenueByTime(timeStart,timeEnd);
     }
-    public Page<Bills> getBillsByCusName(String cus_name, int page, int size)
+    public Page<Bills> getBillsByCusName(String name, List<Integer> status, List<Integer> confirm,String timeStart,String timeEnd, int page, int size)
     {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return bill_repository.getBillsByCusName(cus_name,pageable);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Specification<Bills> specification = (Root<Bills> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
+            if (name != null && !name.trim().isEmpty())
+            {
+                Predicate namePredicate = criteriaBuilder.like(root.get("name"), "%" + name + "%");
+                predicates.add(namePredicate);
+            }
+            if (status != null && !status.isEmpty())
+            {
+                Predicate statusPredicate = root.get("status").in(status);
+                predicates.add(statusPredicate);
+            }
+            if (confirm != null && !confirm.isEmpty())
+            {
+                Predicate confirmPredicate = root.get("confirm").in(confirm);
+                predicates.add(confirmPredicate);
+            }
+            if (timeStart != null && !timeStart.trim().isEmpty() && timeEnd != null && !timeEnd.trim().isEmpty())
+            {
+                LocalDateTime startDate = LocalDateTime.parse(timeStart + "T00:00:00");
+                LocalDateTime endDate = LocalDateTime.parse(timeEnd + "T23:59:59");
+                Predicate timeStartPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("purchase_date"),startDate);
+                Predicate timeEndPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("purchase_date"),endDate);
+                predicates.add(timeStartPredicate);
+                predicates.add(timeEndPredicate);
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return bill_repository.findAll(specification, pageable);
+    }
+    public Long countBillByConfirm(String name, List<Integer> status, int confirm,String timeStart,String timeEnd)
+    {
+        Specification<Bills> specification = (Root<Bills> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
+            if (name != null && !name.trim().isEmpty())
+            {
+                Predicate namePredicate = criteriaBuilder.like(root.get("name"), "%" + name + "%");
+                predicates.add(namePredicate);
+            }
+            if (status != null && !status.isEmpty())
+            {
+                Predicate statusPredicate = root.get("status").in(status);
+                predicates.add(statusPredicate);
+            }
+            if (timeStart != null && !timeStart.trim().isEmpty() && timeEnd != null && !timeEnd.trim().isEmpty())
+            {
+                LocalDateTime startDate = LocalDateTime.parse(timeStart + "T00:00:00");
+                LocalDateTime endDate = LocalDateTime.parse(timeEnd + "T23:59:59");
+                Predicate timeStartPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("purchase_date"),startDate);
+                Predicate timeEndPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("purchase_date"),endDate);
+                predicates.add(timeStartPredicate);
+                predicates.add(timeEndPredicate);
+            }
+            Predicate confirmPredicate = criteriaBuilder.equal(root.get("confirm"), confirm);
+            predicates.add(confirmPredicate);
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return bill_repository.count(specification);
+    }
+    public Long countBillByStatus(String name, int status, List<Integer> confirm,String timeStart,String timeEnd)
+    {
+        Specification<Bills> specification = (Root<Bills> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
+            if (name != null && !name.trim().isEmpty())
+            {
+                Predicate namePredicate = criteriaBuilder.like(root.get("name"), "%" + name + "%");
+                predicates.add(namePredicate);
+            }
+            if (confirm != null && !confirm.isEmpty())
+            {
+                Predicate confirmPredicate = root.get("confirm").in(confirm);
+                predicates.add(confirmPredicate);
+            }
+            if (timeStart != null && !timeStart.trim().isEmpty() && timeEnd != null && !timeEnd.trim().isEmpty())
+            {
+                LocalDateTime startDate = LocalDateTime.parse(timeStart + "T00:00:00");
+                LocalDateTime endDate = LocalDateTime.parse(timeEnd + "T23:59:59");
+                Predicate timeStartPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("purchase_date"),startDate);
+                Predicate timeEndPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("purchase_date"),endDate);
+                predicates.add(timeStartPredicate);
+                predicates.add(timeEndPredicate);
+            }
+            Predicate statusPredicate = criteriaBuilder.equal(root.get("status"), status);
+            predicates.add(statusPredicate);
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return bill_repository.count(specification);
     }
 }

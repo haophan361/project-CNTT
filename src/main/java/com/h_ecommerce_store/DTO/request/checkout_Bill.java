@@ -15,7 +15,7 @@ import java.util.List;
 public class checkout_Bill
 {
     @NotBlank(message = "Họ và tên không được để trống")
-    private String cus_name;
+    private String name;
     @NotBlank(message = "Tỉnh/Thành phố không được để trống")
     private String city;
     @NotBlank(message = "Quận/Huyện không được để trống")

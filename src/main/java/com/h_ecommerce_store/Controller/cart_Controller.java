@@ -1,11 +1,11 @@
 package com.h_ecommerce_store.Controller;
 import com.h_ecommerce_store.DTO.response.list_ShoppingCart;
-import com.h_ecommerce_store.Entity.Customers;
+import com.h_ecommerce_store.Entity.Users;
 import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Entity.Shopping_Carts;
 import com.h_ecommerce_store.Service.account_Service;
 import com.h_ecommerce_store.Service.cart_Service;
-import com.h_ecommerce_store.Service.customer_Service;
+import com.h_ecommerce_store.Service.user_Service;
 import com.h_ecommerce_store.Service.product_Service;
 import com.h_ecommerce_store.Util.Load_dataNavbar;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class cart_Controller
     private final cart_Service cart_service;
     private final product_Service product_service;
     private final account_Service account_service;
-    private final customer_Service customer_service;
+    private final user_Service user_service;
     private final Load_dataNavbar load_dataNavbar;
 
     @PostMapping("/user/addToCart/{productID}/{quantity}")
@@ -30,7 +30,7 @@ public class cart_Controller
     {
         Products product=product_service.getProductsByID(productID);
         String username=account_service.getLoggedUserName();
-        Customers customer=customer_service.getCustomer(username);
+        Users customer= user_service.getCustomer(username);
         Shopping_Carts cart=new Shopping_Carts(quantity,customer, product);
         cart_service.addToCart(cart);
         return ResponseEntity.ok("/web/detail_product/"+productID);
@@ -40,7 +40,7 @@ public class cart_Controller
     {
         Products product=product_service.getProductsByID(productID);
         String username=account_service.getLoggedUserName();
-        Customers customer=customer_service.getCustomer(username);
+        Users customer= user_service.getCustomer(username);
         int cartID= cart_service.getCartID(productID,username);
         Shopping_Carts cart=new Shopping_Carts(cartID,quantity,customer,product);
         cart_service.updateCart(cart);

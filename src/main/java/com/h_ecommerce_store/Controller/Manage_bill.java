@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,47 +25,23 @@ public class Manage_bill
 {
     private final bill_Service bill_service;
     private final billDetail_Service billDetail_service;
-    @GetMapping("/admin/bill")
-    public String searchBillBy_cusName(Model model, @RequestParam(value="page", required=false, defaultValue="1") int page,
-                                       HttpServletRequest request)
-    {
-        Page<Bills> bills =bill_service.getAllBill(page,20);
-        List<Bills> billsList=bills.getContent();
-        List<listBill> listBills = new ArrayList<>();
-        for (Bills bill : billsList)
-        {
-            listBill list_bill = new listBill(
-                    bill.getID(),
-                    bill.getCus_name(),
-                    bill.getCost(),
-                    bill.getStatus(),
-                    bill.getConfirm(),
-                    bill.getAddress(),
-                    bill.getPhone(),
-                    bill.getPurchase_date(),
-                    bill.getReceive_date()
-            );
-            listBills.add(list_bill);
-        }
-        model.addAttribute("listBills",listBills);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", bills.getTotalPages());
-        model.addAttribute("requestURI", request.getRequestURI());
-        return "admin/bill";
-    }
-    @GetMapping("/admin/searchBillBy_cusName")
-    public String Manage_Bill(Model model,@RequestParam(value = "cus_name",required = false) String cus_name,
-                              @RequestParam(value="page", required=false, defaultValue="1") int page,
+    @GetMapping("/staff/bill")
+    public String Manage_Bill(Model model, @RequestParam(value="page", required=false, defaultValue="1") int page,
+                              @RequestParam(value = "cus_name",defaultValue = "") String cus_name,
+                              @RequestParam(value="status",required = false) List<Integer> status,
+                              @RequestParam(value = "confirm",required = false) List<Integer> confirm,
+                              @RequestParam(value = "calendar_start",required = false) String timeStart,
+                              @RequestParam(value = "calendar_end",required = false) String timeEnd,
                               HttpServletRequest request)
     {
-        Page<Bills> bills =bill_service.getBillsByCusName(cus_name,page,20);
+        Page<Bills> bills =bill_service.getBillsByCusName(cus_name,status,confirm,timeStart,timeEnd,page,10);
         List<Bills> billsList=bills.getContent();
         List<listBill> listBills = new ArrayList<>();
         for (Bills bill : billsList)
         {
             listBill list_bill = new listBill(
                     bill.getID(),
-                    bill.getCus_name(),
+                    bill.getName(),
                     bill.getCost(),
                     bill.getStatus(),
                     bill.getConfirm(),
@@ -78,10 +55,36 @@ public class Manage_bill
         model.addAttribute("listBills",listBills);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bills.getTotalPages());
-        model.addAttribute("requestURI", request.getRequestURI()+"?cus_name="+cus_name);
-        return "admin/bill";
+        model.addAttribute("cus_name",cus_name);
+        model.addAttribute("status",status);
+        model.addAttribute("confirm",confirm);
+        model.addAttribute("calendar_start",timeStart);
+        model.addAttribute("calendar_end",timeEnd);
+        model.addAttribute("status_0",bill_service.countBillByStatus(cus_name,0,confirm,timeStart,timeEnd));
+        model.addAttribute("status_1",bill_service.countBillByStatus(cus_name,1,confirm,timeStart,timeEnd));
+        model.addAttribute("confirm_0",bill_service.countBillByConfirm(cus_name,status,0,timeStart,timeEnd));
+        model.addAttribute("confirm_1",bill_service.countBillByConfirm(cus_name,status,1,timeStart,timeEnd));
+        String statusParam="";
+        if(status!=null && !status.isEmpty())
+        {
+            String statusValue=status.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining("%2C"));
+            statusParam="&status=" + statusValue;
+        }
+        String confirmParam="";
+        if(confirm!=null && !confirm.isEmpty())
+        {
+            String confirmValue = confirm.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining("%2C"));
+            confirmParam = "&confirm=" + confirmValue;
+        }
+        model.addAttribute("requestURI", request.getRequestURI()+"?cus_name="+cus_name
+                +"&calendar_start="+timeStart+"&calendar_end="+timeEnd+statusParam+confirmParam);
+        return "staff/bill";
     }
-    @GetMapping("/admin/billDetail")
+    @GetMapping("/staff/billDetail")
     public String Manage_billDetail(@RequestParam("billID") int billID, Model model)
     {
         List<BillDetails> billDetails=billDetail_service.getBillDetailByBillID(billID);
@@ -101,21 +104,21 @@ public class Manage_bill
         model.addAttribute("confirm",bill.getConfirm());
         model.addAttribute("billID",billID);
         model.addAttribute("listBillDetails",listBillDetails);
-        return "admin/billDetail";
+        return "staff/billDetail";
     }
-    @PostMapping("/admin/confirmBill")
+    @PostMapping("/staff/confirmBill")
     public String ConfirmBill(@RequestParam("billID") int billID)
     {
         bill_service.confirmBill(billID);
-        return "redirect:/admin/bill";
+        return "redirect:/staff/bill";
     }
-    @PostMapping("/admin/deleteBill")
+    @PostMapping("/staff/deleteBill")
     public String deleteBill(@RequestParam("selectedBillIDs") List<Integer> selectedBillIds)
     {
         for (Integer billID : selectedBillIds)
         {
             bill_service.deleteBillByID(billID);
         }
-        return "redirect:/admin/bill";
+        return "redirect:/staff/bill";
     }
 }

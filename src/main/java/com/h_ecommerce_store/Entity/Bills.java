@@ -17,7 +17,7 @@ public class Bills
 {
     @Id
     private int ID;
-    private String cus_name;
+    private String name;
     private BigDecimal cost;
     private LocalDateTime purchase_date;
     private int status;
@@ -28,14 +28,14 @@ public class Bills
 
     @ManyToOne
     @JoinColumn(name = "username")
-    private Customers customer;
+    private Users user;
 
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BillDetails> billDetails = new ArrayList<>();
-    public Bills(Customers customer, String cus_name,String address, String phone,BigDecimal cost, int status,int confirm)
+    public Bills(Users user, String name, String address, String phone, BigDecimal cost, int status, int confirm)
     {
-        this.customer = customer;
-        this.cus_name = cus_name;
+        this.user = user;
+        this.name = name;
         this.address = address;
         this.phone = phone;
         this.cost = cost;
