@@ -25,9 +25,27 @@ function RoleChange(selectedRole)
     var name = selectedRole.dataset.name;
     var currentRole = selectedRole.dataset.role;
     var newRole = selectedRole.value;
+    var name_currentRole;
+    var name_newRole;
+    if(currentRole==="ROLE_USER")
+    {
+        name_currentRole="Khách hàng";
+    }
+    else
+    {
+        name_currentRole="Nhân viên";
+    }
+    if(newRole==="ROLE_USER")
+    {
+        name_newRole="Khách hàng";
+    }
+    else
+    {
+        name_newRole="Nhân viên";
+    }
     bootbox.confirm({
         title: "Chuyển đổi vai trò",
-        message: "Bạn có muốn chuyển vai trò  của "+name +" từ "+currentRole+" thành "+newRole+"?",
+        message: "Bạn có muốn chuyển vai trò  của "+name +" từ "+name_currentRole+" thành "+name_newRole+"?",
         backdrop: false,
         buttons:
             {
