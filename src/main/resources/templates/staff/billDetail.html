@@ -36,32 +36,11 @@
         </div>
     </div>
     <div class="wrapper">
-        <div class="sidebar" data-background-color="white" data-active-color="danger">
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/crudProducts}">
-                            <i class= "fa fa-fw fa-th mr-1"></i><span>CRUD</span>
-                        </a>
-                      </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/dashboard}">
-                            <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" th:href="@{/admin/bill}">
-                            <i class="fa fa-file-text"></i><span> Danh sách hóa đơn</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="main-panel">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" th:href="@{/admin/bill}">
+                        <a class="navbar-brand" th:href="@{/staff/bill}">
                             <i class="fa fa-arrow-left"></i>
                             Quay lại
                         </a>
@@ -99,7 +78,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <form th:action="@{/admin/confirmBill}" method="post" style="display: inline-block; float: right;margin-top: 15px">
+                                <form th:action="@{/staff/confirmBill}" method="post" style="display: inline-block; float: right;margin-top: 15px">
                                     <input type="hidden" name="billID" th:value="${billID}">
                                     <button type="submit" class="btn btn-primary btn-md"
                                             th:text="${confirm == 1 ? 'Đã xác nhận' : 'Xác nhận hóa đơn'}"

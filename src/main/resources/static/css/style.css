@@ -757,7 +757,6 @@ textarea.input {
   padding: 60px 0px;
   margin: 30px 0px;
   background-color: #E4E7ED;
-  background-image: url('../img/hotdeal.png');
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -828,6 +827,7 @@ textarea.input {
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
   min-height: 380px;
+  max-height: 410px;
 }
 
 .product:hover {
@@ -842,6 +842,7 @@ textarea.input {
 .product .product-img>img {
   width: 100%;
   max-height: 170px;
+  min-height: 120px;
 }
 
 .product .product-img .product-label {
@@ -1212,32 +1213,24 @@ textarea.input {
   font-weight: 500;
 }
 
-.productType-link
+.productType-checkbox
 {
   margin-top: 10px;
+  font-size: 14px;
 }
 
-.productType-link > a
+.productType-checkbox label span
 {
-  display: flex;
   font-size: 12px;
-  color: inherit;
-  text-decoration: none;
-}
-.productType-link > a:hover
-{
-  color: red;
-}
-
-.productType-link > a > span
-{
+  font-weight: 500;
   text-transform: uppercase;
 }
 
-.productType-link > a > small
+.productType-checkbox label small
 {
   color: #8D99AE;
-  margin-left: 5px;
+  font-size: 10px;
+  font-weight: 500;
 }
 
 /*----------------------------*\
@@ -2061,6 +2054,20 @@ textarea.input {
   padding: 20px;
   text-align: center;
 }
+.modal-content {
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.modal-body {
+  text-align: justify;
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
 /*=========================================================
 	15 -> BILL
 ===========================================================*/
@@ -2145,3 +2152,212 @@ textarea.input {
   margin: 20px 0;
   display: inline-block;}
 .contant_box_404{ margin-top:-50px;}
+
+/*======================
+    Admin Bill
+=======================*/
+.search-bill
+{
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.input-group
+{
+  align-items: center;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.input-group input
+{
+  flex: 1;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.input-group button
+{
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.input-group button:hover
+{
+  background-color: #c82333;
+}
+
+.form-section
+{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.checkbox-group,
+.calendar-group
+{
+  margin-top: 20px;
+}
+
+.checkbox-group
+{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.calendar-group
+{
+  margin-left: 30px;
+}
+
+.checkbox-confirm,
+.checkbox-status
+{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.checkbox-confirm label,
+.checkbox-status label
+{
+  white-space: nowrap;
+  margin: 0;
+}
+.checkbox-group .checkbox-status
+{
+  margin-top: 20px;
+}
+
+.form-check
+{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendar-group
+{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.calendar-group > div
+{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-group label
+{
+  flex: 0 0 120px;
+  text-align: right;
+}
+
+.calendar-group input
+{
+  flex: 1;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+@media (max-width: 767px)
+{
+  .input-group, .checkbox-group, .calendar-group
+  {
+    flex-direction: column;
+  }
+  .input-group .form-control
+  {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+/*======================
+    Admin User
+=======================*/
+.container.search-user
+{
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 100%;
+}
+
+.flex-container
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.role-flex
+{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.role-flex label
+{
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.form-group label
+{
+  font-weight: bold;
+}
+.container.search-user .btn
+{
+  font-size: 16px;
+  padding: 10px 20px;
+}
+.table.user {
+  margin-top: 20px;
+  border-collapse: collapse;
+  max-width: 100%;
+  width: 100%;
+}
+
+.content.table-responsive
+{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table.user th, .table.user td
+{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table.user th
+{
+  font-weight: bold;
+}
+
+.table.user td
+{
+  font-size: 14px;
+}
+
+.table.user .form-control
+{
+  padding: 5px 10px;
+  font-size: 14px;
+}

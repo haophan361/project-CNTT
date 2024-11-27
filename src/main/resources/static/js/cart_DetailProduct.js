@@ -1,9 +1,23 @@
-function checkQuantityBeforeAdd(ID,availableQuantity,selectedQuantity)
+function checkQuantityBeforeAdd(button)
 {
-    if(availableQuantity==0)
+    var ID = button.dataset.productId;
+    var availableQuantity = button.dataset.quantity;
+    var selectedQuantity = button.dataset.selected;
+    var role = button.dataset.role;
+    var modal;
+    var messageText;
+    if(role!=="[ROLE_USER]")
     {
-        var modal = document.getElementById("customMessageBox");
-        var messageText = document.getElementById("messageText");
+        bootbox.alert({
+            message: "Chuyển qua account người dùng để có thể mua hàng",
+            backdrop: false
+        });
+        return;
+    }
+    if(availableQuantity===0)
+    {
+        modal = document.getElementById("customMessageBox");
+        messageText = document.getElementById("messageText");
         messageText.textContent = 'Sản phẩm đã hết hàng';
         modal.style.display = "block";
         return;
@@ -11,8 +25,8 @@ function checkQuantityBeforeAdd(ID,availableQuantity,selectedQuantity)
     var quantity = document.getElementById("quantity_input").value;
     if (quantity > availableQuantity-selectedQuantity)
     {
-        var modal = document.getElementById("customMessageBox");
-        var messageText = document.getElementById("messageText");
+        modal = document.getElementById("customMessageBox");
+        messageText = document.getElementById("messageText");
         messageText.textContent = 'Bạn đã có ' + selectedQuantity + ' sản phẩm trong giỏ hàng.\n' +
             'Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.';
         modal.style.display = "block";
@@ -24,6 +38,7 @@ function checkQuantityBeforeAdd(ID,availableQuantity,selectedQuantity)
 }
 function addToCart(ID)
 {
+
     var quantity = document.getElementById("quantity_input").value;
     {
         $.ajax({

@@ -3,11 +3,13 @@
         <div class="container">
             <ul class="header-links pull-right">
                 <li sec:authorize="isAnonymous()">
-                    <a th:href="@{/web/loginForm}">
+                    <a th:href="@{/login}">
                       <i class="fa fa-user-o"></i> Đăng nhập
                     </a>
                 </li>
                 <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/crudProducts}">Manage Products</a></li>
+                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/user}">Quản lí người dùng</a></li>
+                <li><a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/bill}">Quản lí hóa đơn</a></li>
                 <li sec:authorize="isAuthenticated()" class="dropdown">
                     <a th:if="${role} !='ROLE_ADMIN'" href="#" class="dropdown-toggle" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-user-o"></i> Thông tin cá nhân

@@ -1,6 +1,6 @@
 package com.h_ecommerce_store.Controller;
 import com.h_ecommerce_store.DTO.request.changePassword;
-import com.h_ecommerce_store.Entity.Customers;
+import com.h_ecommerce_store.Entity.Users;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.h_ecommerce_store.Entity.Accounts;
 import com.h_ecommerce_store.DTO.request.Register;
 import com.h_ecommerce_store.Service.account_Service;
-import com.h_ecommerce_store.Service.customer_Service;
+import com.h_ecommerce_store.Service.user_Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ import java.util.List;
 public class account_Controller
 {
     private final account_Service account_service;
-    private final customer_Service customer_service;
+    private final user_Service user_service;
     private final PasswordEncoder passwordEncoder;
     @GetMapping("/web/registerForm")
     public String registerForm(Model model)
@@ -42,7 +42,7 @@ public class account_Controller
                     "Mật khẩu không trùng khớp");
             return "/web/register";
         }
-        List<String> listPhone=customer_service.listPhone();
+        List<String> listPhone= user_service.listPhone();
         if(register.isPhonePresent(listPhone))
         {
             result.rejectValue("phone","error.register",
@@ -66,9 +66,9 @@ public class account_Controller
         String username=register.getUsername();
         String password=register.getPassword();
         Accounts account=new Accounts(username,password);
-        Customers customer=new Customers(name,username,address,phone);
+        Users customer=new Users(name,username,address,phone);
         account_service.insertAccount(account);
-        customer_service.insertCustomer(customer);
+        user_service.insertCustomer(customer);
         return "redirect:/login";
     }
     @GetMapping("/login")

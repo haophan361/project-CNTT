@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>H_Ecommerce</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+</head>
+    <body>
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+              <!-- row -->
+                <div class="row">
+                  <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="/" class="logo">
+                              <img th:src="@{/img/logo.png}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="main-panel">
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h4 class="title">Danh sách người dùng</h4>
+                                    </div>
+                                    <div class="container search-user">
+                                        <form th:action="@{/admin/bill}" method="get" class="form-horizontal">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="name">Nhập họ và tên:</label>
+                                                        <input type="text" class="form-control" th:name="name" id="name" th:value="${name}" placeholder="Nhập họ và tên">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="username">Nhập email:</label>
+                                                        <input type="text" class="form-control" th:name="username" id="username" th:value="${username}" placeholder="Nhập email">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="phone">Nhập số điện thoại:</label>
+                                                        <input type="text" class="form-control" th:name="phone" id="phone" th:value="${phone}" placeholder="Nhập số điện thoại">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" style="margin-top: 40px">
+                                                    <div class="form-group role-flex">
+                                                        <label>Vai trò:</label>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" th:name="role" value="ROLE_STAFF" id="staff"
+                                                                   th:checked="${role != null and role.contains('ROLE_STAFF')}">
+                                                            <label class="form-check-label" for="staff">
+                                                                <span th:text="'Nhân viên ('+${staff_role}+')'"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" th:name="role" value="ROLE_USER" id="user"
+                                                                   th:checked="${role != null and role.contains('ROLE_USER')}">
+                                                            <label class="form-check-label" for="user">
+                                                                <span th:text="'Khách hàng ('+${user_role}+')'"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <button type="button" onclick="searchUser()" class="btn btn-primary">
+                                                        <i class="fa fa-search"></i> Tìm kiếm
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="content table-responsive table-full-width">
+                                        <table class="table table-striped table-bordered user">
+                                            <thead>
+                                            <tr>
+                                                <th>Họ và tên</th>
+                                                <th>Email</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Vai trò</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody th:each="user,index : ${list_User}">
+                                            <tr>
+                                                <td th:text="${user.name}"></td>
+                                                <td th:text="${user.email}"></td>
+                                                <td th:text="${user.address}"></td>
+                                                <td th:text="${user.phone}"></td>
+                                                <td>
+                                                    <select class="form-control form-control-sm w-100" th:id="${'combobox-role_'+index}"
+                                                            th:data-email="${user.email}"
+                                                            th:data-name="${user.name}"
+                                                            th:data-role="${user.role}"
+                                                            onchange="RoleChange(this)">
+                                                        <option value="ROLE_STAFF" th:selected="${user.role == 'ROLE_STAFF'}">Nhân viên</option>
+                                                        <option value="ROLE_USER" th:selected="${user.role == 'ROLE_USER'}">Khách hàng</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="store-filter clearfix" style="margin-top: 20px">
+                            <ul class="store-pagination">
+                              <!-- Previous Page -->
+                                <a th:href="@{${requestURI}(page=${currentPage - 1})}"
+                                   th:if="${currentPage > 1}">&laquo; Previous</a>
+                                    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                        <li>
+                                            <a th:href="@{${requestURI}(page=${i})}"
+                                               th:text="${i}"
+                                               th:classappend="${i == currentPage} ? 'active' : ''"></a>
+                                        </li>
+                                    </span>
+                                <!-- Next Page -->
+                                <a th:href="@{${requestURI}(page=${currentPage + 1})}"
+                                   th:if="${currentPage < totalPages}">Next &raquo;</a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script th:src="@{/js/manage_User.js}"></script>
+</html>
