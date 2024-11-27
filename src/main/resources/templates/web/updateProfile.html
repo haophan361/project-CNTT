@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <h1 style="text-align:center">Cập nhật thông tin</h1>
-                    <form th:action="@{/user/updateProfile}" th:object="${updateProfile}" method="post">
+                    <form th:object="${updateProfile}" th:action="${role == 'ROLE_USER' ? '/user/updateProfile' : '/staff/updateProfile'}"method="post">
                         <input type="hidden" th:field="*{username}">
 
                         <div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">

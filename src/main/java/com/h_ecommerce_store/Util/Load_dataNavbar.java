@@ -4,10 +4,7 @@ import com.h_ecommerce_store.DTO.response.*;
 import com.h_ecommerce_store.Entity.Accounts;
 import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Entity.Shopping_Carts;
-import com.h_ecommerce_store.Service.account_Service;
-import com.h_ecommerce_store.Service.billDetail_Service;
-import com.h_ecommerce_store.Service.cart_Service;
-import com.h_ecommerce_store.Service.product_Service;
+import com.h_ecommerce_store.Service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -22,6 +19,7 @@ public class Load_dataNavbar
     private final cart_Service cart_service;
     private final product_Service product_service;
     private final billDetail_Service billDetail_service;
+    private final bill_Service bill_service;
     public void load_Navbar(Model model)
     {
         String username=account_service.getLoggedUserName();
@@ -32,6 +30,7 @@ public class Load_dataNavbar
             List <Shopping_Carts> carts =cart_service.getCart_Customer(account.getUsername());
             list_Cart=cart_service.getCart_Customer(carts);
             model.addAttribute("number_type",cart_service.getCartCountByCus(username));
+            model.addAttribute("number_bill",bill_service.CountBill_NotConfirmOrNotReceive(username));
             model.addAttribute("role",account.getRole());
         }
         List<String> typeProduct=product_service.getProductType();

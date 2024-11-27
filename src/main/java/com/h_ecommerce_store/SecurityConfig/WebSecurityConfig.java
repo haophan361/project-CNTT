@@ -26,7 +26,7 @@ public class WebSecurityConfig {
                         ,"/admin/changeRole/**"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(
-                                "/**",
+                                "/",
                                 "/login",
                                 "/web/**",
                                 "/js/**",
