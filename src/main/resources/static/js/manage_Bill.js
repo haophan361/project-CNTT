@@ -8,7 +8,7 @@ document.querySelectorAll('.bill-row').forEach(function(row)
             return;
         }
         var billID = row.getAttribute('data-bill-id');
-        window.location.href = '/admin/billDetail?billID=' + billID;
+        window.location.href = '/staff/billDetail?billID=' + billID;
     });
 
     row.addEventListener('mouseover', function()
@@ -108,3 +108,76 @@ function confirmDeleteBill(event)
         $(this).find('.modal-dialog').css("width","800px");
     });
 }
+function searchBill()
+{
+    var cus_name = document.getElementById('searchInput').value;
+    var selectedConfirm = [];
+    var selectedStatus = [];
+    var timeStart=document.getElementById("calendar_start").value;
+    var timeEnd=document.getElementById("calendar_end").value;
+    document.querySelectorAll('input[name="confirm"]:checked').forEach(function (checkbox)
+    {
+        selectedConfirm.push(checkbox.value);
+    });
+    document.querySelectorAll('input[name="status"]:checked').forEach(function (checkbox)
+    {
+        selectedStatus.push(checkbox.value);
+    });
+    var url = new URL(window.location.origin + "/staff/bill");
+    var params = new URLSearchParams(window.location.search);
+    params.set('cus_name', cus_name);
+    if (selectedConfirm)
+    {
+        params.set('confirm', selectedConfirm.join(','));
+    }
+    if (selectedStatus)
+    {
+        params.set('status', selectedStatus.join(','));
+    }
+    if (timeStart && timeEnd)
+    {
+        var startDate = new Date(timeStart);
+        var endDate = new Date(timeEnd);
+
+        if (startDate > endDate)
+        {
+            bootbox.alert({
+                message: 'Ngày bắt đầu phải nhỏ hơn ngày kết thúc',
+                size: 'large',
+                backdrop: true
+            });
+            return false;
+        }
+        else
+        {
+            params.set("calendar_start", timeStart);
+            params.set("calendar_end", timeEnd);
+        }
+    }
+    else if (timeStart && !timeEnd || !timeStart && timeEnd)
+    {
+        bootbox.alert({
+            message: 'Phải chọn cả ngày bắt đầu và ngày kết thúc',
+            size: 'large',
+            backdrop: true
+        });
+        return false;
+    }
+    window.location.href = url.pathname + '?' + params.toString();
+}
+document.addEventListener('DOMContentLoaded', function()
+{
+    flatpickr("#calendar_start",
+        {
+        enableTime: false,
+        dateFormat: "Y-m-d",
+    });
+});
+document.addEventListener('DOMContentLoaded', function()
+{
+    flatpickr("#calendar_end",
+        {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+        });
+});

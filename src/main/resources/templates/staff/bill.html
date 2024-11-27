@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>H_Ecommerce</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS   -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!--  Paper Dashboard core CSS    -->
+    <link th:href="@{/css/paper-dashboard.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!--  Fonts and icons   -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+
+</head>
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <body>
+        <div class="wrapper">
+            <div class="main-panel">
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h4 class="title">Danh sách hóa đơn</h4>
+                                    </div>
+                                    <div class="container search-bill">
+                                        <form th:action="@{/staff/bill}" method="get" class="form-inline">
+                                            <div class="row">
+                                                <!-- Search Input -->
+                                                <div class="col-12 col-md-12">
+                                                    <div class="input-group" style="display: flex">
+                                                        <input type="text" class="form-control" th:name="cus_name" id="searchInput" th:value="${cus_name}" placeholder="Tên người dùng">
+                                                        <button type="button" onclick="searchBill()">Search</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Checkbox Group -->
+                                                <div class="col-12 col-md-7">
+                                                    <div class="checkbox-group">
+                                                        <div class="checkbox-confirm">
+                                                            <label>Xử lí</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" th:name="confirm" value="0" id="pending"
+                                                                       th:checked="${confirm != null and confirm.contains(0)}">
+                                                                <label class="form-check-label" for="pending" th:text="'Chưa xác nhận ('+${confirm_0}+')'"></label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" th:name="confirm" value="1" id="confirmed"
+                                                                       th:checked="${confirm != null and confirm.contains(1)}">
+                                                                <label class="form-check-label" for="confirmed" th:text="'Xác nhận ('+${confirm_1}+')'"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="checkbox-status">
+                                                            <label>Trạng thái</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" th:name="status" value="0" id="unpaid"
+                                                                       th:checked="${status != null and status.contains(0)}">
+                                                                <label class="form-check-label" for="unpaid" th:text="'Chưa thanh toán ('+${status_0}+')'"></label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" th:name="status" value="1" id="paid"
+                                                                       th:checked="${status != null and status.contains(1)}">
+                                                                <label class="form-check-label" for="paid" th:text="'Thanh toán ('+${status_1}+')'"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Calendar Group -->
+                                                <div class="col-12 col-md-5">
+                                                    <div class="calendar-group">
+                                                        <div>
+                                                            <label for="calendar_start">Ngày bắt đầu mua hàng</label>
+                                                            <input class="input" th:name="calendar_start" id="calendar_start" type="text"
+                                                                   th:value="${calendar_start}">
+                                                        </div>
+                                                        <div>
+                                                            <label for="calendar_end">Ngày kết thúc</label>
+                                                            <input class="input" th:name="calendar_end" id="calendar_end" type="text"
+                                                                   th:value="${calendar_end}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="content table-responsive table-full-width">
+                                        <form id="deleteBillForm" method="POST" th:action="@{/staff/deleteBill}">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>ID</th>
+                                                    <th>Tên</th>
+                                                    <th>Tổng</th>
+                                                    <th>Ngày mua</th>
+                                                    <th>Xử lý</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Ngày nhận hàng</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody th:each="bill : ${listBills}">
+                                                <tr class="bill-row" th:data-bill-id="${bill.billID}">
+                                                    <td class="col-sm-1 col-md-1">
+                                                        <input class="bill-checkbox" type="checkbox" th:value="${bill.billID}" name="selectedBillIDs"
+                                                               th:data-bill-receive="${bill.receive_date}">
+                                                    </td>
+                                                    <td th:text="${bill.billID}"></td>
+                                                    <td th:text="${bill.cus_name}"></td>
+                                                    <td th:text="${bill.formattedPrice} + 'đ'"></td>
+                                                    <td th:text="${bill.formattedPurchase_date}"></td>
+                                                    <td th:text="${bill.confirm ==1 ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                                                    <td th:text="${bill.address}"></td>
+                                                    <td th:text="${bill.phone}"></td>
+                                                    <td th:text="${bill.status == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}"></td>
+                                                    <td th:text="${bill.receive_date == null ? 'Chưa nhận hàng' : bill.formattedReceive_date}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div style="float: right; margin-top: 30px">
+                                                <button class="btn btn-danger" type="button" onclick="confirmDeleteBill(event)">Xóa hóa đơn</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="store-filter clearfix" style="margin-top: 20px">
+                            <ul class="store-pagination">
+                                <!-- Previous Page -->
+                                <a th:href="@{${requestURI}(page=${currentPage - 1})}"
+                                   th:if="${currentPage > 1}">&laquo; Previous</a>
+                                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                    <li>
+                                        <a th:href="@{${requestURI}(page=${i})}"
+                                           th:text="${i}"
+                                           th:classappend="${i == currentPage} ? 'active' : ''"></a>
+                                    </li>
+                                </span>
+                                <!-- Next Page -->
+                                <a th:href="@{${requestURI}(page=${currentPage + 1})}"
+                                   th:if="${currentPage < totalPages}">Next &raquo;</a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <!--   Core JS Files   -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+	<script th:src="@{/js/paper-dashboard.js}   "></script>
+
+    <script th:src="@{/js/manage_Bill.js}"></script>
+
+</html>

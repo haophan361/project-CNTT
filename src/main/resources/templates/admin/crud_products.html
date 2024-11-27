@@ -16,27 +16,20 @@
             margin-top: 20px;
             background: #f8f8f8;
         }
-
-        /* Sidebar styling */
-        .sidebar {
-            /* Thay thế width cố định bằng lưới Bootstrap */
+        .table-responsive
+        {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
-
-        /* Đảm bảo bảng không gây ra kéo ngang */
-        .table-responsive {
-            overflow-x: hidden; /* Thay đổi từ auto sang hidden để ẩn thanh cuộn ngang */
-            width: 100%; /* Đảm bảo chiều rộng 100% cho vùng chứa */
-        }
-
-        /* Đảm bảo hình ảnh không vượt quá kích thước ô */
         .table img {
-            max-width: 100% !important; /* Đảm bảo hình ảnh không vượt quá chiều rộng của ô */
-            height: auto !important; /* Giữ tỷ lệ hình ảnh */
-            object-fit: contain; /* Đảm bảo hình ảnh vừa với ô mà không bị cắt */
+            max-width: 100% !important;
+            height: auto !important;
+            object-fit: contain;
         }
 
-        /* Điều chỉnh modal cho các thiết bị nhỏ */
-        @media (max-width: 576px) {
+        @media (max-width: 576px)
+        {
             .modal-dialog {
                 max-width: 90%;
                 margin: 1.75rem auto;
@@ -77,11 +70,6 @@
                             <li class="nav-item">
                                 <a class="nav-link px-2 active" th:href="@{/admin/dashboard}">
                                     <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-item" style="width:200px">
-                                <a class="nav-link px-2" th:href="@{/admin/bill}">
-                                    <i class="fa fa-file-text"></i><span> Danh sách hóa đơn</span>
                                 </a>
                             </li>
                         </ul>

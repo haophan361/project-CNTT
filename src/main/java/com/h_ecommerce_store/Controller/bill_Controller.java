@@ -26,7 +26,7 @@ public class bill_Controller
     private final account_Service account_service;
     private final cart_Service cart_service;
     private final product_Service product_service;
-    private final customer_Service customer_service;
+    private final user_Service user_service;
     private final bill_Service bill_service;
     private final Load_dataNavbar load_dataNavbar;
     @GetMapping("/user/form_BillDetail")
@@ -58,8 +58,8 @@ public class bill_Controller
             return "/web/checkout";
         }
         String username=account_service.getLoggedUserName();
-        Customers customer=customer_service.getCustomer(username);
-        String cus_name=checkout_bill.getCus_name();
+        Users customer= user_service.getCustomer(username);
+        String cus_name=checkout_bill.getName();
         BigDecimal total=checkout_bill.getTotal();
 
         int status=checkout_bill.getStatus();

@@ -2,12 +2,18 @@ package com.h_ecommerce_store.Service;
 
 import com.h_ecommerce_store.Entity.Products;
 import com.h_ecommerce_store.Repository.Product_Repository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @RequiredArgsConstructor
@@ -84,20 +90,10 @@ public class product_Service {
         Pageable pageable = PageRequest.of(page-1, size);
         return productRepository.findAll(pageable);
     }
-    public Page<Products> getListProductByBrands(List<String> brands,int page, int size)
-    {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return productRepository.getListProductByBrands(brands,pageable);
-    }
     public Page<Products> noBrand_selectByName_Products(String keyword,int page,int size)
     {
         Pageable pageable = PageRequest.of(page-1, size);
         return productRepository.noBrand_selectByName_Products(keyword,pageable);
-    }
-    public Page<Products> selectByName_Products(String keyword,List<String> brands,int page,int size)
-    {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return productRepository.selectByName_Products(keyword,brands,pageable);
     }
     public List<String> getProductType()
     {
@@ -111,13 +107,47 @@ public class product_Service {
     {
         return productRepository.getProductName();
     }
-    public Long countProduct_ByProductType(String productType)
+    public Long countProduct_ByProductType(String productType,List<String> brand,String product_name)
     {
-        return productRepository.countProduct_ByProductType(productType);
+        Specification<Products> specification = (Root<Products> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
+            if (product_name != null && !product_name.trim().isEmpty())
+            {
+                Predicate product_namePredicate = criteriaBuilder.like(root.get("product_name"), "%" + product_name + "%");
+                predicates.add(product_namePredicate);
+            }
+            if (brand != null && !brand.isEmpty())
+            {
+                Predicate brandPredicate = root.get("brand").in(brand);
+                predicates.add(brandPredicate);
+            }
+            Predicate productTypePredicate = criteriaBuilder.equal(root.get("product_type"), productType);
+            predicates.add(productTypePredicate);
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return productRepository.count(specification);
     }
-    public Long countProductBrand_ByType(String brand,String productType)
+    public Long countProductBrand_ByType(String brand,List<String> productType,String product_name)
     {
-        return productRepository.countProductBrand_ByType(brand,productType);
+        Specification<Products> specification = (Root<Products> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
+            if (product_name != null && !product_name.trim().isEmpty())
+            {
+                Predicate product_namePredicate = criteriaBuilder.like(root.get("product_name"), "%" + product_name + "%");
+                predicates.add(product_namePredicate);
+            }
+            if (productType != null && !productType.isEmpty())
+            {
+                Predicate brandPredicate = root.get("product_type").in(productType);
+                predicates.add(brandPredicate);
+            }
+            Predicate productTypePredicate = criteriaBuilder.equal(root.get("brand"), brand);
+            predicates.add(productTypePredicate);
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return productRepository.count(specification);
     }
     public Page<Products> getLisProduct_inStock(int page,int size)
     {
@@ -134,23 +164,40 @@ public class product_Service {
         Pageable pageable = PageRequest.of(page-1, size);
         return productRepository.noBrand_getListProductByType(productType,pageable);
     }
-    public Page<Products> getListProductByType(String productType,List<String> brands,int page,int size)
-    {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return productRepository.getListProductByType(productType,brands,pageable);
-    }
-    public Page<Products> noBrand_getLisProductDiscount(int page,int size)
-    {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return productRepository.noBrand_getLisProductDiscount(pageable);
-    }
-    public Page<Products> getListProduct_Discount(List<String> brands,int page,int size)
-    {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return productRepository.getLisProductDiscount(brands,pageable);
-    }
     public List<Products> getRelatedProductByType(String productType,int ID)
     {
         return productRepository.getRelatedProductByType(productType,ID);
+    }
+    public Page<Products> getProduct(String name, List<String> productType, List<String> brand,String url, int page, int size)
+    {
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Specification<Products> specification = (Root<Products> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
+            if (name != null && !name.trim().isEmpty())
+            {
+                Predicate namePredicate = criteriaBuilder.like(root.get("product_name"), "%" + name + "%");
+                predicates.add(namePredicate);
+            }
+            if (brand != null && !brand.isEmpty())
+            {
+                Predicate brandPredicate = root.get("brand").in(brand);
+                predicates.add(brandPredicate);
+            }
+            if (productType != null && !productType.isEmpty())
+            {
+                Predicate productTypePredicate = root.get("product_type").in(productType);
+                predicates.add(productTypePredicate);
+            }
+            if(url.equals("discount"))
+            {
+                Predicate discountPredicate = criteriaBuilder.greaterThan(root.get("discount"),0 );
+                predicates.add(discountPredicate);
+                query.orderBy(criteriaBuilder.desc(root.get("discount")));
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        return productRepository.findAll(specification, pageable);
     }
 }

@@ -15,7 +15,7 @@ public class Shopping_Carts
 
     @ManyToOne
     @JoinColumn (name="username")
-    private Customers customer;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name="productID")
@@ -24,17 +24,17 @@ public class Shopping_Carts
     {
 
     }
-    public Shopping_Carts(int ID,int quantity, Customers customer, Products product)
+    public Shopping_Carts(int ID, int quantity, Users user, Products product)
     {
         this.ID=ID;
         this.quantity = quantity;
-        this.customer = customer;
+        this.user = user;
         this.product = product;
     }
-    public Shopping_Carts(int quantity, Customers customer, Products product)
+    public Shopping_Carts(int quantity, Users user, Products product)
     {
         this.quantity = quantity;
-        this.customer = customer;
+        this.user = user;
         this.product = product;
     }
 }

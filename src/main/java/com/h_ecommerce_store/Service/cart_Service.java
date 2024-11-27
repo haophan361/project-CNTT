@@ -41,7 +41,7 @@ public class cart_Service
     }
     public void addToCart(Shopping_Carts cart)
     {
-        Shopping_Carts existCart=cart_repository.checkExist_Cart(cart.getProduct().getID(),cart.getCustomer().getEmail());
+        Shopping_Carts existCart=cart_repository.checkExist_Cart(cart.getProduct().getID(),cart.getUser().getEmail());
         if(existCart==null)
         {
             int ID=cart_repository.newID();

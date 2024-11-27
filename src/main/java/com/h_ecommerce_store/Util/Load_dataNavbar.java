@@ -45,46 +45,25 @@ public class Load_dataNavbar
             model.addAttribute("list_cart",list_Cart.subList(0,5));
         }
     }
-    public void get_Type(Model model,List<String> brands)
+    public void get_Type(Model model,List<String> brands,String product_name)
     {
         List<String> allType=product_service.getProductType();
         List<productType_asideWidget> productTypes=new ArrayList<>();
-        if(brands==null)
+        for(String type : allType)
         {
-            for(String type : allType)
-            {
-                long count=product_service.countProduct_ByProductType(type);
-                productType_asideWidget productType=new productType_asideWidget(type,count);
-                productTypes.add(productType);
-            }
-        }
-        else
-        {
-            for (String type : allType)
-            {
-                long typeCount=0;
-                for (String brand : brands)
-                {
-                    long count=product_service.countProductBrand_ByType(brand,type);
-                    typeCount+=count;
-                }
-                productType_asideWidget productType=new productType_asideWidget(type,typeCount);
-                productTypes.add(productType);
-            }
+            long count=product_service.countProduct_ByProductType(type,brands,product_name);
+            productType_asideWidget productType=new productType_asideWidget(type,count);
+            productTypes.add(productType);
         }
         model.addAttribute("allType",productTypes);
     }
-    public void get_Brand(Model model,String productType)
+    public void get_Brand(Model model,List<String> productType,String product_name)
     {
-        if(productType==null)
-        {
-            productType="";
-        }
         List<String> allBrand=product_service.getProductBrand();
         List<brand_asideWidget> brands=new ArrayList<>();
         for(String brand :allBrand)
         {
-            long count=product_service.countProductBrand_ByType(brand,productType);
+            long count=product_service.countProductBrand_ByType(brand,productType,product_name);
             brand_asideWidget productBrand=new brand_asideWidget(brand,count);
             brands.add(productBrand);
         }
