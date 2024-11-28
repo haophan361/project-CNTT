@@ -21,7 +21,6 @@
 	<div class="form-card">
 		<h2 class="text-center mb-4">Register</h2>
 		<form th:action="@{/web/register}" th:object="${register}" method="POST">
-			<!-- Họ và tên -->
 			<div class="form-group">
 				<label for="name">Họ và tên</label>
 				<input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Nhập họ và tên" required>
@@ -30,13 +29,11 @@
 				</div>
 			</div>
 
-			<!-- Thành phố, Quận/Huyện, Phường/Xã -->
 			<div class="row">
 				<div class="form-group half-width">
 					<label for="cities">Tỉnh/Thành phố</label>
-					<select id="cities" class="form-select form-control-lg" th:field="*{city}" required>
-						<option value="" selected>Chọn tỉnh/thành phố</option>
-						<!-- Options sẽ được thêm từ JavaScript -->
+					<select id="cities" class="form-select form-control-lg" required>
+						<option value="" selected>Tỉnh/thành phố</option>
 					</select>
 					<input type="hidden" id="cityName" th:field="*{city}">
 					<div th:if="${#fields.hasErrors('city')}" class="text-danger">
@@ -46,9 +43,8 @@
 
 				<div class="form-group half-width">
 					<label for="districts">Quận/Huyện</label>
-					<select id="districts" class="form-select form-control-lg" th:field="*{district}" required>
-						<option value="" selected>Chọn quận/huyện</option>
-						<!-- Options sẽ được thêm từ JavaScript -->
+					<select id="districts" class="form-select form-control-lg" required>
+						<option value="" selected>Quận/huyện</option>
 					</select>
 					<input type="hidden" id="districtName" th:field="*{district}">
 					<div th:if="${#fields.hasErrors('district')}" class="text-danger">
@@ -59,13 +55,12 @@
 
 			<div class="form-group">
 				<label for="wards">Phường/Xã</label>
-				<select id="wards" class="form-select" th:field="*{ward}" required>
-					<option value="" selected>Chọn phường/xã</option>
+				<select id="wards" class="form-select" required>
+					<option value="" selected>Phường/xã</option>
 				</select>
 				<input type="hidden" id="wardName" th:field="*{ward}">
 			</div>
 
-			<!-- Địa chỉ và số điện thoại -->
 			<div class="form-group">
 				<label for="address">Số nhà, tên đường</label>
 				<input type="text" id="address" th:field="*{houseNo}" class="form-control" placeholder="Nhập số nhà, tên đường" required>
@@ -79,7 +74,6 @@
 				</div>
 			</div>
 
-			<!-- Email và Mật khẩu -->
 			<div class="row">
 				<div class="form-group half-width">
 					<label for="username">Email</label>
@@ -98,7 +92,6 @@
 				</div>
 			</div>
 
-			<!-- Xác nhận mật khẩu -->
 			<div class="form-group">
 				<label for="confirmPassword">Xác nhận mật khẩu</label>
 				<input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control" placeholder="Nhập lại mật khẩu" required>
@@ -107,7 +100,6 @@
 				</div>
 			</div>
 
-			<!-- Nút đăng ký -->
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
 			<p class="text-center mt-3">Already a member? <a th:href="@{/web/login}">Login</a></p>
 		</form>

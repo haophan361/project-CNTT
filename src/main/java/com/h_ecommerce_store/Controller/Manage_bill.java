@@ -80,8 +80,18 @@ public class Manage_bill
                     .collect(Collectors.joining("%2C"));
             confirmParam = "&confirm=" + confirmValue;
         }
+        String calendarStartParam="";
+        if(timeStart!=null)
+        {
+            calendarStartParam="&calendar_start="+timeStart;
+        }
+        String calendarEndParam="";
+        if(timeEnd!=null)
+        {
+            calendarEndParam="&calendar_end="+timeEnd;
+        }
         model.addAttribute("requestURI", request.getRequestURI()+"?cus_name="+cus_name
-                +"&calendar_start="+timeStart+"&calendar_end="+timeEnd+statusParam+confirmParam);
+                +calendarStartParam+calendarEndParam+statusParam+confirmParam);
         return "staff/bill";
     }
     @GetMapping("/staff/billDetail")
