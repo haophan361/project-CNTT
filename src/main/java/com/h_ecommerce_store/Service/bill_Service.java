@@ -124,6 +124,10 @@ public class bill_Service
         LocalDateTime timeEnd = timeStart.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59);
         return bill_repository.getRevenueByTime(timeStart,timeEnd);
     }
+    public Long CountBill_NotConfirmOrNotReceive(String email)
+    {
+        return bill_repository.CountBill_NotConfirmOrNotReceive(email);
+    }
     public Page<Bills> getBillsByCusName(String name, List<Integer> status, List<Integer> confirm,String timeStart,String timeEnd, int page, int size)
     {
         Pageable pageable = PageRequest.of(page - 1, size);

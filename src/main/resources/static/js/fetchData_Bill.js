@@ -51,9 +51,9 @@ function updateStatus(source)
         })
     }
 }
-function confirmCancel(event)
+function confirmCancel(event,button)
 {
-    event.preventDefault();
+    var status = button.dataset.status;
     bootbox.confirm({
         title: "Xác nhận hủy đơn hàng",
         message: "Bạn có muốn hủy đơn hàng hay không",
@@ -73,7 +73,21 @@ function confirmCancel(event)
         {
             if (result)
             {
-                document.getElementById("cancelForm").submit();
+                if(status==="1")
+                {
+                    bootbox.alert({
+                        message: "Tiền đã thanh toán sẽ được hoàn lại trong vòng 24h!",
+                        backdrop: false,
+                        callback: function ()
+                        {
+                            document.getElementById("cancelForm").submit();
+                        }
+                    });
+                }
+                else
+                {
+                    document.getElementById("cancelForm").submit();
+                }
             }
         }
     }).on('shown.bs.modal', function()

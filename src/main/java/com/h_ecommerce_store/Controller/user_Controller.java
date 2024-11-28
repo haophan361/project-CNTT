@@ -2,6 +2,7 @@ package com.h_ecommerce_store.Controller;
 
 import com.h_ecommerce_store.DTO.request.updateProfile;
 import com.h_ecommerce_store.DTO.response.manage_User;
+import com.h_ecommerce_store.Entity.Accounts;
 import com.h_ecommerce_store.Entity.Users;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class user_Controller
 {
     private final account_Service account_service;
     private final user_Service user_service;
-    @GetMapping("/user/formProfile")
+    @GetMapping({"/user/formProfile","/staff/formProfile"})
     public String formProfile(Model model)
     {
         String username=account_service.getLoggedUserName();
@@ -38,13 +39,18 @@ public class user_Controller
         model.addAttribute("districtName",district);
         String ward=address[2];
         model.addAttribute("wardName",ward);
-        String houseNo=address[3];
+        String houseNo="";
+        if(address.length>3)
+        {
+            houseNo=address[3];
+        }
         model.addAttribute("houseNo",houseNo);
         updateProfile update_profile= new updateProfile(name,username,phone);
         model.addAttribute("updateProfile", update_profile);
+        model.addAttribute("role", account_service.getAccount(username).getRole());
         return "web/updateProfile";
     }
-    @PostMapping("/user/updateProfile")
+    @PostMapping({"/user/updateProfile","/staff/updateProfile"})
     public String updateProfile(@Valid @ModelAttribute("updateProfile") updateProfile updateProfile
             , BindingResult result,
                                 @RequestParam(value = "cityName") String city,
@@ -61,7 +67,15 @@ public class user_Controller
         String phone=updateProfile.getPhone();
         String username=updateProfile.getUsername();
         user_service.updateProfile(name,address,phone,username);
-        return "redirect:/user/formProfile";
+        Accounts accounts=account_service.getAccount(username);
+        if(accounts.getRole().equals("ROLE_USER"))
+        {
+            return "redirect:/user/formProfile";
+        }
+        else
+        {
+            return "redirect:/staff/formProfile";
+        }
     }
     @GetMapping("/admin/user")
     public String getUser(Model model,@RequestParam(value = "name",defaultValue = "") String name,

@@ -2,121 +2,120 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trang đăng kí</title>
-	<link th:href="@{/css/style.css}" rel="stylesheet">
+	<title>Register</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+	<link th:href="@{/css/custom-login.css}" rel="stylesheet">
 </head>
 <body>
-	<div id="header">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
+<div class="register-wrapper">
+	<!-- Phần bên trái -->
+	<div class="info-section register-info">
+		<div class="info-content">
+			<h1>Welcome to Our Store!</h1>
+			<p>Join us today to explore amazing products and exclusive deals.</p>
+		</div>
+	</div>
+
+	<!-- Phần bên phải -->
+	<div class="form-card">
+		<h2 class="text-center mb-4">Register</h2>
+		<form th:action="@{/web/register}" th:object="${register}" method="POST">
+			<!-- Họ và tên -->
+			<div class="form-group">
+				<label for="name">Họ và tên</label>
+				<input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Nhập họ và tên" required>
+				<div th:if="${#fields.hasErrors('name')}" class="text-danger">
+					<small th:errors="*{name}"></small>
+				</div>
+			</div>
+
+			<!-- Thành phố, Quận/Huyện, Phường/Xã -->
 			<div class="row">
-				<!-- LOGO -->
-				<div class="col-md-3">
-					<div class="header-logo">
-						<a href="/" class="logo">
-							<img th:src="@{/img/logo.png}" alt="">
-						</a>
+				<div class="form-group half-width">
+					<label for="cities">Tỉnh/Thành phố</label>
+					<select id="cities" class="form-select form-control-lg" th:field="*{city}" required>
+						<option value="" selected>Chọn tỉnh/thành phố</option>
+						<!-- Options sẽ được thêm từ JavaScript -->
+					</select>
+					<input type="hidden" id="cityName" th:field="*{city}">
+					<div th:if="${#fields.hasErrors('city')}" class="text-danger">
+						<small th:errors="*{city}"></small>
+					</div>
+				</div>
+
+				<div class="form-group half-width">
+					<label for="districts">Quận/Huyện</label>
+					<select id="districts" class="form-select form-control-lg" th:field="*{district}" required>
+						<option value="" selected>Chọn quận/huyện</option>
+						<!-- Options sẽ được thêm từ JavaScript -->
+					</select>
+					<input type="hidden" id="districtName" th:field="*{district}">
+					<div th:if="${#fields.hasErrors('district')}" class="text-danger">
+						<small th:errors="*{district}"></small>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="form-container">
-		<div class="container py-5 h-100">
-			<div class="row d-flex align-items-center justify-content-center h-100">
-    			<div class="col-md-8 col-lg-7 col-xl-6">
-					<img src="https://i.imgur.com/uNGdWHi.png"
-						class="img-fluid" alt="Phone image">
-    			</div>
-	    		<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-	    			<h1 style="text-align:center">Register</h1>
-	    			<form th:action="@{/web/register}" th:object="${register}"  method="POST">
-						<div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">
-							<small th:errors="*{name}"></small>
-						</div>
-					    <div data-mdb-input-init class="form-outline mb-4">
-					        <input type="text" id="name" th:field="*{name}" class="form-control form-control-lg"/>
-					        <label class="form-label" for="name">Họ và tên</label>
-					    </div>
 
-						<div th:if="${#fields.hasErrors('city')}" style="color: red" class="error">
-							<small th:errors="*{city}"></small>
-						</div>
-					    <div class="mb-4">
-					        <select data-mdb-select-init class="form-control form-control-lg" id="cities">
-					            <option value="" selected>Tỉnh/Thành phố</option>
-					        </select>
-					        <input type="hidden" id="cityName" th:field="*{city}">
-					    </div>
+			<div class="form-group">
+				<label for="wards">Phường/Xã</label>
+				<select id="wards" class="form-select" th:field="*{ward}" required>
+					<option value="" selected>Chọn phường/xã</option>
+				</select>
+				<input type="hidden" id="wardName" th:field="*{ward}">
+			</div>
 
-						<div th:if="${#fields.hasErrors('district')}" style="color: red" class="error">
-							<small th:errors="*{district}"></small>
-						</div>
-					    <div class="mb-4">
-					        <select data-mdb-select-init class="form-control form-control-lg" id="districts">
-					            <option value="" selected>Quận/Huyện</option>
-					        </select>
-					        <input type="hidden" id="districtName" th:field="*{district}">
-					    </div>
+			<!-- Địa chỉ và số điện thoại -->
+			<div class="form-group">
+				<label for="address">Số nhà, tên đường</label>
+				<input type="text" id="address" th:field="*{houseNo}" class="form-control" placeholder="Nhập số nhà, tên đường" required>
+			</div>
 
-
-					    <div class="mb-4">
-					        <select data-mdb-select-init class="form-control form-control-lg" id="wards">
-					            <option value="" selected>Phường/Xã</option>
-					        </select>
-					        <input type="hidden" id="wardName" th:field="*{ward}">
-					    </div>
-
-					    <div data-mdb-input-init class="form-outline mb-4">
-					        <input type="text" id="address" th:field="*{houseNo}" class="form-control"/>
-					        <label class="form-label" for="address" >Số nhà, Tên đường</label>
-					    </div>
-
-						<div th:if="${#fields.hasErrors('phone')}" style="color:red;" class="error">
-							<small th:errors="*{phone}"></small>
-						</div>
-					    <div data-mdb-input-init class="form-outline mb-4">
-					        <input type="text" id="phone" th:field="*{phone}" class="form-control">
-					        <label class="form-label" for="phone" >Số điện thoại</label>
-					    </div>
-
-						<div th:if="${#fields.hasErrors('username')}" style="color: red" class="error">
-							<small th:errors="*{username}"></small>
-						</div>
-					    <div data-mdb-input-init class="form-outline mb-4">
-					        <input type="email" id="username" th:field="*{username}" class="form-control"/>
-					        <label class="form-label" for="username">Email</label>
-					    </div>
-
-
-						<div th:if="${#fields.hasErrors('password')}" style="color: red" class="error">
-							<small th:errors="*{password}"></small>
-						</div>
-					    <div data-mdb-input-init class="form-outline mb-4">
-					        <input type="password" id="password" th:field="*{password}" class="form-control"/>
-					        <label class="form-label" for="password">Mật khẩu</label>
-					    </div>
-
-						<div th:if="${#fields.hasErrors('confirmPassword')}" style="color: red" class="error">
-							<small th:errors="*{confirmPassword}"></small>
-						</div>
-						<div data-mdb-input-init class="form-outline mb-4">
-							<input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control"/>
-							<label class="form-label" for="confirmPassword">Xác nhận mật khẩu</label>
-						</div>
-
-					    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Register</button>
-					    <p>Already a member? <a th:href="@{/web/login}">Login</a></p>
-					</form>
+			<div class="form-group">
+				<label for="phone">Số điện thoại</label>
+				<input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="Nhập số điện thoại" required>
+				<div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+					<small th:errors="*{phone}"></small>
 				</div>
 			</div>
-		</div>
+
+			<!-- Email và Mật khẩu -->
+			<div class="row">
+				<div class="form-group half-width">
+					<label for="username">Email</label>
+					<input type="email" id="username" th:field="*{username}" class="form-control" placeholder="Nhập email" required>
+					<div th:if="${#fields.hasErrors('username')}" class="text-danger">
+						<small th:errors="*{username}"></small>
+					</div>
+				</div>
+
+				<div class="form-group half-width">
+					<label for="password">Mật khẩu</label>
+					<input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Nhập mật khẩu" required>
+					<div th:if="${#fields.hasErrors('password')}" class="text-danger">
+						<small th:errors="*{password}"></small>
+					</div>
+				</div>
+			</div>
+
+			<!-- Xác nhận mật khẩu -->
+			<div class="form-group">
+				<label for="confirmPassword">Xác nhận mật khẩu</label>
+				<input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control" placeholder="Nhập lại mật khẩu" required>
+				<div th:if="${#fields.hasErrors('confirmPassword')}" class="text-danger">
+					<small th:errors="*{confirmPassword}"></small>
+				</div>
+			</div>
+
+			<!-- Nút đăng ký -->
+			<button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+			<p class="text-center mt-3">Already a member? <a th:href="@{/web/login}">Login</a></p>
+		</form>
 	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-	<script th:src="@{/js/register.js}"></script>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script th:src="@{/js/register.js}"></script>
 </body>
 </html>

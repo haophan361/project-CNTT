@@ -80,14 +80,15 @@ public class account_Controller
         }
         return "/web/login";
     }
-    @GetMapping("/user/form_changePassword")
+    @GetMapping({"/user/form_changePassword","/staff/form_changePassword"})
     public String form_changePassword(Model model)
     {
         String username=account_service.getLoggedUserName();
         model.addAttribute("changePassword",new changePassword(username));
+        model.addAttribute("role",account_service.getAccount(username).getRole());
         return "/web/passwordForm";
     }
-    @PostMapping("/user/changePassword")
+    @PostMapping({"/user/changePassword","/staff/changePassword"})
     public String changePassword(@Valid @ModelAttribute("changePassword") changePassword changePassword,
                                  BindingResult result)
     {

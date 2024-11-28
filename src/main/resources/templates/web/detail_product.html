@@ -67,16 +67,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 											<span class="qty-down">-</span>
 										</div>
 									</div>
-									<div id="customMessageBox" class="modal">
-										<div class="modal-content">
-											<div class="modal-header">
-												<span class="close">&times;</span>
-											</div>
-											<div class="modal-body">
-												<p id="messageText"></p>
-											</div>
-										</div>
-									</div>
 									<button class="add-to-cart-btn" type="button" sec:authorize="isAuthenticated()"
 											th:data-product-id="${detail_Product.productID}"
 											th:data-quantity="${detail_Product.quantity}"
@@ -182,10 +172,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 											<div id="review-form" >
 												<!--/*@thymesVar id="postComment" type="com.h_ecommerce_store.DTO.request.postComment"*/-->
 												<form th:if="${postComment != null}" class="review-form" th:action="@{/user/postComment}"
-													  th:object="${postComment}" method="POST" onsubmit="return allowComment(this)">
-													<input class="allowComment" type="hidden" th:data-allow-comment="${postComment.allowCommentTime}">
+													  th:object="${postComment}" method="POST" id="commentForm">
 													<input type="hidden" th:field="*{productID}"/>
-													<textarea id="inputComment"  class="input" th:field="*{comment}" placeholder="Your Review"></textarea>
+													<textarea id="inputComment" class="input" th:field="*{comment}" placeholder="Your Review"></textarea>
 													<label for="inputComment"></label>
 													<div class="input-rating">
 														<span>Your Rating: </span>
@@ -193,19 +182,21 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 															<small th:errors="*{comment}"></small>
 														</div>
 														<div class="stars">
-															<input id="star5" th:field="*{rate}" value="5" type="radio">
+															<input id="star5" th:field="*{rate}" value="5" type="radio" name="rate">
 															<label for="star5"></label>
-															<input id="star4" th:field="*{rate}" value="4" type="radio">
+															<input id="star4" th:field="*{rate}" value="4" type="radio" name="rate">
 															<label for="star4"></label>
-															<input id="star3" th:field="*{rate}" value="3" type="radio">
+															<input id="star3" th:field="*{rate}" value="3" type="radio" name="rate">
 															<label for="star3"></label>
-															<input id="star2" th:field="*{rate}" value="2" type="radio">
+															<input id="star2" th:field="*{rate}" value="2" type="radio" name="rate">
 															<label for="star2"></label>
-															<input id="star1" th:field="*{rate}" value="1" type="radio">
+															<input id="star1" th:field="*{rate}" value="1" type="radio" name="rate">
 															<label for="star1"></label>
 														</div>
 													</div>
-													<button class="primary-btn" type="submit">Submit</button>
+													<button class="primary-btn" type="button" onclick="allowComment(this)"
+															th:data-allow-comment="${postComment.allowCommentTime}"
+															th:data-role="${#authentication.principal.authorities}">Submit</button>
 												</form>
 											</div>
 										</div>

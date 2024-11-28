@@ -17,8 +17,15 @@
                         <i class="fa fa-user-o"></i>Thông tin cá nhân
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a></li>
-                        <li><a th:href="@{/user/formProfile}" style="color: black;">Hồ sơ của bạn</a></li>
+                        <li>
+                            <a th:if="${role} =='ROLE_USER'" th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a>
+                            <a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/form_changePassword}" style="color: black;">Đổi mật khẩu</a>
+                        </li>
+
+                        <li>
+                            <a th:if="${role} =='ROLE_USER'" th:href="@{/user/formProfile}" style="color: black;"> Hồ sơ của bạn</a>
+                            <a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/formProfile}" style="color: black;"> Hồ sơ của bạn</a>
+                        </li>
                     </ul>
                     <form th:action="@{/logout}" method="post" style="display: inline">
                         <button type="submit" style="color: white ;background: none; border: none";>
@@ -66,10 +73,11 @@
                             <a th:href="@{/user/Bill}">
                                 <i class="fa fa-file-text"></i>
                                 <span>Hóa đơn</span>
+                                <div th:if="${number_bill}!=null" class="qty" th:text="${number_bill} "></div>
                             </a>
                         </div>
                         <!-- Cart -->
-                        <div class="dropdown" th:if="${role} !='ROLE_ADMIN'">
+                        <div class="dropdown" th:if="${role} =='ROLE_USER'">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
