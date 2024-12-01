@@ -46,16 +46,16 @@ body {
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
-    padding: 60px 30px;
+    justify-content: flex-start; /* Đưa nội dung lên trên */
+    align-items: flex-start; /* Căn nội dung về phía bên trái */
+    text-align: left; /* Căn trái các dòng chữ */
+    padding: 60px 30px; /* Khoảng cách từ cạnh container */
     position: relative;
     z-index: 1;
 
-    max-width: 80%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    max-width: 80%; /* Giới hạn chiều rộng của nội dung */
+    word-wrap: break-word; /* Đảm bảo chữ dài tự động xuống dòng */
+    overflow-wrap: break-word; /* Tương thích với các trình duyệt khác */
 }
 
 
@@ -66,22 +66,28 @@ body {
 }
 
 .info-text p {
-    max-width: 80%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    text-align: left;
-    margin: 10px 0;
+    max-width: 80%; /* Giới hạn chiều rộng của đoạn văn */
+    word-wrap: break-word; /* Ngắt từ nếu quá dài */
+    overflow-wrap: break-word; /* Tương thích các trình duyệt khác */
+    white-space: normal; /* Đảm bảo đoạn văn ngắt dòng bình thường */
+    text-align: left; /* Căn trái đoạn văn */
+    margin: 10px 0; /* Khoảng cách trên/dưới */
 }
 
+
+/* Phần bên phải (màu trắng) */
 .form-section {
     flex: 1;
     background: var(--white);
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Tạo đường cắt chéo cho phần màu trắng */
+
 }
 
+
+/* Card đăng nhập */
 .login-card {
     background: #fff;
     padding: 30px;
@@ -155,6 +161,8 @@ body {
 .register-wrapper {
     display: flex;
     height: 100vh;
+    padding-bottom: 30px; /* Thêm khoảng cách với viền dưới */
+    margin-bottom: 15px; /* Khoảng cách nhỏ hơn với viền dưới */
 }
 
 .register-info {
@@ -203,11 +211,11 @@ body {
 
 .row {
     display: flex;
-    gap: 20px;
+    gap: 20px; /* Khoảng cách giữa các trường */
 }
 
 .half-width {
-    flex: 1;
+    flex: 1; /* Mỗi trường chiếm 50% */
 }
 
 .form-group {
@@ -271,5 +279,260 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+
+@media (max-width: 1025px) {
+    .login-wrapper {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+    }
+
+    .login-info {
+        clip-path: none;
+        height: auto;
+        padding: 20px;
+    }
+
+    .info-text {
+        text-align: center;
+        align-items: center;
+    }
+
+    .form-section {
+        padding: 20px;
+        justify-content: center;
+    }
+}
+
+/* Media queries cho màn hình nhỏ hơn 768px */
+@media (max-width: 768px) {
+    .login-wrapper {
+        width: 100%;
+    }
+
+    .info-text h1 {
+        font-size: 24px;
+    }
+    .info-text p {
+        font-size: 14px;
+    }
+
+    .login-card {
+        padding: 20px;
+        max-width: 80%;
+    }
+    input {
+        box-sizing: border-box;
+    }
+
+
+    .btn-primary {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Wrapper chính */
+    .login-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+        padding: 0; /* Loại bỏ padding */
+        margin-bottom: 20px;
+    }
+
+    /* Phần màu đen */
+    .login-info {
+        flex: 0.5 ;
+        height: 33.33%;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+
+
+    }
+    .login-info {
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-section {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /* Phần form login */
+    .form-section {
+        flex: 2 ;
+        height: calc(66.66% - 10px);
+        background: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        /* margin-bottom: 20px;*/
+    }
+
+    /* Form Login */
+    .login-card {
+        max-width: 90%;
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    /* Nút Sign In */
+    .btn-primary {
+        font-size: 14px;
+        padding: 8px;
+        background: #6a11cb;
+        color: #fff;
+        border-radius: 5px;
+    }
+
+
+    .info-text h1 {
+        font-size: 20px;
+    }
+
+    .info-text p {
+        font-size: 12px;
+    }
+}
+
+
+/* Media queries cho trang Register */
+
+/* Màn hình nhỏ hơn 1024px */
+@media (max-width: 1024px) {
+    .register-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 95%;
+        box-sizing: border-box;
+        padding-bottom: 30px;
+        margin-bottom: 15px;
+    }
+
+    .register-info {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .info-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .info-section p {
+        font-size: 1rem;
+    }
+
+    .form-section {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 30px;
+    }
+
+    .form-card {
+        max-width: 350px;
+        width: 100%;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+@media (max-width: 869px) {
+    .register-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 90%;
+        margin: 0 auto;
+        padding-bottom: 30px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+
+    .form-card {
+        max-width: 85%;
+        padding: 10px;
+    }
+
+    .btn-primary {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+.register-wrapper {
+    height: auto;
+    min-height: 100vh;
+}
+
+
+/* Màn hình nhỏ hơn 480px */
+@media (max-width: 480px) {
+    .register-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 90%;
+        padding-bottom: 30px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+
+    .form-card {
+        max-width: 100%;
+        padding: 8px;
+    }
+
+    .btn-primary {
+        font-size: 6px;
+        padding: 6px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .info-content h1 {
+        font-size: 18px;
+    }
+
+    .info-content p {
+        font-size: 12px;
+    }
 }
 

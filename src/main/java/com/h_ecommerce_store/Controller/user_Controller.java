@@ -29,10 +29,10 @@ public class user_Controller
     public String formProfile(Model model)
     {
         String username=account_service.getLoggedUserName();
-        Users customer= user_service.getCustomer(username);
-        String name=customer.getName();
-        String phone=customer.getPhone();
-        String[] address=customer.getAddress().split(", ");
+        Users user= user_service.getCustomer(username);
+        String name=user.getName();
+        String phone=user.getPhone();
+        String[] address=user.getAddress().split(", ");
         String city=address[0];
         model.addAttribute("cityName",city);
         String district=address[1];

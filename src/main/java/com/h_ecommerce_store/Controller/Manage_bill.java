@@ -106,7 +106,7 @@ public class Manage_bill
                     billDetail.getProduct().getImage_url(),
                     billDetail.getProduct().getProduct_name(),
                     billDetail.getProduct().getID(),
-                    billDetail.getProduct().getQuantity(),
+                    billDetail.getQuantity(),
                     billDetail.getCost());
             listBillDetails.add(BillDetail);
         }
