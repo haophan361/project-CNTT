@@ -76,6 +76,7 @@ function confirmCancel(event,button)
                 if(status==="1")
                 {
                     bootbox.alert({
+                        title: "Thông báo",
                         message: "Tiền đã thanh toán sẽ được hoàn lại trong vòng 24h!",
                         backdrop: false,
                         callback: function ()
@@ -92,6 +93,6 @@ function confirmCancel(event,button)
         }
     }).on('shown.bs.modal', function()
     {
-        $(this).find('.modal-dialog').css('max-width', '80%');
+        $(this).find('.modal-dialog').css('max-width', '30%');
     });
 }

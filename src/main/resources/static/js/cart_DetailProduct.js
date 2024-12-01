@@ -4,11 +4,10 @@ function checkQuantityBeforeAdd(button)
     var availableQuantity = button.dataset.quantity;
     var selectedQuantity = button.dataset.selected;
     var role = button.dataset.role;
-    var modal;
-    var messageText;
     if(role!=="[ROLE_USER]")
     {
         bootbox.alert({
+            title: "Thông báo",
             message: "Chuyển qua account người dùng để có thể mua hàng",
             backdrop: false
         });
@@ -17,6 +16,7 @@ function checkQuantityBeforeAdd(button)
     if(availableQuantity===0)
     {
         bootbox.alert({
+            title: "Thông báo",
             message: "Sản phẩm đã hết hàng",
             backdrop: false
         });
@@ -26,6 +26,7 @@ function checkQuantityBeforeAdd(button)
     if (quantity > availableQuantity-selectedQuantity)
     {
         bootbox.alert({
+            title: "Thông báo",
             message: 'Bạn đã có ' + selectedQuantity + ' sản phẩm trong giỏ hàng.\n' +
                 'Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.',
             backdrop: false
@@ -53,11 +54,10 @@ function addToCart(ID)
 function allowComment(button)
 {
     var role = button.dataset.role;
-    var modal;
-    var messageText
     if (role !== "[ROLE_USER]")
     {
         bootbox.alert({
+            title: "Thông báo",
             message: "Chỉ có người dùng mới có thể bình luận",
             backdrop: false
         });
@@ -67,6 +67,7 @@ function allowComment(button)
     if (!selectedRate)
     {
         bootbox.alert({
+            title: "Thông báo",
             message: "Vui lòng chọn số sao đánh giá trước khi gửi",
             backdrop: false
         });
@@ -76,6 +77,7 @@ function allowComment(button)
     if (allowCommentTime <= 0)
     {
         bootbox.alert({
+            title: "Thông báo",
             message: "Số lần đánh giá của bạn đã vượt quá số lần mua sản phẩm của bạn. Để được đánh giá hãy mua sản phẩm.",
             backdrop: false
         });

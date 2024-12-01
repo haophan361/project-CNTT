@@ -38,6 +38,7 @@ function getCheckBox(source)
             if (receive_date === null)
             {
                 bootbox.alert({
+                    title: "Cảnh báo",
                     message: 'Hóa đơn có mã là ' + billID + ' phải được hoàn tất giao hàng trên 30 ngày mới có thể xóa',
                     size: 'medium',
                     backdrop: false
@@ -53,9 +54,10 @@ function getCheckBox(source)
             {
                 bootbox.alert(
                     {
-                    message: 'Hóa đơn có mã là ' + billID + ' phải được hoàn tất giao hàng trên 30 ngày mới có thể xóa',
-                    size: 'large',
-                    backdrop: false
+                        title: "Cảnh báo",
+                        message: 'Hóa đơn có mã là ' + billID + ' phải được hoàn tất giao hàng trên 30 ngày mới có thể xóa',
+                        size: 'large',
+                        backdrop: false
                 });
                 return false;
             }
@@ -66,9 +68,10 @@ function getCheckBox(source)
     {
         bootbox.alert(
             {
-            message: 'Vui lòng chọn ít nhất một hóa đơn để xóa.',
-            size: 'large',
-            backdrop: true
+                title: "Cảnh báo",
+                message: 'Vui lòng chọn ít nhất một hóa đơn để xóa.',
+                size: 'large',
+                backdrop: true
         });
         return false;
     }
@@ -142,6 +145,7 @@ function searchBill()
         if (startDate > endDate)
         {
             bootbox.alert({
+                title: "Cảnh báo",
                 message: 'Ngày bắt đầu phải nhỏ hơn ngày kết thúc',
                 size: 'large',
                 backdrop: true
@@ -157,6 +161,7 @@ function searchBill()
     else if (timeStart && !timeEnd || !timeStart && timeEnd)
     {
         bootbox.alert({
+            title: "Cảnh báo",
             message: 'Phải chọn cả ngày bắt đầu và ngày kết thúc',
             size: 'large',
             backdrop: true

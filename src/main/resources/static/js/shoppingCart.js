@@ -36,10 +36,12 @@ $('.input-number').each(function()
         }
         else
         {
-            var modal = document.getElementById("customMessageBox");
-            var messageText = document.getElementById("messageText");
-            messageText.textContent = 'Số lượng sản phẩm mua được đã đạt tối đa';
-            modal.style.display = "block";
+            bootbox.alert({
+                title: "Thông báo",
+                message: "Số lượng sản phẩm mua được đã đạt tối đa",
+                backdrop: false
+            });
+            return;
         }
     });
 
@@ -97,10 +99,11 @@ function getCheckBox(source)
             const product_name=checkbox.getAttribute('data-product-name');
             if(product_selected>product_available)
             {
-                var modal = document.getElementById("customMessageBox");
-                var messageText = document.getElementById("messageText");
-                messageText.textContent = 'Số lượng sản phẩm '+ product_name +' chỉ còn '+ product_available +' không đủ để đặt hàng';
-                modal.style.display = "block";
+                bootbox.alert({
+                    title: "Thông báo",
+                    message: 'Số lượng sản phẩm '+ product_name +' chỉ còn '+ product_available +' không đủ để đặt hàng',
+                    backdrop: false
+                });
                 return false;
             }
             isChecked = true;
@@ -108,25 +111,12 @@ function getCheckBox(source)
     }
     if (!isChecked)
     {
-        var modal = document.getElementById("customMessageBox");
-        var messageText = document.getElementById("messageText");
-        messageText.textContent = 'Vui lòng chọn ít nhất một sản phẩm thanh toán.'
-        modal.style.display = "block";
+        bootbox.alert({
+            title: "Thông báo",
+            message: "Vui lòng chọn ít nhất một sản phẩm thanh toán.",
+            backdrop: false
+        });
         return false;
     }
     return true;
-}
-
-document.querySelector(".close").onclick = function()
-{
-    document.getElementById("customMessageBox").style.display = "none";
-}
-
-window.onclick = function(event)
-{
-    var modal = document.getElementById("customMessageBox");
-    if (event.target === modal)
-    {
-        modal.style.display = "none";
-    }
 }

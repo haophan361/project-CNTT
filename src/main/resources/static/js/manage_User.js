@@ -72,6 +72,7 @@ function RoleChange(selectedRole)
                     success: function (response)
                     {
                         bootbox.alert({
+                            title: "Thông báo",
                             message: "Vai trò đã được cập nhật thành công!",
                             backdrop: false
                         });
@@ -79,6 +80,7 @@ function RoleChange(selectedRole)
                     error: function ()
                     {
                         bootbox.alert({
+                            title: "Cảnh báo",
                             message: "Có lỗi xảy ra khi cập nhật vai trò!",
                             backdrop: false
                         });
@@ -92,6 +94,6 @@ function RoleChange(selectedRole)
         }
     }).on('shown.bs.modal', function()
     {
-        $(this).find('.modal-dialog').css('max-width', '80%');
+        $(this).find('.modal-dialog').css('max-width', '30%');
     });
 }

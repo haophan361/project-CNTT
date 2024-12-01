@@ -153,7 +153,7 @@ public class home_Controller
             return "web/detail_product :: tab1";
         }
         htmlContent.append("</body></html>");
-        model.addAttribute("description", htmlContent.toString());
+        model.addAttribute("description", htmlContent);
         return "web/detail_product :: tab1";
     }
     @GetMapping("/web/rating_product/{ID}")
