@@ -35,14 +35,7 @@ public class Load_dataNavbar
         }
         List<String> typeProduct=product_service.getProductType();
         model.addAttribute("typeProduct",typeProduct);
-        if(list_Cart.size()<5)
-        {
-            model.addAttribute("list_cart",list_Cart);
-        }
-        else
-        {
-            model.addAttribute("list_cart",list_Cart.subList(0,5));
-        }
+        model.addAttribute("list_cart",list_Cart);
     }
     public void get_Type(Model model,List<String> brands,String product_name)
     {
@@ -72,18 +65,12 @@ public class Load_dataNavbar
     {
         List<Products> products=billDetail_service.TopProductsSeller();
         List<topSeller_asideWidget> topSellerProduct=new ArrayList<>();
-        int count=0;
         for(Products product : products)
         {
-            if(count==5)
-            {
-                break;
-            }
             topSeller_asideWidget product_widget=new topSeller_asideWidget(product.getID(),
                     product.getProduct_name(),product.getImage_url(),product.getProduct_type(),
                     product.getCost(),product.getDiscount());
             topSellerProduct.add(product_widget);
-            count++;
         }
         model.addAttribute("topSellerProduct",topSellerProduct);
     }

@@ -9,11 +9,8 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
-    <!-- Bootstrap core CSS     -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 
-    <!--  Paper Dashboard core CSS    -->
     <link th:href="@{/css/paper-dashboard.css}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link th:href="@{/css/style.css}" rel="stylesheet">
@@ -24,22 +21,9 @@
 
 </head>
 <body>
-    <div id="header">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3">
-                    <div class="header-logo">
-                        <a href="/" class="logo">
-                            <img th:src="@{/img/logo.png}" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <header
+            th:replace ="~{fragment/navbar.html :: navbar} ">
+    </header>
     <div class="wrapper">
         <div class="sidebar" data-background-color="white" data-active-color="danger">
             <div class="sidebar-wrapper">
@@ -61,18 +45,24 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar bar1"></span>
-                            <span class="icon-bar bar2"></span>
-                            <span class="icon-bar bar3"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Dashboard</a>
+                        <a class="navbar-brand">Dashboard</a>
                     </div>
-                    <div class="collapse navbar-collapse"></div>
+                    <div class="sidebar-wrapper">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/admin/crudProducts}">
+                                    <i class= "fa fa-fw fa-th mr-1"></i><span>CRUD</span>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" th:href="@{/admin/dashboard}">
+                                    <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
-
 
             <div class="content">
                 <div class="container-fluid">
@@ -182,7 +172,9 @@
                                     </select>
                                 </div>
                                 <div class="content">
-                                    <canvas id="topSellerChart"></canvas>
+                                    <div class="chart-container" style="position: relative; width: 100%; height: auto;">
+                                        <canvas id="topSellerChart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -235,6 +227,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:src="@{/js/DashBoard.js}"></script>
-    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 	<script th:src="@{/js/paper-dashboard.js}"></script>
 </html>
