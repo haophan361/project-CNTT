@@ -15,7 +15,9 @@ Dự án này nhằm xây dựng một website bán hàng trực tuyến cho cá
 ## 🌍 Các công nghệ sử dụng
 - **Frontend :art:**: HTML, CSS, JavaScript, BootStrap 5, Thymeleaf 
 - **Backend :coffee:**: Java (Spring Boot) , Spring Security,  Spring Data JPA
-- **Database :floppy_disk:**: MySQL 
+- **Database :floppy_disk:**: MySQL
+- **Cloud Storage :cloud:**: Firebase Storage
+- **TinyURL :link:**: TinyURL (dùng để rút ngắn URL)
 - **Version Control :octopus: :**: Git, GitHub
 
 ## :wrench: Cài đặt 
