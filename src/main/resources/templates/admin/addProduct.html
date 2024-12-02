@@ -3,10 +3,9 @@
 <head>
 	<meta charset="UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
-    <title>Thêm Sản Phẩm</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 	<link rel="stylesheet" th:href="@{/css/style.css}"/>
-	<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+	<title>Thêm Sản Phẩm</title>
 </head>
 <body>
 	<div id="header">
@@ -67,11 +66,10 @@
 						</div>
 
 						<div data-mdb-input-init class="form-outline mb-4">
-							<label class="form-label" for="description">Chi tiết sản phẩm</label>
-							<input type="file" id="description" name="description" class="form-control" accept=".doc,.docx,.pdf"
-								   th:attr="required=${product.ID == null}"
-								   onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-							<input type="hidden" th:field="*{detail}" th:value="${product.detail}">
+							<div data-mdb-input-init class="form-outline mb-4">
+								<label class="form-label" for="full-featured">Chi tiết sản phẩm</label>
+								<textarea id="full-featured" th:field="*{detail}"></textarea>
+							</div>
 						</div>
 
 						<div data-mdb-input-init class="form-outline mb-4">
@@ -89,12 +87,13 @@
 								Cancel
 							</a>
 						</div>
-
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+	<script src="https://cdn.tiny.cloud/1/c2xoakco5gbwg2mhms6xorsljw4v4pqm3bwk6rckifljdjb3/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+	<script th:src="@{/js/description_Product.js}"></script>
 </body>
 </html>

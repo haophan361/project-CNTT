@@ -65,11 +65,8 @@
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <label class="form-label" for="description">Chi tiết sản phẩm</label>
-                            <input type="file" id="description" name="description" class="form-control" accept=".doc,.docx,.pdf"
-                                   th:attr="required=${product.ID == null}"
-                                   onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-                            <input type="hidden" th:field="*{detail}" th:value="${product.detail}">
+                            <label class="form-label" for="full-featured">Chi tiết sản phẩm</label>
+                            <textarea id="full-featured" th:field="*{detail}"></textarea>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
@@ -79,7 +76,7 @@
                                    onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                             <input type="hidden" th:field="*{image_url}" th:value="${product.image_url}">
                             <br>
-                            <img id="blah" width="400" height="350" th:src="@{'/Image/' + ${product.image_url}}">
+                            <img id="blah" width="400" height="350" th:src="${product.image_url}">
                         </div>
                         <div style="display: flex;">
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" style="height: 50px;margin-top: 8px">
@@ -96,5 +93,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/c2xoakco5gbwg2mhms6xorsljw4v4pqm3bwk6rckifljdjb3/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script th:src="@{/js/description_Product.js}"></script>
 </body>
 </html>

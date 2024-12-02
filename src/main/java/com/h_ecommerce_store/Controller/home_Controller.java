@@ -133,27 +133,8 @@ public class home_Controller
     public String getDescription_product(Model model, @PathVariable("ID") int ID)
     {
         Products product = product_service.getProductsByID(ID);
-        String description_file = product.getDetail();
-        StringBuilder htmlContent = new StringBuilder("<html><body>");
-        try
-        {
-            URI fileUri = new URI(description_file);
-            URL fileUrl = fileUri.toURL();
-            try (InputStream inputStream = fileUrl.openStream();
-                 PDDocument document = PDDocument.load(inputStream))
-            {
-                PDFTextStripper pdfStripper = new PDFTextStripper();
-                String text = pdfStripper.getText(document);
-                htmlContent.append("<p>").append(text.replace("\n", "<br>")).append("</p>");
-            }
-        }
-        catch (Exception e)
-        {
-            model.addAttribute("description", "Không thể load dữ liệu");
-            return "web/detail_product :: tab1";
-        }
-        htmlContent.append("</body></html>");
-        model.addAttribute("description", htmlContent);
+        String description = product.getDetail();
+        model.addAttribute("description", description);
         return "web/detail_product :: tab1";
     }
     @GetMapping("/web/rating_product/{ID}")

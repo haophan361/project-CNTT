@@ -27,36 +27,25 @@ public class products_Controller
     private final billDetail_Service billDetail_service;
     private final bill_Service bill_service;
     @PostMapping("/admin/saveProducts")
-    public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile,@RequestParam("description") MultipartFile descriptionFile)
+    public String saveProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile)
     {
         if (!imageFile.isEmpty())
         {
             String image = file_Service.upload(imageFile,"media");
             product.setImage_url(image);
-        }
-        if(!descriptionFile.isEmpty())
-        {
-            String description = file_Service.upload(descriptionFile,"application/pdf");
-            product.setDetail(description);
         }
         product_service.saveProduct(product);
         return "redirect:/admin/crudProducts";
     }
     @PostMapping("/admin/updateProduct")
-    public String updateProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile,@RequestParam("description")MultipartFile descriptionFile)
+    public String updateProduct(@ModelAttribute("product") Products product, @RequestParam("imageInput") MultipartFile imageFile)
     {
         if (!imageFile.isEmpty())
         {
             String image = file_Service.upload(imageFile,"media");
             product.setImage_url(image);
         }
-        if(!descriptionFile.isEmpty())
-        {
-            String description = file_Service.upload(descriptionFile,"application/pdf");
-            product.setDetail(description);
-        }
         product_service.updateProduct(product);
-
         return "redirect:/admin/crudProducts";
     }
 
