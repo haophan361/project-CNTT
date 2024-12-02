@@ -82,7 +82,7 @@ Vui lòng mở trình duyệt và truy cập link:
 └── :memo: **README.md**  
 
 ## :camera: Ảnh minh họa giao diện
-![Giao diện sản phẩm](e:\anhtongquan.jpg)
+![Giao diện sản phẩm](static/images/anhtongquan.jpg)
 ---
 ## :memo: Đánh giá và phản hồi
 Chúng tôi rất mong nhận được phản hồi từ bạn về các tính năng của website.
