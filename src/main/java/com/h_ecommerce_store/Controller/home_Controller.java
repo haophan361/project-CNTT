@@ -8,22 +8,15 @@ import com.h_ecommerce_store.Service.*;
 import com.h_ecommerce_store.Util.Load_dataNavbar;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.h_ecommerce_store.DTO.response.detail_Product;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import com.h_ecommerce_store.DTO.response.comment_Product;
-import org.apache.pdfbox.pdmodel.PDDocument;
-
-
 @Controller
 @RequiredArgsConstructor
 public class home_Controller

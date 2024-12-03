@@ -51,13 +51,22 @@ public class bill_Controller
         return "/web/checkout";
     }
     @PostMapping("/user/insertBill")
-    public String insertBill(@Valid @ModelAttribute("checkout_Bill") checkout_Bill checkout_bill, BindingResult result)
+    public String insertBill(Model model,@Valid @ModelAttribute("checkout_Bill") checkout_Bill checkout_bill, BindingResult result)
     {
+        String username=account_service.getLoggedUserName();
         if(result.hasErrors())
         {
-            return "/web/checkout";
+            List<Integer> selectedProductIds = checkout_bill.getBillDetails().stream()
+                    .map(checkout_BillDetail::getProductID)
+                    .toList();
+            List<Integer> selectedCartIds=new ArrayList<>();
+            for(Integer productID:selectedProductIds)
+            {
+                int cartID=cart_service.getCartID(productID,username);
+                selectedCartIds.add(cartID);
+            }
+            return getListBill(selectedCartIds, model);
         }
-        String username=account_service.getLoggedUserName();
         Users customer= user_service.getCustomer(username);
         String cus_name=checkout_bill.getName();
         BigDecimal total=checkout_bill.getTotal();
