@@ -108,7 +108,7 @@ function confirmDeleteBill(event)
         }
     }).on('shown.bs.modal', function()
     {
-        $(this).find('.modal-dialog').css("width","800px");
+        $(this).find('.modal-dialog').css("max-width","40%");
     });
 }
 function searchBill()
