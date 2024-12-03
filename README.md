@@ -1,23 +1,22 @@
-# 🌐💻XÂY DỰNG WEBSITE KINH DOANH ĐỒ ĐIỆN TỬ🛒📱
+# 🌐💻XÂY DỰNG WEBSITE KINH DOANH THIẾT BỊ ĐIỆN TỬ GIA DỤNG🛒📱
 
 Dự án được xây dựng bởi 👩‍💻 [Ngọc Hân](https://github.com/HanNguyenLA) và 👨‍💻 [Phúc Hảo](https://github.com/haophan361)
 ---
 
 ## :rocket: Mô tả dự án
-Dự án này nhằm xây dựng một website bán hàng trực tuyến cho các sản phẩm đồ điện tử, bao gồm các chức năng như:
+Dự án này nhằm xây dựng một website bán hàng trực tuyến cho các sản phẩm thiết bị điện tử gia dụng, bao gồm các chức năng như:
 - **Quản lý tài khoản người dùng🧑‍💻 :** Người dùng có thể tạo tài khoản, đăng nhập và thay đổi thông tin cá nhân.
 - **Quản lý sản phẩm📦 :** Cung cấp giao diện để thêm, sửa, và xóa sản phẩm, cùng với các chức năng quản lý kho.
-- **Quản lý đơn hàng🛒:** Quản trị viên có thể theo dõi và xử lý các đơn hàng của khách hàng.
-- **Tìm kiếm và lọc sản phẩm🔍:** Người dùng có thể tìm kiếm và lọc sản phẩm theo các tiêu chí khác nhau.
+- **Quản lý đơn hàng🛒:** Nhân viên có thể theo dõi, xác lnhận và xử lí các đơn hàng của khách hàng.
+- **Tìm kiếm và lọc sản phẩm🔍:** Người dùng có thể tìm kiếm và lọc sản phẩm theo các tiêu chí khác nhau như tên sản phẩm loại sản phẩm, thương hiệu,...
 - **Đánh giá sản phẩm⭐:** Người dùng có thể đánh giá các sản phẩm mà họ đã mua.
 - **Khuyến mãi và giảm giá🎁:** Quản trị viên có thể thiết lập mã giảm giá và khuyến mãi cho sản phẩm.
-- **:star2:Dashboard:star2::**  cung cấp các báo cáo chi tiết về số lượng mặt hàng, tổng doanh thu, sản phẩm trong giỏ hàng, người dùng đăng ký, biểu đồ bán chạy, doanh thu theo loại sản phẩm, doanh thu theo tháng
+- **:star2:Dashboard:star2::** Cung cấp các báo cáo chi tiết về số lượng mặt hàng, tổng doanh thu, sản phẩm trong giỏ hàng, người dùng đăng ký, biểu đồ bán chạy, doanh thu theo loại sản phẩm, doanh thu theo tháng
 ## 🌍 Các công nghệ sử dụng
-- **Frontend :art:**: HTML, CSS, JavaScript, BootStrap 5, Thymeleaf 
+- **Frontend :art:**: HTML, CSS, JavaScript, BootStrap 3, BootStrap 4, Bootsrap 5, Thymeleaf 
 - **Backend :coffee:**: Java (Spring Boot) , Spring Security,  Spring Data JPA
 - **Database :floppy_disk:**: MySQL
 - **Cloud Storage :cloud:**: Firebase Storage
-- **TinyURL :link:**: TinyURL (dùng để rút ngắn URL)
 - **Version Control :octopus: :**: Git, GitHub
 
 ## :wrench: Cài đặt 
