@@ -41,7 +41,6 @@ $('.input-number').each(function()
                 message: "Số lượng sản phẩm mua được đã đạt tối đa",
                 backdrop: false
             });
-            return;
         }
     });
 
@@ -66,16 +65,55 @@ $('.input-number').each(function()
 });
 function deleteCart(cartID)
 {
-    {
-        $.ajax({
-            url:"/user/deleteCart/"+cartID,
-            type: "POST",
-            success: function(response)
+    bootbox.confirm({
+        title: "Xóa sản phẩm khỏi giỏ hàng",
+        message: "Bạn có muốn xóa sản phẩm này khỏi giỏ hàng ?",
+        backdrop: false,
+        buttons:
             {
-                window.location.href = response;
+                cancel:
+                    {
+                        label: '<i class="fa fa-times"></i> Không'
+                    },
+                confirm:
+                    {
+                        label: '<i class="fa fa-check"></i> Đồng ý'
+                    }
+            },
+        callback: function (result)
+        {
+            if (result)
+            {
+                $.ajax({
+                    url:"/user/deleteCart/"+cartID,
+                    type: "POST",
+                    success: function ()
+                    {
+                        bootbox.alert({
+                            title: "Thông báo",
+                            message: "Sản phẩm đã bị xóa khỏi giỏ hàng!",
+                            backdrop: false,
+                            callback: function ()
+                            {
+                                location.reload();
+                            }
+                        });
+                    },
+                    error: function ()
+                    {
+                        bootbox.alert({
+                            title: "Cảnh báo",
+                            message: "Có lỗi xảy ra khi xóa sản phẩm khỏi giỏ hàng!",
+                            backdrop: false
+                        });
+                    }
+                });
             }
-        })
-    }
+        }
+    }).on('shown.bs.modal', function()
+    {
+        $(this).find('.modal-dialog').css('max-width', '40%');
+    });
 }
 function toggleCheckboxes(source)
 {

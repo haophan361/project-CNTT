@@ -9,7 +9,7 @@
                         <i class="fa fa-user-o"></i> Đăng nhập
                     </a>
                 </li>
-                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/crudProducts}">Manage Products</a></li>
+                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/crudProducts}">Quản lí sản phẩm</a></li>
                 <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/user}">Quản lí người dùng</a></li>
                 <li><a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/bill}">Quản lí hóa đơn</a></li>
                 <li sec:authorize="isAuthenticated()" class="dropdown">

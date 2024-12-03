@@ -26,6 +26,6 @@ function confirmDelete(event)
         }
     }).on('shown.bs.modal', function()
     {
-        $(this).find('.modal-dialog').css('max-width', '30%');
+        $(this).find('.modal-dialog').css('max-width', '40%');
     });
 }

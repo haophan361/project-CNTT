@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,14 @@ public class bill_Controller
     {
         if(result.hasErrors())
         {
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            BigDecimal total=new BigDecimal(0);
+            for(checkout_BillDetail billDetail: checkout_bill.getBillDetails())
+            {
+                billDetail.setFormatted_newPrice(decimalFormat.format(billDetail.getProductNewPrice()));
+                total=total.add(billDetail.getProductNewPrice());
+            }
+            checkout_bill.setFormatted_price(decimalFormat.format(total));
             return "/web/checkout";
         }
         String username=account_service.getLoggedUserName();

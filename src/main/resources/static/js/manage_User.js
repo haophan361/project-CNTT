@@ -69,12 +69,16 @@ function RoleChange(selectedRole)
                         username: username,
                         role: newRole
                     },
-                    success: function (response)
+                    success: function ()
                     {
                         bootbox.alert({
                             title: "Thông báo",
                             message: "Vai trò đã được cập nhật thành công!",
-                            backdrop: false
+                            backdrop: false,
+                            callback: function ()
+                            {
+                                location.reload();
+                            }
                         });
                     },
                     error: function ()
@@ -94,6 +98,6 @@ function RoleChange(selectedRole)
         }
     }).on('shown.bs.modal', function()
     {
-        $(this).find('.modal-dialog').css('max-width', '30%');
+        $(this).find('.modal-dialog').css('max-width', '40%');
     });
 }
