@@ -72,6 +72,13 @@ public class Load_dataNavbar
                     product.getCost(),product.getDiscount());
             topSellerProduct.add(product_widget);
         }
-        model.addAttribute("topSellerProduct",topSellerProduct);
+        if(products.size()<=5)
+        {
+            model.addAttribute("topSellerProduct",topSellerProduct);
+        }
+        else
+        {
+            model.addAttribute("topSellerProduct",topSellerProduct.subList(0,5));
+        }
     }
 }
