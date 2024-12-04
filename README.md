@@ -86,7 +86,6 @@ Vui lòng mở trình duyệt và truy cập link:
 │   │           └── 🌐: **web** 
 │   │       ├── 🔐: **key_firebase** 
 │   │       └── :loudspeaker: **application.properties**                      
-│   │
 │   └── 📂: **test**                                      
 │       └── 📂: **java**      
 │           └── 📂: **com** 
