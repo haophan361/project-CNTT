@@ -7,7 +7,7 @@ Dự án được xây dựng bởi 👩‍💻 [Ngọc Hân](https://github.com
 Dự án này nhằm xây dựng một website bán hàng trực tuyến cho các sản phẩm thiết bị điện tử gia dụng, bao gồm các chức năng như:
 - **Quản lý tài khoản người dùng🧑‍💻 :** Người dùng có thể tạo tài khoản, đăng nhập và thay đổi thông tin cá nhân.
 - **Quản lý sản phẩm📦 :** Cung cấp giao diện để thêm, sửa, và xóa sản phẩm, cùng với các chức năng quản lý kho.
-- **Quản lý đơn hàng🛒:** Nhân viên có thể theo dõi, xác lnhận và xử lí các đơn hàng của khách hàng.
+- **Quản lý đơn hàng🛒:** Nhân viên có thể theo dõi, xác nhận và xử lí các đơn hàng của khách hàng.
 - **Tìm kiếm và lọc sản phẩm🔍:** Người dùng có thể tìm kiếm và lọc sản phẩm theo các tiêu chí khác nhau như tên sản phẩm loại sản phẩm, thương hiệu,...
 - **Đánh giá sản phẩm⭐:** Người dùng có thể đánh giá các sản phẩm mà họ đã mua.
 - **Khuyến mãi và giảm giá🎁:** Quản trị viên có thể thiết lập mã giảm giá và khuyến mãi cho sản phẩm.
