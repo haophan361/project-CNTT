@@ -21,9 +21,22 @@
 
 </head>
 <body>
-    <header
-            th:replace ="~{fragment/navbar.html :: navbar} ">
-    </header>
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
         <div class="sidebar" data-background-color="white" data-active-color="danger">
             <div class="sidebar-wrapper">
@@ -47,7 +60,7 @@
                     <div class="navbar-header">
                         <a class="navbar-brand">Dashboard</a>
                     </div>
-                    <div class="sidebar-wrapper">
+                    <div class="sidebar-wrapper visible-xs">
                         <ul class="nav">
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{/admin/crudProducts}">

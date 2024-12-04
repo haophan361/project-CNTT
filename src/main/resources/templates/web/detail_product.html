@@ -171,7 +171,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										<div class="col-md-3" style="clear: both;width: 50%;justify-content: center">
 											<div id="review-form" >
 												<!--/*@thymesVar id="postComment" type="com.h_ecommerce_store.DTO.request.postComment"*/-->
-												<form th:if="${postComment != null}" class="review-form" th:action="@{/user/postComment}"
+												<form th:if="${postComment != null && #authorization.expression('isAuthenticated()')}" class="review-form" th:action="@{/user/postComment}"
 													  th:object="${postComment}" method="POST" id="commentForm">
 													<input type="hidden" th:field="*{productID}"/>
 													<textarea id="inputComment" class="input" th:field="*{comment}" placeholder="Your Review"></textarea>
