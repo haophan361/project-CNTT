@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -176,4 +177,38 @@ public class bill_Controller
         bill_service.cancelBill(billID);
         return "redirect:/user/Bill";
     }
+    @GetMapping("/user/reorder/{billID}")
+    public String reorderBill(@PathVariable int billID, Principal principal) {
+        // Lấy thông tin hóa đơn cũ
+        Bills oldBill = bill_service.getBillByID(billID);
+        if (oldBill == null) {
+            return "redirect:/user/listBill?error=BillNotFound"; // Nếu không tìm thấy hóa đơn
+        }
+
+        // Lấy thông tin người dùng hiện tại
+        String username = principal.getName();
+        Users user = user_service.getCustomer(username);
+
+        // Duyệt qua danh sách chi tiết hóa đơn
+        for (BillDetails billDetail : oldBill.getBillDetails()) {
+            Products product = billDetail.getProduct();
+            int quantity = billDetail.getQuantity();
+
+            // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng hay chưa
+            Shopping_Carts existingCart = cart_service.checkExist_Cart(product.getID(), username);
+            if (existingCart != null) {
+                // Nếu đã tồn tại, cập nhật số lượng
+                existingCart.setQuantity(existingCart.getQuantity() + quantity);
+                cart_service.updateCart(existingCart);
+            } else {
+                // Nếu chưa tồn tại, thêm mới sản phẩm vào giỏ hàng
+                Shopping_Carts newCart = new Shopping_Carts(quantity, user, product);
+                cart_service.addToCart(newCart);
+            }
+        }
+
+        // Chuyển hướng về giỏ hàng sau khi thêm
+        return "redirect:/user/shoppingCart";
+    }
+
 }

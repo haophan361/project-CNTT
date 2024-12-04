@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface Cart_Repository extends JpaRepository<Shopping_Carts, Integer>
 {
+    Shopping_Carts findByProduct_IDAndUser_Email(int productID, String username);
     @Query("SELECT COALESCE(MAX(ID),0)+1 AS newID FROM Shopping_Carts ")
     int newID();
     @Query("SELECT c FROM Shopping_Carts c WHERE c.user.email= :username")

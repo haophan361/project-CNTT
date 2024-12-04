@@ -13,7 +13,9 @@ import java.util.Optional;
 public class cart_Service
 {
     private final Cart_Repository cart_repository;
-
+    public Shopping_Carts checkExist_Cart(int productID, String username) {
+        return cart_repository.findByProduct_IDAndUser_Email(productID, username);
+    }
     public List<Shopping_Carts> getCart_Customer(String username)
     {
         return cart_repository.getShopping_CartsByCus(username);

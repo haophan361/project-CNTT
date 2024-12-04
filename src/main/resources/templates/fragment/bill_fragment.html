@@ -43,6 +43,9 @@
         <div class="total-price">
             <h3 class="font-weight-bold" th:text="${bill.formattedPrice} + 'đ'" style="color: red"></h3>
         </div>
+        <div class="reorder-button">
+            <a class="btn btn-primary btn-md" th:href="@{'/user/reorder/' + ${bill.billID}}">Mua lại</a>
+        </div>
         <form th:if="${bill.confirm}==0" th:action="@{/user/cancelBill}" method="POST" style="display: inline-block; float: right;"
               id="cancelForm">
             <input type="hidden" th:value="${bill.billID}" th:name="billID">
