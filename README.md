@@ -64,20 +64,34 @@ Vui lòng mở trình duyệt và truy cập link:
 │   ├── :file_folder: **main**                     
 │   │   ├── :file_folder: **java**                
 │   │   │   └── :file_folder: **com**             
-│   │   │       └── :file_folder: **example**      
-│   │   │           ├── :busts_in_silhouette: **controller**      
-│   │   │           ├── :scroll: **model**         
-│   │   │           ├── :bookmark_tabs: **repository**     
-│   │   │           ├── :electric_plug: **service**      
-│   │   │           └── :wrench: **config**       
-│   │   ├── :open_file_folder: **resources**        
-│   │   │   ├── :gear: **application.properties**    
-│   │   │   └── :loudspeaker: **static**            
-│   │   └── :desktop_computer: **webapp**          
+│   │   │       └── 📂: **h_ecommerce_store**      
+│   │   │           ├── 🌐: **Controller**
+│   │   │           ├── 📦: **DTO**  
+│   │   │           ├── 🗂️: **Entity**         
+│   │   │           ├── 🛠️: **Repository**     
+│   │   │           ├── 🔐: **SecurityConfig**      
+│   │   │           ├── 🔧: **Service**    
+│   │   │           ├── ⚙️: **Util**  
+│   │   │           └── 📋: **HEcommerceApplication**       
+│   │   └── :open_file_folder: **resources**        
+│   │       ├── 📂: **static** 
+│   │            ├── 📁: **css**
+│   │            ├── 📁: **fonts**  
+│   │            ├── 📁: **img**         
+│   │            ├── 📁: **js** 
+│   │       ├── 📂: **template** 
+│   │           ├── 🧑‍💻: **admin**
+│   │           ├── 📦: **fragment**  
+│   │           ├── 🧑‍💼: **staff**         
+│   │           └── 🌐: **web** 
+│   │       ├── 🔐: **key_firebase** 
+│   │       └── :loudspeaker: **application.properties**                      
 │   │
-│   └── :file_folder: **test**                     
-│       ├── :file_folder: **java**                  
-│       └── :file_folder: **resources**             
+│   └── 📂: **test**                                      
+│       └── 📂: **java**      
+│           └── 📂: **com** 
+│               └── 📂: **h_ecommerce_store** 
+│                   └── ⚙️: **HEcommerceApplicationTests.java** 
 │
 ├── :page_facing_up: **pom.xml**                    
 └── :memo: **README.md**  
