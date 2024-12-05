@@ -13,7 +13,7 @@ Dự án này nhằm xây dựng một website bán hàng trực tuyến cho cá
 - **Khuyến mãi và giảm giá🎁:** Quản trị viên có thể thiết lập mã giảm giá và khuyến mãi cho sản phẩm.
 - **:star2:Dashboard:star2::** Cung cấp các báo cáo chi tiết về số lượng mặt hàng, tổng doanh thu, sản phẩm trong giỏ hàng, người dùng đăng ký, biểu đồ bán chạy, doanh thu theo loại sản phẩm, doanh thu theo tháng
 ## 🌍 Các công nghệ sử dụng
-- **Frontend :art:**: HTML, CSS, JavaScript, BootStrap 3, BootStrap 4, Bootsrap 5, Thymeleaf 
+- **Frontend :art:**: HTML, CSS, JavaScript, BootStrap 3, BootStrap 4, Thymeleaf 
 - **Backend :coffee:**: Java (Spring Boot) , Spring Security,  Spring Data JPA
 - **Database :floppy_disk:**: MySQL
 - **Cloud Storage :cloud:**: Firebase Storage
@@ -37,7 +37,7 @@ Cài đặt các phụ thuộc bằng maven:
 mvn clean install
 ```
 ### 3. Cấu hình cơ sở dữ liệu💾
-Tạo cơ sở dữ liệu trong MySQL (ví dụ: electronic_store).
+Tạo cơ sở dữ liệu trong MySQL (bằng các file sql).
 Cập nhật thông tin kết nối cơ sở dữ liệu trong file application.properties:
 ``` properties
 spring.application.name=H_Ecommerce
