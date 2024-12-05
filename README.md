@@ -97,6 +97,9 @@ Vui lòng mở trình duyệt và truy cập link:
 
 ## :camera: Ảnh minh họa giao diện
 ![Giao diện sản phẩm](https://firebasestorage.googleapis.com/v0/b/h-ecommerce-a8e7c.appspot.com/o/Screenshot%202024-12-02%20221541.png?alt=media&token=54683579-cc83-457c-9440-00fa3ac7239f)
+
+## 📹: Video giới thiệu chức năng
+https://firebasestorage.googleapis.com/v0/b/h-ecommerce-a8e7c.appspot.com/o/%C4%90%E1%BB%93%20%C3%A1n%20CNTT%20(Nh%C3%B3m%208).mp4?alt=media&token=21dd3c7e-9c38-4778-acca-5a5adbdbc14e
 ---
 ## :memo: Đánh giá và phản hồi
 Chúng tôi rất mong nhận được phản hồi từ bạn về các tính năng của website.
